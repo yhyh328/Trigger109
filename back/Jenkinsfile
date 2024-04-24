@@ -117,20 +117,20 @@ pipeline {
         }
     }
 
-    post {  // 배포 후 알림 단계
-        success {
-            script {
-                mattermostSend (color: 'good',
-                message: "BE 배포 성공   :cat_jump: :loopy_happy: :bboong: ",
-                )
-            }
-        }
-        failure {
-            script {
-                mattermostSend (color: 'danger',
-                message: "BE 배포 실패   :cry_tom: :cryingloopy: :cryingpatamon: "
-                )
-            }
-        }
-    }
+//     post {  // 배포 후 알림 단계
+//         success {
+//             script {
+//                 mattermostSend (color: 'good',
+//                 message: "BE 배포 성공   :cat_jump: :loopy_happy: :bboong: ",
+//                 )
+//             }
+//         }
+//         failure {
+//             script {
+//                 mattermostSend (color: 'danger',
+//                 message: "BE 배포 실패   :cry_tom: :cryingloopy: :cryingpatamon: "
+//                 )
+//             }
+//         }
+//     }
 }
