@@ -5,26 +5,26 @@ const HeaderContainer = styled.header`
   background-color: #1a1a1a;
   padding: 5px 50px;
   display: flex;
-  justify-content: space-between;
   align-items: center;
-  position: fixed;   /* 이 부분을 추가합니다. */
-  top: 0;            /* 화면의 맨 위에 위치시킵니다. */
-  left: 0;           /* 화면의 왼쪽 끝부터 시작합니다. */
-  right: 0;          /* 화면의 오른쪽 끝까지 확장합니다. */
-  z-index: 1000;     /* 다른 요소들 위에 표시될 수 있도록 z-index를 설정합니다. */
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
 `;
-
 
 const Logo = styled.h1`
   font-size: 24px;
   color: #FFFFFF;
   font-family: 'Audiowide', sans-serif;
+  margin-right: 20px; // 로고와 네비게이션 사이의 간격
   span {
-    color: #00FCCE
+    color: #00FCCE;
   }
 `;
 
 const Nav = styled.nav`
+  display: flex;
   a {
     color: white;
     text-decoration: none;
@@ -36,15 +36,30 @@ const Nav = styled.nav`
   }
 `;
 
+const PlayButton = styled.button`
+  margin-left: auto; // 왼쪽에 있는 요소들로부터 자동으로 오른쪽으로 밀려나게 설정
+  background-color: #00FCCE;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  cursor: pointer;
+  border-radius: 5px;
+  &:hover {
+    background-color: #009988;
+  }
+`;
+
 export const Header: React.FC = () => {
   return (
     <HeaderContainer>
       <Logo>Tri<span>gg</span>er</Logo>
       <Nav>
-        <a href="#">Home</a>
-        <a href="#">About</a>
-        <a href="#">Contact</a>
+        <a href="#">공지사항</a>
+        <a href="#">랭킹</a>
+        <a href="/live">라이브</a>
+        <a href="#">가이드</a>
       </Nav>
+      <PlayButton>지금 플레이하기</PlayButton>
     </HeaderContainer>
   );
 }
