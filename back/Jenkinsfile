@@ -39,6 +39,11 @@ pipeline {
                 }
             }
         }
+        stage('Install Docker CLI') {
+            steps {
+                sh 'curl -fsSL https://get.docker.com | sh'
+            }
+        }
         stage("Build") {
                 steps {
                     script {
