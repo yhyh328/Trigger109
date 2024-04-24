@@ -1,20 +1,21 @@
 pipeline {
     agent any
     environment {
-        REPO = "s10-ai-image-sub2/S10P22C202"
-        DB_URL = "${env.DB_URL}"
-        DB_USER = "${env.DB_USER}"
-        DB_PASSWORD = "${env.DB_PASSWORD}"
-        REDIS_HOST = "${env.REDIS_HOST}"
-        REDIS_PASSWORD = "${env.REDIS_PASSWORD}"
-        REDIS_PORT = "${env.REDIS_PORT}"
-        KAKAO_ID = "${env.KAKAO_ID}"
-        KAKAO_REDIRECT_URI = "${env.KAKAO_REDIRECT_URI}"
-        KAKAO_PW = "${env.KAKAO_PW}"
-        S3_ACCESS_KEY = "${env.S3_ACCESS_KEY}"
-        S3_SECRET_KEY = "${env.S3_SECRET_KEY}"
-        S3_REGION = "${env.S3_REGION}"
-        S3_BUCKET = "${env.S3_BUCKET}"
+        REPO = "s10-final/S10P31C109"
+//         REPO = "s10-ai-image-sub2/S10P22C202"
+//         DB_URL = "${env.DB_URL}"
+//         DB_USER = "${env.DB_USER}"
+//         DB_PASSWORD = "${env.DB_PASSWORD}"
+//         REDIS_HOST = "${env.REDIS_HOST}"
+//         REDIS_PASSWORD = "${env.REDIS_PASSWORD}"
+//         REDIS_PORT = "${env.REDIS_PORT}"
+//         KAKAO_ID = "${env.KAKAO_ID}"
+//         KAKAO_REDIRECT_URI = "${env.KAKAO_REDIRECT_URI}"
+//         KAKAO_PW = "${env.KAKAO_PW}"
+//         S3_ACCESS_KEY = "${env.S3_ACCESS_KEY}"
+//         S3_SECRET_KEY = "${env.S3_SECRET_KEY}"
+//         S3_REGION = "${env.S3_REGION}"
+//         S3_BUCKET = "${env.S3_BUCKET}"
     }
     stages {
         stage('Checkout') {
@@ -24,7 +25,7 @@ pipeline {
         }
         stage('Setup Environment') {
             steps {
-                dir("${env.WORKSPACE}/ForMyBaby/backend"){
+                dir("${env.WORKSPACE}/back"){
                     script {
                         sh "ls -al"
                         sh "echo 'SUBMODULE CHECK'"
@@ -45,7 +46,7 @@ pipeline {
                         withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: 'Docker-hub', usernameVariable: 'DOCKER_USER_ID', passwordVariable: 'DOCKER_USER_PASSWORD']]) {
                             echo "도커허브 아이디: ${DOCKER_USER_ID}"
                             echo "도커허브 비밀번호: ${DOCKER_USER_PASSWORD}"
-                            sh "docker build --no-cache -t ${DOCKER_USER_ID}/back ForMyBaby/backend"
+                            sh "docker build --no-cache -t ${DOCKER_USER_ID}/back /back"
                         }
                     }
                 }
@@ -103,7 +104,8 @@ pipeline {
                             sh "docker stop -f back || true"
                             sh "docker rm -f back || true"
                             sh "docker rmi back || true"
-                            sh "docker run -d --name back -p 8082:8080 -e DB_URL=${env.DB_URL} -e DB_USER=${env.DB_USER} -e DB_PASSWORD=${env.DB_PASSWORD} -e REDIS_HOST=${env.REDIS_HOST} -e REDIS_PASSWORD=${env.REDIS_PASSWORD} -e REDIS_PORT=${env.REDIS_PORT} -e KAKAO_ID=${env.KAKAO_ID} -e KAKAO_REDIRECT_URI=${env.KAKAO_REDIRECT_URI} -e KAKAO_PW=${env.KAKAO_PW} -e S3_ACCESS_KEY=${env.S3_ACCESS_KEY} -e S3_SECRET_KEY=${env.S3_SECRET_KEY} -e S3_REGION=${env.S3_REGION} -e S3_BUCKET=${env.S3_BUCKET} ${DOCKER_USER_ID}/back && docker ps"
+                            sh "docker run -d --name back -p 8082:8080"
+//                             sh "docker run -d --name back -p 8082:8080 -e DB_URL=${env.DB_URL} -e DB_USER=${env.DB_USER} -e DB_PASSWORD=${env.DB_PASSWORD} -e REDIS_HOST=${env.REDIS_HOST} -e REDIS_PASSWORD=${env.REDIS_PASSWORD} -e REDIS_PORT=${env.REDIS_PORT} -e KAKAO_ID=${env.KAKAO_ID} -e KAKAO_REDIRECT_URI=${env.KAKAO_REDIRECT_URI} -e KAKAO_PW=${env.KAKAO_PW} -e S3_ACCESS_KEY=${env.S3_ACCESS_KEY} -e S3_SECRET_KEY=${env.S3_SECRET_KEY} -e S3_REGION=${env.S3_REGION} -e S3_BUCKET=${env.S3_BUCKET} ${DOCKER_USER_ID}/back && docker ps"
                         } catch (Exception e) {
                             sh "docker restart back || true"  // Ignore error if container doesn't exist
                         }
@@ -113,20 +115,20 @@ pipeline {
         }
     }
 
-post {
-        success {
-            script {
-                mattermostSend (color: 'good',
-                message: "BE 배포 성공   :cat_jump: :loopy_happy: :bboong: ",
-                )
-            }
-        }
-        failure {
-            script {
-                mattermostSend (color: 'danger',
-                message: "BE 배포 실패   :cry_tom: :cryingloopy: :cryingpatamon: "
-                )
-            }
-        }
-    }
+// post {
+//         success {
+//             script {
+//                 mattermostSend (color: 'good',
+//                 message: "BE 배포 성공   :cat_jump: :loopy_happy: :bboong: ",
+//                 )
+//             }
+//         }
+//         failure {
+//             script {
+//                 mattermostSend (color: 'danger',
+//                 message: "BE 배포 실패   :cry_tom: :cryingloopy: :cryingpatamon: "
+//                 )
+//             }
+//         }
+//     }
 }
