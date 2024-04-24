@@ -25,7 +25,7 @@ pipeline {
         }
         stage('Setup Environment') {
             steps {
-                dir("${env.WORKSPACE}"){
+                dir("${env.WORKSPACE}/back"){
                     script {
                         sh "ls -al"
                         sh "echo 'SUBMODULE CHECK'"
