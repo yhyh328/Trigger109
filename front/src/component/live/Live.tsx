@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import Chat from '../chatlist/Chat';
 
 // 스타일 컴포넌트 정의
 const LiveContainer = styled.div`
@@ -18,6 +19,16 @@ const ChatContainer = styled.div`
   background-color: #f2f2f2;
 `;
 
+// 채팅 컴포넌트
+const Chat1 = () => {
+  return (
+    <ChatContainer>
+      <Chat />
+    </ChatContainer>
+  );
+};
+
+
 // 비디오 플레이어 컴포넌트
 const VideoPlayer = () => {
   return (
@@ -30,21 +41,13 @@ const VideoPlayer = () => {
   );
 };
 
-// 채팅 컴포넌트
-const Chat = () => {
-  return (
-    <ChatContainer>
-      <p>Chat interface here</p>
-    </ChatContainer>
-  );
-};
 
 // 라이브 스트리밍 메인 컴포넌트
 const Live = () => {
   return (
     <LiveContainer>
       <VideoPlayer />
-      <Chat />
+      <Chat1 />
     </LiveContainer>
   );
 };

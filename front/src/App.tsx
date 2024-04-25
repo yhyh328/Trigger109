@@ -10,6 +10,8 @@ import { Footer } from './component/main/Footer';
 import { GlobalStyle } from './GlobalStyle';
 import Live from './component/live/Live';
 
+
+
 const App = () => {
   return (
     <Router>
@@ -25,7 +27,9 @@ const App = () => {
             <MainSection5/>
           </> }
         /> 
-        <Route path="/live" element={<Live />} />
+        <Route path="/live" element={
+        <Live />
+        }  />
       </Routes>
       <Footer />
     </Router>
