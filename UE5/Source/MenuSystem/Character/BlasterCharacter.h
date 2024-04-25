@@ -48,6 +48,15 @@ class ABlasterCharacter : public ACharacter
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input, meta = (AllowPrivateAccess = "true"))
 	UInputAction* EquipAction;
 
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input, meta = (AllowPrivateAccess = "true"))
+	UInputAction* CrouchAction;
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input, meta = (AllowPrivateAccess = "true"))
+	UInputAction* AimAction;
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input, meta = (AllowPrivateAccess = "true"))
+	UInputAction* AimAction2;
+
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))
 	class UWidgetComponent* OverheadWidget;
 
@@ -65,6 +74,8 @@ class ABlasterCharacter : public ACharacter
 
 public:
 	void SetOverlappingWeapon(AWeapon* Weapon);
+	bool IsWeaponEquipped();
+	bool IsAiming();
 
 	ABlasterCharacter();
 	virtual void Tick(float DeltaTime) override;
@@ -89,7 +100,13 @@ protected:
 	/** Called for looking input */
 	void Look(const FInputActionValue& Value);
 
-	void Equip(const FInputActionValue& Value);
+	void EquipButtonPressed(const FInputActionValue& Value);
+
+	void CrouchButtonPressed(const FInputActionValue& Value);
+
+	void AimButtonPressed();
+
+	void AimButtonReleased();
 
 	// To add mapping context
 	virtual void BeginPlay();

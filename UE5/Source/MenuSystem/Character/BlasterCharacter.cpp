@@ -58,6 +58,16 @@ void ABlasterCharacter::SetOverlappingWeapon(AWeapon* Weapon)
 	}
 }
 
+bool ABlasterCharacter::IsWeaponEquipped()
+{
+	return (Combat && Combat->EquippedWeapon);
+}
+
+bool ABlasterCharacter::IsAiming()
+{
+	return (Combat && Combat->bAiming);
+}
+
 ABlasterCharacter::ABlasterCharacter() :
 	CreateSessionCompleteDelegate(FOnCreateSessionCompleteDelegate::CreateUObject(this, &ThisClass::OnCreateSessionComplete)),
 	FindSessionsCompleteDelegate(FOnFindSessionsCompleteDelegate::CreateUObject(this, &ThisClass::OnFindSessionsComplete)),
@@ -84,6 +94,8 @@ ABlasterCharacter::ABlasterCharacter() :
 
 	Combat = CreateDefaultSubobject<UCombatComponent>(TEXT("CombatComponent"));
 	Combat->SetIsReplicated(true);
+
+	GetCharacterMovement()->NavAgentProps.bCanCrouch = true;
 
 	// Note: For faster iteration times these variables, and many more, can be tweaked in the Character Blueprint
 	// instead of recompiling to adjust them
@@ -304,7 +316,13 @@ void ABlasterCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCo
 		// Looking
 		EnhancedInputComponent->BindAction(LookAction, ETriggerEvent::Triggered, this, &ABlasterCharacter::Look);
 
-		EnhancedInputComponent->BindAction(EquipAction, ETriggerEvent::Triggered, this, &ABlasterCharacter::Equip);
+		EnhancedInputComponent->BindAction(EquipAction, ETriggerEvent::Triggered, this, &ABlasterCharacter::EquipButtonPressed);
+
+		EnhancedInputComponent->BindAction(CrouchAction, ETriggerEvent::Triggered, this, &ABlasterCharacter::CrouchButtonPressed);
+
+		EnhancedInputComponent->BindAction(AimAction, ETriggerEvent::Triggered, this, &ABlasterCharacter::AimButtonPressed);
+
+		EnhancedInputComponent->BindAction(AimAction2, ETriggerEvent::Triggered, this, &ABlasterCharacter::AimButtonReleased);
 	}
 	else
 	{
@@ -363,7 +381,7 @@ void ABlasterCharacter::Look(const FInputActionValue& Value)
 	}
 }
 
-void ABlasterCharacter::Equip(const FInputActionValue& Value)
+void ABlasterCharacter::EquipButtonPressed(const FInputActionValue& Value)
 {
 	if (Combat)
 	{
@@ -375,5 +393,33 @@ void ABlasterCharacter::Equip(const FInputActionValue& Value)
 		{
 			ServerEquipButtonPressed();
 		}
+	}
+}
+
+void ABlasterCharacter::CrouchButtonPressed(const FInputActionValue& Value)
+{
+	if (bIsCrouched)
+	{
+		UnCrouch();
+	}
+	else
+	{
+		Crouch();
+	}
+}
+
+void ABlasterCharacter::AimButtonPressed()
+{
+	if (Combat)
+	{
+		Combat->SetAiming(true);
+	}
+}
+
+void ABlasterCharacter::AimButtonReleased()
+{
+	if (Combat)
+	{
+		Combat->SetAiming(false);
 	}
 }
