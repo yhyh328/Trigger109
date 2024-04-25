@@ -1,48 +1,26 @@
 pipeline {
-    agent any // 이 파이프라인은 어떤 Jenkins 에이전트에서도 실행될 수 있음을 의미
+    agent any
 
     environment {
-        REPO = "s10-final/S10P31C109"  // 환경 변수 설정
+        REPO = "s10-final/S10P31C109"
     }
 
     stages {
         stage('Checkout') {
             steps {
-                checkout scm  // 소스 코드 관리(SCM) 시스템에서 최신 코드를 체크아웃
+                checkout scm
             }
         }
-
-
-        //         stage('Setup Environment') {
-//             steps {
-//                 dir("${env.WORKSPACE}/Easysign_fe-edu"){
-//                     script {
-//                         sh "ls -al"
-//                         sh "ls secure-settings -al"
-//                         sh "chmod +x ./gradlew"
-//                         sh "cp ./secure-settings/application.yml ./src/main/resources"
-//                         sh "cp ./secure-settings/application-dev.yml ./src/main/resources"
-//                         sh "ls ./src/main/resources -al"
-//
-//                     }
-//                 }
-//             }
-//         }
-//		stage('Junit Test') {
-//			steps {
-//				sh "./gradlew test"
-//			}
-//		}
 
         stage("Build") {
             steps {
                 script {
                     withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: 'Docker-hub', usernameVariable: 'DOCKER_USER_ID', passwordVariable: 'DOCKER_USER_PASSWORD']]) {
-                        def buildStatus = sh(script: "docker build -t ${DOCKER_USER_ID}/front front", returnStatus: true)  // 빌드 상태를 반환받음
-                        if (buildStatus != 0) {  // 빌드 실패 시
+                        def buildStatus = sh(script: "docker build -t ${DOCKER_USER_ID}/front:latest front", returnStatus: true)
+                        if (buildStatus != 0) {
                             error("Build failed, stopping the pipeline.")
                         }
-                        sh "docker system prune --filter until=10h"  // 오래된 이미지 정리
+                        sh "docker system prune --all --force --filter 'until=24h'"
                     }
                 }
             }
@@ -52,10 +30,9 @@ pipeline {
             steps {
                 script {
                     withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: 'Docker-hub', usernameVariable: 'DOCKER_USER_ID', passwordVariable: 'DOCKER_USER_PASSWORD']]) {
-                        // 로그인 정보가 로그에 출력되지 않도록 set +x, set -x 사용을 제거
                         sh """
                             echo $DOCKER_USER_PASSWORD | docker login -u $DOCKER_USER_ID --password-stdin > /dev/null 2>&1
-                            docker push ${DOCKER_USER_ID}/front  // 이미지 푸시
+                            docker push ${DOCKER_USER_ID}/front:latest
                         """
                     }
                 }
@@ -66,40 +43,13 @@ pipeline {
             steps {
                 script {
                     withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: 'Docker-hub', usernameVariable: 'DOCKER_USER_ID', passwordVariable: 'DOCKER_USER_PASSWORD']]) {
-                        sh "docker pull ${DOCKER_USER_ID}/front"  // 최신 이미지 가져오기
-                        sh "docker stop front || true"  // 실행 중인 컨테이너 중지
-                        sh "docker rm front || true"  // 컨테이너 제거
-                        sh "docker run -d --name front -p 3001:3000 ${DOCKER_USER_ID}/front"  // 새 컨테이너 시작
+                        sh "docker pull ${DOCKER_USER_ID}/front:latest"
+                        sh "docker stop front || true"
+                        sh "docker rm front || true"
+                        sh "docker run -d --name front -p 3001:3000 ${DOCKER_USER_ID}/front:latest"
                     }
                 }
             }
         }
     }
-
-    // post {
-    //     success {
-    //         script {
-    //             // 배포 성공 시 메시지 전송
-    //             mattermostSend (color: 'good', message: "FE 배포 성공 :cat_jump: :loopy_happy: :bboong: ")
-    //         }
-    //     }
-    //     failure {
-    //         script {
-    //             // 배포 실패 시 메시지 전송
-    //             mattermostSend (color: 'danger', message: "FE 배포 실패 :cry_tom: :cryingloopy: :cryingpatamon: ")
-    //         }
-    //     }
-    //     always {
-    //         script {
-    //             def Author_ID = sh(script: "git show -s --pretty=%an", returnStdout: true).trim()
-    //             def Author_Name = sh(script: "git show -s --pretty=%ae", returnStdout: true).trim()
-    //             // 모든 빌드 후 메시지 전송
-    //             mattermostSend (color: 'good',
-    //                     message: "빌드 ${currentBuild.currentResult}: ${env.JOB_NAME} #${env.BUILD_NUMBER} by ${Author_ID}(${Author_Name})\n(<${env.BUILD_URL}|Details>)",
-    //                     endpoint: 'https://meeting.ssafy.com/hooks/q4qjarpscbf9pme4f46yiojzfe',
-    //                     channel: 'C107-Jenkins'
-    //             )
-    //         }
-    //     }
-    // }
 }
