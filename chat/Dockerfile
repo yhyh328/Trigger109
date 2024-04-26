@@ -1,15 +1,17 @@
-FROM node:lts-alpine as builder
+# 기반 이미지 설정
+FROM node:latest
 
-WORKDIR /front
+# 작업 디렉토리 설정
+WORKDIR /usr/src/app
 
-ENV PATH /front/node_modules/.bin:$PATH
-
-# COPY package.json /front-edu/package.json
+# 소스 코드 복사
 COPY . .
 
+# 의존성 설치
 RUN npm install
-# RUN npm install typescript @types/node @types/react @types/react-dom @types/jest react-router-dom redux react-redux
 
-CMD ["npm", "start"]
-
+# 포트 설정
 EXPOSE 3000
+
+# 어플리케이션 실행
+CMD ["node", "index.js"]
