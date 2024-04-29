@@ -18,6 +18,12 @@ const Logo = styled.h1`
   color: #FFFFFF;
   font-family: 'Audiowide', sans-serif;
   margin-right: 20px; // 로고와 네비게이션 사이의 간격
+
+  a, a:hover, a:active, a:visited {
+    color: inherit; // Inherits the color from the parent h1 element
+    text-decoration: none; // Removes underline from all link states
+  }
+
   span {
     color: #00FCCE;
   }
@@ -52,7 +58,9 @@ const PlayButton = styled.button`
 export const Header: React.FC = () => {
   return (
     <HeaderContainer>
-      <Logo>Tri<span>gg</span>er</Logo>
+      <Logo>
+        <a href="/">Tri<span>gg</span>er</a>
+      </Logo>
       <Nav>
         <a href="#">공지사항</a>
         <a href="#">랭킹</a>
