@@ -15,15 +15,19 @@
 }
 .my-message-container {
   display: flex;
-  justify-content: flex-end;
+  justify-content: flex-start;
   margin-bottom: 5px;
 }
 .my-message {
-  background-color: #f7e600;
+  background-color: #00FCCE;
   border-radius: 8px;
   padding: 8px;
-  max-width: 200px;
+  max-width: 200px;  
   font-size: 12px;
+  overflow: hidden;  
+  white-space: nowrap; 
+  text-overflow: ellipsis;  
+  margin-left: 10px;
 }
 
 .your-message-container {
@@ -31,13 +35,18 @@
   justify-content: flex-start;
   /* margin-bottom: 5px; */
   align-items: center;
+  margin-bottom: 10px;
 }
 .your-message {
-  background-color: white;
+  background-color: #00FCCE;
   border-radius: 8px;
   padding: 8px;
-  max-width: 200px;
+  max-width: 200px;  
   font-size: 12px;
+  overflow: hidden;  
+  white-space: nowrap; 
+  text-overflow: ellipsis;  
+  margin-left: 10px;
 }
 
 .profile-image {
@@ -49,10 +58,25 @@
 
 .message-container {
   padding-top: 100px; /* navbar 높이만큼 상단 패딩 추가 */
-  max-height: calc(100vh - 60px - 70px); /* navbar와 입력창 높이를 고려한 조정 */
+  max-height: calc(100vh - 60px - 100px); /* navbar와 입력창 높이를 고려한 조정 */
   overflow-y: auto;
-  padding-bottom: 70px; /* 입력창 높이만큼의 패딩을 추가 */
+  padding-bottom: 1000px; /* 입력창 높이만큼의 패딩을 추가 */
+  background-color: #000000;
+
 }
+
+.sender-name {
+  font-size: 14px; /* 글꼴 크기 조정 */
+  color: #ffffff; /* 글꼴 색상 설정 */
+  font-weight: bold; /* 글꼴 두께 */
+}
+
+.message-content {
+  display: flex;
+  align-items: center;  
+  width: 100%;  
+}
+
 
 
 

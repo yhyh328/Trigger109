@@ -24,18 +24,13 @@ const MessageContainer = ({ messageList, user }) => {
               </div>
             ) : isMyMessage ? (
               <div className="my-message-container">
-                <div className="my-message">{message.chat}</div>
+                <div className="message-content">
+                  <p className="sender-name">{message.user.name}</p>
+                  <div className="my-message">{message.chat}</div>
+                </div>
               </div>
             ) : (
               <div className="your-message-container">
-                <img
-                  src="/profile.jpeg" 
-                  alt="profile"
-                  className="profile-image"
-                  style={{
-                    visibility: (index === 0 || messageList[index - 1].user.name !== message.user.name) ? "visible" : "hidden"
-                  }}
-                />
                 <div className="message-content">
                   <p className="sender-name">{message.user.name}</p>
                   <div className="your-message">{message.chat}</div>

@@ -34,7 +34,7 @@ const Chat = () => {
   };
 
   return (
-    <div className="App">
+    <div className="Chat">
       <MessageContainer messageList={messageList} user={user} />
       <InputField 
         message={message} 

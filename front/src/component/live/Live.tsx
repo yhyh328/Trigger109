@@ -19,15 +19,6 @@ const ChatContainer = styled.div`
   background-color: #f2f2f2;
 `;
 
-// 채팅 컴포넌트
-const Chat1 = () => {
-  return (
-    <ChatContainer>
-      <Chat />
-    </ChatContainer>
-  );
-};
-
 
 // 비디오 플레이어 컴포넌트
 const VideoPlayer = () => {
@@ -47,7 +38,9 @@ const Live = () => {
   return (
     <LiveContainer>
       <VideoPlayer />
-      <Chat1 />
+      <ChatContainer>
+        <Chat />
+      </ChatContainer>
     </LiveContainer>
   );
 };
