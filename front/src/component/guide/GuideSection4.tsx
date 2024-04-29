@@ -1,6 +1,5 @@
 import React from 'react';
 import styled from 'styled-components';
-import GuideButton from './GuideButton';
 import { useNavigate } from 'react-router-dom';
 
 // 이미지 파일 경로를 import합니다. 경로는 실제 파일 위치에 따라 달라집니다.
@@ -71,7 +70,6 @@ const MainSection4 = () => {
         </h3>
         {/* 기타 텍스트 내용 */}
         <GuideButtonContainer>
-          <GuideButton label="게임 배우기" onClick={handleGuideButtonClick} />
         </GuideButtonContainer>
       </GuidItemContainer>
       <ImageContainer>
