@@ -9,7 +9,7 @@ import { MainSection5 } from './component/main/MainSection5';
 import { Footer } from './component/main/Footer';
 import { GlobalStyle } from './GlobalStyle';
 import Live from './component/live/Live';
-
+import LiveDetail from './component/live/LiveDetail'
 
 
 const App = () => {
@@ -30,6 +30,7 @@ const App = () => {
         <Route path="/live" element={
         <Live />
         }  />
+        <Route path="/live/:userId" element={<LiveDetail />} /> // 사용자 상세 페이지 경로
       </Routes>
       <Footer />
     </Router>

@@ -1,47 +1,25 @@
 import React from 'react';
-import styled from 'styled-components';
-import Chat from '../chatlist/Chat';
+import { Link } from 'react-router-dom';
 
-// 스타일 컴포넌트 정의
-const LiveContainer = styled.div`
-  display: flex;
-  height: 100vh;
-`;
-
-const VideoContainer = styled.div`
-  flex: 3;
-  background-color: #000;
-`;
-
-const ChatContainer = styled.div`
-  flex: 1;
-  overflow: hidden;
-  background-color: #f2f2f2;
-`;
-
-
-// 비디오 플레이어 컴포넌트
-const VideoPlayer = () => {
-  return (
-    <VideoContainer>
-      <video width="100%" height="100%" controls>
-        <source src="your-video-url.mp4" type="video/mp4" />
-        Your browser does not support the video tag.
-      </video>
-    </VideoContainer>
-  );
-};
-
-
-// 라이브 스트리밍 메인 컴포넌트
 const Live = () => {
+  const streams = [
+    { userId: 'user1', title: 'Nature Walks' },
+    { userId: 'user2', title: 'City Tours' },
+    { userId: 'user3', title: 'Gaming Session' },
+    // 더 많은 스트림을 추가할 수 있습니다.
+  ];
+
   return (
-    <LiveContainer>
-      <VideoPlayer />
-      <ChatContainer>
-        <Chat />
-      </ChatContainer>
-    </LiveContainer>
+    <div>
+      <h1>Live Streams</h1>
+      <ul>
+        {streams.map(stream => (
+          <li key={stream.userId}>
+            <Link to={`/live/${stream.userId}`}>{stream.title}</Link>
+          </li>
+        ))}
+      </ul>
+    </div>
   );
 };
 
