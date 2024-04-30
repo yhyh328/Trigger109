@@ -1,7 +1,7 @@
-import React from 'react';
 import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
-import { GuideSection } from './GuideSection';
+import GuideSection from './GuideSection';
+import { DUMMY_GUIDEIMG1, DUMMY_GUIDEIMG2 } from './dummy-guideImg';
 
 const GuideTopImg = styled.section`
   height: 80vh;
@@ -9,78 +9,77 @@ const GuideTopImg = styled.section`
   background-size: cover;
   display: flex;
   flex-direction: column;
-  justify-content: flex-end; // 섹션의 하단에 내용을 정렬합니다.
-  align-items: center;       // 내용을 가로축 중앙에 정렬합니다.
+  justify-content: flex-end;
+  align-items: center;
   color: white;
-  padding-bottom: 20px;      // 하단 패딩을 추가하여 버튼이 바닥에 닿지 않게 합니다.
+  padding-bottom: 20px;
 `;
 
-
-const GuidItemContainer = styled.div`
-  flex: 1; // flex-grow를 1로 설정하여 가용 공간을 균등하게 채웁니다.
+const GuideItemContainer = styled.div`
+  flex: 1;
   background-color: #0F1923;
-  padding-right: 30px; // 이미지와의 간격을 위한 오른쪽 패딩
+  padding: 50px 30px;
   background-size: cover;
   display: flex;
   flex-direction: column;
-  justify-content: flex-end; // 섹션의 하단에 내용을 정렬합니다.
-  align-items: center;       // 내용을 가로축 중앙에 정렬합니다.
+  justify-content: flex-end;
+  align-items: center;
   color: white;
-  padding-top: 50px;
-  padding-bottom: 50px;      // 하단 패딩을 추가하여 버튼이 바닥에 닿지 않게 합니다.
-  
 `;
 
 const BeginnerInstruction = styled.h2`
   font-size: 100px;
-  font-family: 'Black Han Sans', sans-serif; // Assuming 'Black Han Sans' is the correct font name
+  font-family: 'Black Han Sans', sans-serif;
   color: #00FCCE;
-  margin-top: 0; 
-  margin-bottom: 0;
-  span {
-    color: #00FCCE;
-  }
+  margin: 0;
 `;
 
-const StyledImage = styled.img`
-  max-width: 100%; // 이미지가 컨테이너를 벗어나지 않도록 합니다.
-  height: auto; // 이미지의 비율을 유지합니다.
-  margin-top: 0;
-`;
-
-const ImgSection = styled.section`
-  height: 90vh;
-  background-image: url('/valorant6.png');
-  background-size: cover;
+const ImageSection1 = styled.div`
+  width: 100%;
   display: flex;
-  flex-direction: column;
-  justify-content: flex-end; // 섹션의 하단에 내용을 정렬합니다.
-  align-items: center;       // 내용을 가로축 중앙에 정렬합니다.
-  color: white;
-  padding-bottom: 20px;      // 하단 패딩을 추가하여 버튼이 바닥에 닿지 않게 합니다.
+  flex-direction: column; // Ensures images are displayed in a column
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 20px;
 `;
 
+const ImageSection2 = styled.div`
+  width: 100%;
+  display: flex;
+  flex-direction: row; // Ensures images are displayed in a row
+  justify-content: space-around;
+  align-items: center;
+  overflow-x: auto; // Enables horizontal scrolling if items overflow
+  margin-bottom: 20px;
+`;
 
-
-// 컴포넌트 정의...
+// Define Guide component
 const Guide = () => {
   const navigate = useNavigate();
 
   const handleGuideButtonClick = () => {
-    console.log("Guide Button clicked!")
+    console.log("Guide Button clicked!");
     navigate('/guide');
-  }
+  };
 
   return (
     <>
       <GuideTopImg>
-        {/* ... Content that should be inside GuideTopImg ... */}
+        {/* Additional content can be placed here */}
       </GuideTopImg>
-      <GuidItemContainer>
+      <GuideItemContainer>
         <BeginnerInstruction>초보자 가이드</BeginnerInstruction>
-        {/* ... Additional content for GuidItemContainer if needed ... */}
-      </GuidItemContainer>
-      {/* ... Any other components or HTML elements that should be rendered ... */}
+        <ImageSection1>
+          {DUMMY_GUIDEIMG1.map((image1) => (
+            <GuideSection key={image1.id} {...image1} />
+          ))}
+        </ImageSection1>
+        <ImageSection2>
+          {DUMMY_GUIDEIMG2.map((image2) => (
+            <GuideSection key={image2.id} {...image2} />
+          ))}
+        </ImageSection2>
+      </GuideItemContainer>
     </>
   );
 };
