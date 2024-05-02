@@ -1,0 +1,55 @@
+pipeline {
+    agent any
+
+    environment {
+        REPO = "s10-final/S10P31C109"
+    }
+
+    stages {
+        stage('Checkout') {
+            steps {
+                checkout scm
+            }
+        }
+
+        stage("Build") {
+            steps {
+                script {
+                    withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: 'Docker-hub', usernameVariable: 'DOCKER_USER_ID', passwordVariable: 'DOCKER_USER_PASSWORD']]) {
+                        def buildStatus = sh(script: "docker build -t ${DOCKER_USER_ID}/front:latest front", returnStatus: true)
+                        if (buildStatus != 0) {
+                            error("Build failed, stopping the pipeline.")
+                        }
+                        sh "docker system prune --all --force --filter 'until=24h'"
+                    }
+                }
+            }
+        }
+
+        stage("Login and Push") {
+            steps {
+                script {
+                    withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: 'Docker-hub', usernameVariable: 'DOCKER_USER_ID', passwordVariable: 'DOCKER_USER_PASSWORD']]) {
+                        sh """
+                            echo $DOCKER_USER_PASSWORD | docker login -u $DOCKER_USER_ID --password-stdin > /dev/null 2>&1
+                            docker push ${DOCKER_USER_ID}/front:latest
+                        """
+                    }
+                }
+            }
+        }
+
+        stage('Pull and Deploy') {
+            steps {
+                script {
+                    withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: 'Docker-hub', usernameVariable: 'DOCKER_USER_ID', passwordVariable: 'DOCKER_USER_PASSWORD']]) {
+                        sh "docker pull ${DOCKER_USER_ID}/front:latest"
+                        sh "docker stop front || true"
+                        sh "docker rm front || true"
+                        sh "docker run -d --name front -p 3001:3000 ${DOCKER_USER_ID}/front:latest"
+                    }
+                }
+            }
+        }
+    }
+}
