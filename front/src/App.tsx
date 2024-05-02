@@ -1,4 +1,3 @@
-import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { Header } from './component/navbar/Header'; 
 import { MainSection } from './component/main/MainSection';
@@ -10,8 +9,11 @@ import { Footer } from './component/main/Footer';
 import { GlobalStyle } from './GlobalStyle';
 import Live from './component/live/Live';
 import Guide from './component/guide/Guide';
+import Notifications from './component/notifications/Notifications';
+import './App.css';
 
 const App = () => {
+  
   return (
     <Router>
       <GlobalStyle />
@@ -31,6 +33,9 @@ const App = () => {
         }  />
         <Route path="/guide" element={
           <Guide />
+        } />
+        <Route path="/notifications" element={
+          <Notifications />
         } />
       </Routes>
       <Footer />

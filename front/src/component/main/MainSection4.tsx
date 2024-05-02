@@ -2,9 +2,23 @@ import React from 'react';
 import styled from 'styled-components';
 import GuideButton from './GuideButton';
 import { useNavigate } from 'react-router-dom';
+import { playGunShot, playGunLoad } from '../../soundEffects';
 
 // 이미지 파일 경로를 import합니다. 경로는 실제 파일 위치에 따라 달라집니다.
 // import valorantImage from './path/to/valorant3.png'; 
+
+const sizes = {
+  mobile: '600px',
+  tablet: '768px',
+  desktop: '992px'
+};
+
+// Media queries 헬퍼 함수
+const media = {
+  mobile: `(max-width: ${sizes.mobile})`,
+  tablet: `(min-width: ${sizes.tablet})`,
+  desktop: `(min-width: ${sizes.desktop})`
+};
 
 const GuidContainer = styled.section`
   display: flex; // Flex 레이아웃 적용
@@ -29,14 +43,15 @@ const ImageContainer = styled.div`
 
 const GuideButtonContainer = styled.div`
   display: flex;
-  justify-content: center; // Corrected the typo here
+  justify-content: center; 
   align-items: center;
 `
 
 const Logo = styled.h1`
   font-size: 150px;
   color: #FFFFFF;
-  margin-top: 0; 
+  margin-top: 0;
+  margin-bottom: 0;
   span {
     color: #00FCCE;
   }
@@ -51,11 +66,19 @@ const StyledImage = styled.img`
 
 // 컴포넌트 정의...
 const MainSection4 = () => {
+
+  const handleGuideButtonEnter = () => {
+    console.log("Guide Button entered!")
+    playGunLoad();
+  }
+
   const navigate = useNavigate();
 
   const handleGuideButtonClick = () => {
     console.log("Guide Button clicked!")
+    playGunShot();
     navigate('/guide');
+    window.scrollTo(0, 0);
   }
 
   return (
@@ -71,8 +94,14 @@ const MainSection4 = () => {
         </h3>
         {/* 기타 텍스트 내용 */}
         <GuideButtonContainer>
-          <GuideButton label="게임 배우기" onClick={handleGuideButtonClick} />
+          <GuideButton 
+            label="게임 배우기" 
+            onMouseEnter={handleGuideButtonEnter} 
+            onClick={handleGuideButtonClick} 
+          />
         </GuideButtonContainer>
+        <br />
+        <br />
       </GuidItemContainer>
       <ImageContainer>
         {/* 이미지 경로를 정확하게 지정해야 합니다. */}
@@ -83,3 +112,5 @@ const MainSection4 = () => {
 };
 
 export default MainSection4;
+
+

@@ -105,7 +105,8 @@
     transition: all .4s 0s;
   }
   .guide-btn:hover {
-    cursor: pointer;
+    cursor: none;
+    background-image: url('./pnghut_stock-photography-shooting-target-clip-art-reticle-vector.png'), auto;
   }
   .guide-btn:hover .underlay:before {
     transform: translateX(-10%)  translateY(-50%) rotate(15deg);
