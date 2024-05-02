@@ -8,6 +8,7 @@ import { useParams } from 'react-router-dom';
 
 const Video = () => {
   const [localStream, setLocalStream] = useState({});
+  const [screenStream, setScreenStream] = useState({});
   const [remoteStreamUrl, setRemoteStreamUrl] = useState('');
   const [streamUrl, setStreamUrl] = useState('');
   const [initiator, setInitiator] = useState(false);
@@ -50,6 +51,8 @@ const Video = () => {
     };
   }, [roomId]);
 
+
+
   const getUserMedia = async () => {
     const op = {
       video: { width: { min: 160, ideal: 640, max: 1280 }, height: { min: 120, ideal: 360, max: 720 } },
@@ -84,19 +87,25 @@ const Video = () => {
   };
 
   const getDisplay = async () => {
-    const stream = await getDisplayStream();
-    screenVideoRef.current.srcObject = stream;
-    setStreamUrl(stream);
-    setLocalStream(stream);
-    stream.getTracks().forEach(track => {
-      peer.addTrack(track, stream);
-    });
-
-    stream.oninactive = () => {
-      screenVideoRef.current.srcObject = null;
-      setStreamUrl(null);
-    };
+    try {
+        const stream = await getDisplayStream();
+        screenVideoRef.current.srcObject = stream;
+        setScreenStream(stream);
+        stream.getTracks().forEach(track => {
+            peer.addTrack(track, stream);
+        });
+  
+        stream.oninactive = () => {
+            screenVideoRef.current.srcObject = null;
+            setScreenStream({});
+        };
+    } catch (error) {
+        console.error('Failed to get display stream:', error);
+        // 추가적인 에러 처리 로직
+    }
   };
+  
+
 
   const enter = (roomId) => {
     setConnecting(true);
