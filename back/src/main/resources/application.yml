@@ -1,18 +1,19 @@
 spring:
-  application:
-    name: Trigger
-
-# PostgreSQL 데이터베이스 설정
-spring.datasource:
-  url: jdbc:postgresql://localhost:5432/springboot
-  username: postgres
-  password: pass
-  driver-class-name: org.postgresql.Driver
-
-# Hibernate 설정 (옵션)
-spring.jpa:
-  properties:
+  #db
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://k10c109.p.ssafy.io:10912/trigger
+    username: root
+    password: trigger109!
+  #jpa
+  jpa:
     hibernate:
-      dialect: org.hibernate.dialect.PostgreSQLDialect
-  hibernate:
-    ddl-auto: create
+      ddl-auto: create
+    properties:
+      hibernate:
+        format_sql: true
+        default_batch_fetch_size: 1000
+    defer-datasource-initialization: true
+  sql:
+    init:
+      mode: always
