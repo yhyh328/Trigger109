@@ -44,7 +44,7 @@ const Nav = styled.nav`
 
 const PlayButton = styled.button`
   margin-left: auto; // 왼쪽에 있는 요소들로부터 자동으로 오른쪽으로 밀려나게 설정
-  background-color: #00FCCE;
+  background-color: #000000;
   color: white;
   border: none;
   padding: 10px 20px;
