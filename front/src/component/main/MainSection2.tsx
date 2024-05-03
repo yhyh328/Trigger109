@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import { playGunShot } from '../../soundEffects';
 
 const NewsSectionContainer = styled.section`
   background-color: #1a1a1d;
@@ -113,7 +114,7 @@ const MainSection2 = () => {
           <NewsTitleContainer>
             <NewsHeader>최신소식</NewsHeader>
             <GoToNewsPageLink>
-              <a href="/news-page">소식 페이지 바로가기</a>
+              <a href="/notifications">소식 페이지 바로가기</a>
             </GoToNewsPageLink>
           </NewsTitleContainer>
           <NewsItemsContainer>
