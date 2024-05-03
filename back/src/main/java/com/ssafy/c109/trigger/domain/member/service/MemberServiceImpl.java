@@ -1,0 +1,37 @@
+package com.ssafy.c109.trigger.domain.member.service;
+
+import com.ssafy.c109.trigger.domain.member.dto.request.SignUpRequest;
+import com.ssafy.c109.trigger.domain.member.entity.Member;
+import com.ssafy.c109.trigger.domain.member.repository.MemberRepository;
+import lombok.RequiredArgsConstructor;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Service;
+
+@Service
+@RequiredArgsConstructor
+public class MemberServiceImpl implements MemberService {
+
+    private final MemberRepository memberRepository;
+    private PasswordEncoder passwordEncoder; // passwordEncoder를 초기화합니다.
+
+    @Override
+    public void singUp(SignUpRequest signUpRequest) throws Exception {
+        if (memberRepository.findByEmail(signUpRequest.email()).isPresent()) { // getEmail() 메서드 호출로 수정합니다.
+            throw new Exception("이미 존재하는 이메일입니다.");
+        }
+
+        if (memberRepository.findByNickName(signUpRequest.nickName()).isPresent()) { // getNickName() 메서드 호출로 수정합니다.
+            throw new Exception("이미 존재하는 닉네임입니다.");
+        }
+
+        Member member = Member.builder()
+                .email(signUpRequest.email()) // getEmail() 메서드 호출로 수정합니다.
+                .password(passwordEncoder.encode(signUpRequest.password())) // passwordEncoder를 사용하여 비밀번호를 암호화합니다.
+                .nickName(signUpRequest.nickName()) // getNickName() 메서드 호출로 수정합니다.
+                .gender(signUpRequest.gender()) // SignUpRequest에서 getGender() 메서드가 구현되어 있다고 가정합니다.
+                .build();
+
+        memberRepository.save(member);
+    }
+}
+
