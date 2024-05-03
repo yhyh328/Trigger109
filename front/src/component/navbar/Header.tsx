@@ -1,6 +1,5 @@
 import React from 'react';
 import styled from 'styled-components';
-import { playGunShot } from '../../soundEffects';
 
 const HeaderContainer = styled.header`
   background-color: #1a1a1a;
@@ -11,7 +10,7 @@ const HeaderContainer = styled.header`
   top: 0;
   left: 0;
   right: 0;
-  z-index: 9999;
+  z-index: 1000;
 `;
 
 const Logo = styled.h1`
@@ -63,10 +62,10 @@ export const Header: React.FC = () => {
         <a href="/">Tri<span>gg</span>er</a>
       </Logo>
       <Nav>
-        <a href="/notifications">공지사항</a>
+        <a href="#">공지사항</a>
         <a href="#">랭킹</a>
         <a href="/live">라이브</a>
-        <a href="/guide">가이드</a>
+        <a href="#">가이드</a>
       </Nav>
       <PlayButton>지금 플레이하기</PlayButton>
     </HeaderContainer>
