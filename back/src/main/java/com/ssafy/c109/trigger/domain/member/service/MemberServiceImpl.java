@@ -3,6 +3,7 @@ package com.ssafy.c109.trigger.domain.member.service;
 import com.ssafy.c109.trigger.domain.member.dto.request.SignUpRequest;
 import com.ssafy.c109.trigger.domain.member.entity.Member;
 import com.ssafy.c109.trigger.domain.member.repository.MemberRepository;
+import com.ssafy.c109.trigger.global.jpaEnum.Role;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -29,6 +30,7 @@ public class MemberServiceImpl implements MemberService {
                 .password(passwordEncoder.encode(signUpRequest.password())) // passwordEncoder를 사용하여 비밀번호를 암호화합니다.
                 .nickName(signUpRequest.nickName()) // getNickName() 메서드 호출로 수정합니다.
                 .gender(signUpRequest.gender()) // SignUpRequest에서 getGender() 메서드가 구현되어 있다고 가정합니다.
+                .role(Role.gamer)
                 .build();
 
         memberRepository.save(member);

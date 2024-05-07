@@ -46,6 +46,10 @@ public class SecurityConfig {
                 .csrf((AbstractHttpConfigurer::disable))
                 .formLogin(AbstractHttpConfigurer::disable)
                 .httpBasic(AbstractHttpConfigurer::disable)
+                .sessionManagement((sessionManagement) ->
+                        sessionManagement
+                                .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+                )
                 .authorizeHttpRequests((authorizeRequests) ->
                     authorizeRequests
                         .requestMatchers("/api/v1/users/signup").permitAll() // 회원가입 엔드포인트 허용
