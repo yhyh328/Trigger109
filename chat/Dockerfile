@@ -18,6 +18,7 @@ ENV PORT 5001
 # ENV DB mongodb://localhost:27017/kakao-talk
 ENV DB=mongodb://host.docker.internal:27017/kakao-talk
 ENV CORS_ORIGIN http://localhost:3000
+# ENV CORS_ORIGIN http://localhost:5001
 
 # Command to run your app
 CMD ["node", "index.js"]
