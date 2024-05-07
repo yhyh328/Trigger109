@@ -12,7 +12,7 @@ import org.springframework.stereotype.Service;
 public class MemberServiceImpl implements MemberService {
 
     private final MemberRepository memberRepository;
-    private PasswordEncoder passwordEncoder; // passwordEncoder를 초기화합니다.
+    private final PasswordEncoder passwordEncoder;
 
     @Override
     public void singUp(SignUpRequest signUpRequest) throws Exception {

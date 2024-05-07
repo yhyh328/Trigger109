@@ -17,6 +17,7 @@ import org.springframework.security.authentication.dao.DaoAuthenticationProvider
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -42,17 +43,19 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
-                .authorizeHttpRequests(auth ->auth
-                        .requestMatchers("**").permitAll()
-                        .anyRequest().permitAll()
-                )
-                .formLogin(form-> form
-                        .loginPage("/login")
-                        .permitAll()
-                )
-                .antMatchers("**").permitAll() // 모든 경로 허용
-                .antMatchers("/sign-up").permitAll() // 회원가입 접근 가능
-                .anyRequest().authenticated(); // 인증된 사용자만 접근 가능
+                .csrf((AbstractHttpConfigurer::disable))
+                .formLogin(AbstractHttpConfigurer::disable)
+                .httpBasic(AbstractHttpConfigurer::disable)
+                .authorizeHttpRequests((authorizeRequests) ->
+                    authorizeRequests
+                        .requestMatchers("/api/v1/users/signup").permitAll() // 회원가입 엔드포인트 허용
+                        .requestMatchers("/api/v1/users/login").permitAll() // 로그인 엔드포인트 허용
+                        .anyRequest().authenticated() // 그 외의 모든 요청은 인증된 사용자에게만 허용
+                );
+//                .formLogin(form-> form
+//                        .loginPage("/login")
+//                        .permitAll()
+//                );
 
         // 원래 스프링 시큐리티 필터 순서가 LogoutFilter 이후에 로그인 필터 동작
         // 따라서, LogoutFilter 이후에 우리가 만든 필터 동작하도록 설정
