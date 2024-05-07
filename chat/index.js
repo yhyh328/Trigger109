@@ -1,16 +1,16 @@
-const { createServer } = require("http")
+const { createServer } = require("https")
 const app = require("./app")
 const { Server } = require("socket.io")
 require("dotenv").config()
 
-const httpServer = createServer(app)
-const io = new Server(httpServer, {
+const httpsServer = createServer(app)
+const io = new Server(httpsServer, {
     cors:{
-        origin:"http://localhost:3000"
+        origin:"k10c109.p.ssafy.io"
     }
 })
 
 require("./utils/io")(io)
-httpServer.listen(process.env.PORT,() => {
+httpsServer.listen(process.env.PORT,() => {
     console.log("server listening on port")
 })
