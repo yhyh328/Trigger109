@@ -26,5 +26,5 @@ public class Room {
 
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "member_id", referencedColumnName = "memberId")
-    private Member memberId; // Member 엔티티를 참조하는 외래키
+    private Member member;
 }
