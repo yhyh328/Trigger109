@@ -28,7 +28,7 @@ public class Member {
     private String nickName;
 
     @Enumerated(EnumType.STRING)
-    private Role role = Role.gamer; // 기본값으로 gamer 역할 설정
+    private Role role;
 
     private Long level;
 

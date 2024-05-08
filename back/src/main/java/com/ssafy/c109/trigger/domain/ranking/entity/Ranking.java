@@ -1,4 +1,4 @@
-package com.ssafy.c109.trigger.domain.record.entity;
+package com.ssafy.c109.trigger.domain.ranking.entity;
 
 import com.ssafy.c109.trigger.domain.member.entity.Member;
 import jakarta.persistence.*;
@@ -6,8 +6,6 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
-import org.springframework.cglib.core.Local;
 
 import java.time.LocalDate;
 
@@ -16,11 +14,10 @@ import java.time.LocalDate;
 @Builder
 @AllArgsConstructor
 @RequiredArgsConstructor
-@Slf4j
-public class Record {
+public class Ranking {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long recordId;
+    private Long rankingId;
 
     @ManyToOne
     @JoinColumn(name = "member_id")
@@ -28,7 +25,7 @@ public class Record {
 
     private int isWin;
 
-    private int kill;
+    private int killCnt;
 
     private int death;
 
