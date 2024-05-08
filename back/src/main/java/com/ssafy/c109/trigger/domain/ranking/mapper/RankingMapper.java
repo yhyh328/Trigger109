@@ -1,5 +1,6 @@
 package com.ssafy.c109.trigger.domain.ranking.mapper;
 
+import com.ssafy.c109.trigger.domain.ranking.dto.response.GetRankingDetailListResponse;
 import com.ssafy.c109.trigger.domain.ranking.dto.response.GetRankingListResponse;
 import com.ssafy.c109.trigger.domain.ranking.entity.Ranking;
 import org.mapstruct.Mapper;
@@ -12,6 +13,8 @@ public interface RankingMapper {
     RankingMapper MAPPER = Mappers.getMapper(RankingMapper.class);
 
     List<GetRankingListResponse> toGetRankingListResponse(List<Ranking> rankingList);
+
+    List<GetRankingDetailListResponse> toGetRankingDetailListResponses(List<Ranking> rankingList);
 
 
 }
