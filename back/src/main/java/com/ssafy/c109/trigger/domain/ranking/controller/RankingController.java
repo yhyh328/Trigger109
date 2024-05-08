@@ -1,5 +1,6 @@
 package com.ssafy.c109.trigger.domain.ranking.controller;
 
+import com.ssafy.c109.trigger.domain.ranking.dto.response.GetRankingDetailListResponse;
 import com.ssafy.c109.trigger.domain.ranking.dto.response.GetRankingListResponse;
 import com.ssafy.c109.trigger.domain.ranking.service.RankingService;
 import lombok.RequiredArgsConstructor;
@@ -8,6 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
@@ -31,6 +33,14 @@ public class RankingController {
         }
     }
 
-
-
+    @GetMapping("/detail")
+    public ResponseEntity<?> getRankingDetailList(@RequestParam Long memberId){
+        List<GetRankingDetailListResponse> getRankingDetailListResponses = rankingService.getRankingDetailList(memberId);
+        if(getRankingDetailListResponses.isEmpty()){
+            String errorMessage = "랭킹 세부 목록을 가져오지 못했습니다.";
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(errorMessage);
+        } else {
+            return ResponseEntity.ok(getRankingDetailListResponses);
+        }
+    }
 }
