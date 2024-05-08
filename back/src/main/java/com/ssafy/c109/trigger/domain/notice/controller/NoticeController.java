@@ -15,10 +15,9 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @RestController
-@Data
 @RequiredArgsConstructor
-@RequestMapping("/api/v1/notice")
 @Slf4j
+@RequestMapping("/api/v1/notice")
 public class NoticeController {
 
     private final NoticeService noticeService;
