@@ -14,12 +14,16 @@ RUN npm install
 EXPOSE 5001
 
 # Define environment variables
-ENV PORT 5001
+# ENV PORT 5001
+
+# ENV DB=mongodb://13.209.82.252:27017/kakao-talk
+# ENV CORS_ORIGIN http://localhost:3000
+
+#####
+
 # ENV DB mongodb://localhost:27017/kakao-talk
 # ENV DB=mongodb://host.docker.internal:27017/kakao-talk#
 # ENV CORS_ORIGIN "https://k10c109.p.ssafy.io"
-ENV DB=mongodb://13.209.82.252:27017/kakao-talk
-ENV CORS_ORIGIN http://localhost:3000
 
 # Command to run your app
 CMD ["node", "index.js"]
