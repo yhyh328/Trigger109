@@ -46,7 +46,7 @@ pipeline {
                         sh "docker pull ${DOCKER_USER_ID}/chat:latest"
                         sh "docker stop chat || true"
                         sh "docker rm chat || true"
-                        sh "docker run -d --name chat --add-host=host.docker.internal:host-gateway -p 5001:5001 ${DOCKER_USER_ID}/chat:latest"
+                        sh "docker run -d --name chat -p 5001:5001 ${DOCKER_USER_ID}/chat:latest"
                     }
                 }
             }
