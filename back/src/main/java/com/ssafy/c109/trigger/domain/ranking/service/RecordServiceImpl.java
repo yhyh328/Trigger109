@@ -21,7 +21,7 @@ public class RecordServiceImpl implements RankingService{
     @Override
     public List<GetRankingListResponse> getRankingList() {
         try{
-            List<Ranking> getRankingdList = rankingRepository.findAll();
+            List<Ranking> getRankingdList = rankingRepository.getLatestRankingsOrderByRatingDesc();
             List<GetRankingListResponse> getRecordListResponses = rankingMapper.toGetRankingListResponse(getRankingdList);
             if(getRecordListResponses.isEmpty()){
                 throw new RuntimeException("랭킹 목록이 존재하지 않습니다.");
