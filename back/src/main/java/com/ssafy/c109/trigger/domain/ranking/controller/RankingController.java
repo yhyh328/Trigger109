@@ -1,17 +1,13 @@
 package com.ssafy.c109.trigger.domain.ranking.controller;
 
-import com.ssafy.c109.trigger.domain.member.entity.Member;
 import com.ssafy.c109.trigger.domain.ranking.dto.response.GetRankingDetailListResponse;
 import com.ssafy.c109.trigger.domain.ranking.dto.response.GetRankingListResponse;
 import com.ssafy.c109.trigger.domain.ranking.service.RankingService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -24,8 +20,6 @@ import java.util.List;
 @RequestMapping("/api/v1/ranking")
 public class RankingController {
 
-    @Autowired
-    private AuthenticationManager authenticationManager;
     private final RankingService rankingService;
 
     @GetMapping
