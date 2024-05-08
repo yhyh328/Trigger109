@@ -1,7 +1,9 @@
 package com.ssafy.c109.trigger.domain.room.controller;
 
 import com.ssafy.c109.trigger.domain.room.dto.request.RoomCreateRequestDto;
+import com.ssafy.c109.trigger.domain.room.dto.response.RoomResponseDto;
 import com.ssafy.c109.trigger.domain.room.entity.Room;
+import com.ssafy.c109.trigger.domain.room.mapper.RoomMapper;
 import com.ssafy.c109.trigger.domain.room.service.RoomService;
 import lombok.RequiredArgsConstructor;
 import lombok.ToString;
@@ -22,9 +24,17 @@ public class RoomController {
     }
 
     @PostMapping("{memberId}")
-    public ResponseEntity<Room> createRoom(@RequestBody RoomCreateRequestDto roomCreateRequestDto) {
+    public ResponseEntity<RoomResponseDto> createRoom(@RequestBody RoomCreateRequestDto roomCreateRequestDto) {
         Room room = roomService.createRoom(roomCreateRequestDto);
-        return ResponseEntity.status(HttpStatus.CREATED).body(room);
+        RoomResponseDto roomResponseDto = RoomMapper.MAPPER.toRoomResponseDto(room);
+        return ResponseEntity.status(HttpStatus.CREATED).body(roomResponseDto);
     }
+
+    @DeleteMapping("/{roomId}")
+    public ResponseEntity<Void> deleteRoom(@PathVariable Long roomId) {
+        roomService.deleteRoom(roomId);
+        return ResponseEntity.noContent().build();  // HTTP 204 No Content
+    }
+
 }
 
