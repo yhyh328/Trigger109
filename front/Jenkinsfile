@@ -46,7 +46,8 @@ pipeline {
                         sh "docker pull ${DOCKER_USER_ID}/front:latest"
                         sh "docker stop front || true"
                         sh "docker rm front || true"
-                        sh "docker run -d --name chat -p 5001:5001 -e DB=mongodb://13.209.82.252:27017/kakao-talk/chat ${DOCKER_USER_ID}/chat:latest"
+                        sh "docker run -d --name chat -p 5001:5001 -e DB=mongodb://host.docker.internal:27017/kakao-talk/chat ${DOCKER_USER_ID}/chat:latest"
+                        // sh "docker run -d --name chat -p 5001:5001 -e DB=mongodb://13.209.82.252:27017/kakao-talk/chat ${DOCKER_USER_ID}/chat:latest"
                     }
                 }
             }
