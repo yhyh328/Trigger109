@@ -35,9 +35,9 @@ public class RecordServiceImpl implements RankingService{
     }
 
     @Override
-    public List<GetRankingDetailListResponse> getRankingDetailList(Long memberId) {
+    public List<GetRankingDetailListResponse> getRankingDetailList(String email) {
         try{
-            List<Ranking> getRankDetailList = rankingRepository.findByMember_MemberId(memberId);
+            List<Ranking> getRankDetailList = rankingRepository.findByMember_Email(email);
             List<GetRankingDetailListResponse> getRankingDetailListResponses = rankingMapper.toGetRankingDetailListResponses(getRankDetailList);
             if(getRankingDetailListResponses.isEmpty()){
                 throw new RuntimeException("랭킹 세부 목록이 존재하지 않습니다.");

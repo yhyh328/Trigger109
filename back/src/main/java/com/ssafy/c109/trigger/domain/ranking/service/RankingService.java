@@ -7,6 +7,6 @@ import java.util.List;
 
 public interface RankingService {
     List<GetRankingListResponse> getRankingList();
-    List<GetRankingDetailListResponse> getRankingDetailList(Long memberId);
+    List<GetRankingDetailListResponse> getRankingDetailList(String email);
 
 }
