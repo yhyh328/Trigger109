@@ -7,6 +7,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 @RestController
 @Slf4j
@@ -20,7 +21,8 @@ public class MemberController {
         return "jwtTest 요청 성공";
     }
     @PostMapping("/signup")
-    public ResponseEntity<?> signUp(@RequestBody SignUpRequest signUpRequest) {
+    public ResponseEntity<?> signUp(@ModelAttribute SignUpRequest signUpRequest) {
+        log.info("signUpRequest : " + signUpRequest);
         try {
             memberService.singUp(signUpRequest);
             return ResponseEntity.ok("사용자 등록이 성공했습니다.");
