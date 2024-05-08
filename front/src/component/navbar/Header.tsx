@@ -62,10 +62,10 @@ export const Header: React.FC = () => {
         <a href="/">Tri<span>gg</span>er</a>
       </Logo>
       <Nav>
-        <a href="#">공지사항</a>
+        <a href="/notifications">공지사항</a>
         <a href="#">랭킹</a>
         <a href="/live">라이브</a>
-        <a href="#">가이드</a>
+        <a href="/guide">가이드</a>
       </Nav>
       <PlayButton>지금 플레이하기</PlayButton>
     </HeaderContainer>
