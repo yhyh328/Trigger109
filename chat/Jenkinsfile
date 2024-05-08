@@ -16,7 +16,7 @@ pipeline {
             steps {
                 script {
                     withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: 'Docker-hub', usernameVariable: 'DOCKER_USER_ID', passwordVariable: 'DOCKER_USER_PASSWORD']]) {
-                        def buildStatus = sh(script: "docker build -t ${DOCKER_USER_ID}/chat:latest chat", returnStatus: true)
+                        def buildStatus = sh(script: "docker build --no-cache -t ${DOCKER_USER_ID}/chat:latest chat", returnStatus: true)
                         if (buildStatus != 0) {
                             error("Build failed, stopping the pipeline.")
                         }
