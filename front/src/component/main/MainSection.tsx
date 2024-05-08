@@ -21,10 +21,21 @@ const Section = styled.section`
   padding-bottom: 20px;      // 하단 패딩을 추가하여 버튼이 바닥에 닿지 않게 합니다.
 `;
 
+const Logo = styled.h1`
+  font-size: 150px;
+  color: #FFFFFF;
+  margin-top: 0; 
+  span {
+    color: #00FCCE;
+  }
+`;
 
 export const MainSection: React.FC = () => {
   return (
     <Section>
+      <Logo>
+        Tri<span>gg</span>er
+      </Logo>
       <ValorantButton label="무료로 플레이하기" onClick={handlePlayClick} />
     </Section>
   );

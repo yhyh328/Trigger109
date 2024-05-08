@@ -1,54 +1,46 @@
-import React from 'react';
-import styled from 'styled-components';
-import Chat from '../chatlist/Chat';
+import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
+import CreateRoom from './CreateRoom';
 
-// 스타일 컴포넌트 정의
-const LiveContainer = styled.div`
-  display: flex;
-  height: 100vh;
-`;
+interface Stream {
+  userId: string;
+  title: string;
+}
 
-const VideoContainer = styled.div`
-  flex: 3;
-  background-color: #000;
-`;
-
-const ChatContainer = styled.div`
-  flex: 1;
-  overflow: hidden;
-  background-color: #f2f2f2;
-`;
-
-// 채팅 컴포넌트
-const Chat1 = () => {
-  return (
-    <ChatContainer>
-      <Chat />
-    </ChatContainer>
-  );
-};
-
-
-// 비디오 플레이어 컴포넌트
-const VideoPlayer = () => {
-  return (
-    <VideoContainer>
-      <video width="100%" height="100%" controls>
-        <source src="your-video-url.mp4" type="video/mp4" />
-        Your browser does not support the video tag.
-      </video>
-    </VideoContainer>
-  );
-};
-
-
-// 라이브 스트리밍 메인 컴포넌트
 const Live = () => {
+  const [streams, setStreams] = useState<Stream[]>([
+    { userId: 'user1', title: 'Nature Walks' },
+    { userId: 'user2', title: 'City Tours' },
+    { userId: 'user3', title: 'Gaming Session' }
+  ]);
+  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+
+  const createStream = (title: string) => {
+    const newUserId = `user${streams.length + 1}`;
+    const newStream = { userId: newUserId, title };
+    setStreams(prevStreams => [...prevStreams, newStream]);
+  };
+
+  const handleModalOpen = () => setIsModalOpen(true);
+  const handleModalClose = () => setIsModalOpen(false);
+
   return (
-    <LiveContainer>
-      <VideoPlayer />
-      <Chat1 />
-    </LiveContainer>
+    <div>
+      <h1>Live Streams</h1>
+      <button onClick={handleModalOpen}>Create New Stream</button>
+      <CreateRoom
+        isOpen={isModalOpen}
+        onClose={handleModalClose}
+        onCreate={createStream}
+      />
+      <ul>
+        {streams.map(stream => (
+          <li key={stream.userId}>
+            <Link to={`/live/${stream.userId}`}>{stream.title}</Link>
+          </li>
+        ))}
+      </ul>
+    </div>
   );
 };
 

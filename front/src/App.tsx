@@ -9,8 +9,8 @@ import { MainSection5 } from './component/main/MainSection5';
 import { Footer } from './component/main/Footer';
 import { GlobalStyle } from './GlobalStyle';
 import Live from './component/live/Live';
-
-
+import LiveDetail from './component/live/LiveDetail'
+import Guide from './component/guide/Guide';
 
 const App = () => {
   return (
@@ -28,8 +28,12 @@ const App = () => {
           </> }
         /> 
         <Route path="/live" element={
-        <Live />
+          <Live />
         }  />
+        <Route path="/live/:userId" element={<LiveDetail />} /> // 사용자 상세 페이지 경로
+        <Route path="/guide" element={
+          <Guide />
+        } />
       </Routes>
       <Footer />
     </Router>

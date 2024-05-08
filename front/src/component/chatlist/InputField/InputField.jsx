@@ -9,20 +9,21 @@ const InputField = ({message,setMessage,sendMessage}) => {
           {/* <div className="plus-button">+</div> */}
           <form onSubmit={sendMessage} className="input-container">
             <Input
-              placeholder="Type in here…"
+              placeholder="채팅…"
               value={message}
               onChange={(event) => setMessage(event.target.value)}
               multiline={false}
               rows={1}
+              className="input-field"  // CSS 클래스 적용
             />
 
-            <Button
+            {/* <Button
               disabled={message === ""}
               type="submit"
               className="send-button"
             >
               전송
-            </Button>
+            </Button> */}
           </form>
         </div>
   )
