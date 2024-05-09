@@ -8,7 +8,7 @@ const allowedOrigins = ["http://k10c109.p.ssafy.io", "http://k10c109.p.ssafy.io:
 const httpServer = createServer(app)
 const io = new Server(httpServer, {
     cors:{
-        origin:"http://k10c109.p.ssafy.io:3000"
+        origin:"http://chat.trigger109.com"
     }
 })
 
