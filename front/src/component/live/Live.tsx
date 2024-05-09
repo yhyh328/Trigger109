@@ -37,7 +37,7 @@ const Live = () => {
         {streams.map(stream => (
           <li key={stream.userId}>
             {/*<Link to={`/live/${stream.userId}`}>{stream.title}</Link>*/}
-            <Link to={`/live`}>{stream.title}</Link>
+            <Link to={`/live/${stream.userId}`}>{stream.title}</Link>
           </li>
         ))}
       </ul>
