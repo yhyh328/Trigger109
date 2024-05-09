@@ -29,6 +29,6 @@ require("./utils/io")(io)
 // httpServer.listen(process.env.PORT,() => {
 //     console.log("server listening on port")
 // })
-httpServer.listen(3001,() => {
+httpServer.listen(3000,() => {
     console.log("server listening on port")
 })
