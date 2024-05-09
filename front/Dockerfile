@@ -4,6 +4,8 @@ WORKDIR /front
 
 ENV PATH /front/node_modules/.bin:$PATH
 
+ENV REACT_APP_SIGNALING_SERVER=http://k10c109.p.ssafy.io:3001
+
 # COPY package.json /front-edu/package.json
 COPY . .
 
