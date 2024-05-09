@@ -4,7 +4,9 @@ WORKDIR /front
 
 ENV PATH /front/node_modules/.bin:$PATH
 
-ENV REACT_APP_SIGNALING_SERVER=http://k10c109.p.ssafy.io:3001
+ENV REACT_APP_SIGNALING_SERVER = http://k10c109.p.ssafy.io:3001
+ENV REACT_APP_STUN_SERVERS=stun:stun4.l.google.com:19302
+ENV REACT_APP_TURN_SERVERS=turn:numb.viagenie.ca
 
 # COPY package.json /front-edu/package.json
 COPY . .
