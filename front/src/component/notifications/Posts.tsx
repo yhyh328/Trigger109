@@ -1,19 +1,19 @@
 import defaultIMG from './DefaultNotificationIMG.webp';
 
-export type BlogPost = {
+export type Post = {
   id: number;
   title: string;
   image: string | null | undefined;
   text: string;
 };
 
-type BlogPostsProps = {
-  posts: BlogPost[];
+type PostsProps = {
+  posts: Post[];
 };
 
-export default function BlogPosts({ posts }: BlogPostsProps) {
+export default function Posts({ posts }: PostsProps) {
   return (
-    <div id="blog-posts">
+    <div id="posts">
       <ul>
         {posts.map((post) => (
           <li key={post.id}>

@@ -12,8 +12,17 @@ import LiveDetail from './component/live/LiveDetail'
 import Guide from './component/guide/Guide';
 import Notifications from './component/notifications/Notifications';
 import './App.css';
-
+import { useEffect } from 'react';
+import { generateToken, messaging } from './component/notifications/firebase';
+import { onMessage } from 'firebase/messaging';
 const App = () => {
+
+  useEffect(() => {
+    generateToken();
+    onMessage(messaging, (payload) => {
+      console.log(payload);
+    });
+  }, []);
   
   return (
     <Router>

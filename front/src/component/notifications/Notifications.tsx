@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import { ReactNode, useEffect, useState } from "react";
-import BlogPosts, { BlogPost } from "./BlogPosts";
+import Posts, { Post } from "./Posts";
 import { get } from "./http"
 // import fetchingImg from './assets/data-fetching.png';
 import ErrorMessage from "./ErrorMessage";
@@ -13,7 +13,7 @@ const Title = styled.h2`
   margin: 0;
 `;
 
-type RawDataBlogPost = {
+type RawDataPost = {
   id: number;
   userId: number;
   image: string | null;
@@ -22,7 +22,7 @@ type RawDataBlogPost = {
 }
 
 function Notifications() {
-  const [fetchedPosts, setFetchedPosts] = useState<BlogPost[]>();
+  const [fetchedPosts, setFetchedPosts] = useState<Post[]>();
   const [isFetching, setIsFetching] = useState(false);
   const [error, setError] = useState<string>();
 
@@ -32,8 +32,8 @@ function Notifications() {
       try{
         const data = (await get(
           'https://jsonplaceholder.typicode.com/posts' 
-        )) as RawDataBlogPost[];
-        const blogPosts: BlogPost[] = data.map(rawPost => {
+        )) as RawDataPost[];
+        const Posts: Post[] = data.map(rawPost => {
           return {
             id: rawPost.id,
             title: rawPost.title,
@@ -41,7 +41,7 @@ function Notifications() {
             text: rawPost.body
           }
         });
-        setFetchedPosts(blogPosts);
+        setFetchedPosts(Posts);
       } catch (error) {
         if (error instanceof Error) {
           setError(error.message);
@@ -61,7 +61,7 @@ function Notifications() {
   }
 
   if (fetchedPosts) {
-    content = <BlogPosts posts={fetchedPosts} />
+    content = <Posts posts={fetchedPosts} />
   }
 
   if (isFetching) {

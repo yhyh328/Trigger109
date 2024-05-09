@@ -40,7 +40,7 @@
     height: 300px;
   }
   
-  #blog-posts ul {
+  #posts ul {
     list-style: none;
     margin: 2rem auto;
     padding: 0;
@@ -51,20 +51,20 @@
     grid-gap: 2rem;
   }
   
-  #blog-posts li {
+  #posts li {
     padding: 1rem;
     border-radius: 0.5rem;
     background-color: #333;
   }
   
-  #blog-posts h2 {
+  #posts h2 {
     margin: 0;
     font-size: 0.9rem;
     text-transform: capitalize;
     color: #9c9aa0;
   }
   
-  #blog-posts p {
+  #posts p {
     margin: 1rem 0 0 0;
     font-size: 1.1rem;
     color: #9f98ae;
