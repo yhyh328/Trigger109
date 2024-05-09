@@ -24,6 +24,7 @@ const Video = () => {
   const { roomId } = useParams();
   const socket = useRef(null);
 
+
   useEffect(() => {
     socket.current = io(process.env.REACT_APP_SIGNALING_SERVER);
     console.log("REACT_APP_SIGNALING_SERVER", process.env.REACT_APP_SIGNALING_SERVER);
