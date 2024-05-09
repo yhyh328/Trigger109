@@ -47,7 +47,7 @@ pipeline {
                         sh "docker stop chat || true"
                         sh "docker rm chat || true"
                         // sh "docker run -d --name chat -e DB mongodb://host.docker.internal:27017/kakao-talk -p 5001:5001 ${DOCKER_USER_ID}/chat:latest"
-                        sh "docker run -d --name chat -p 5001:5001 ${DOCKER_USER_ID}/chat:latest"                        
+                        sh "docker run -d --name chat -p 5002:5001 ${DOCKER_USER_ID}/chat:latest"
                     }
                 }
             }

@@ -20,7 +20,7 @@ EXPOSE 5001
 
 #####
 
-ENV PORT 5001
+ENV PORT 5002
 #ENV DB=mongodb://k10c109.p.ssafy.io:27017/kakao-talk
 ENV CORS_ORIGIN=http://chat.trigger109.com
 #ENV DB mongodb://localhost:27017/kakao-talk
