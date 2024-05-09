@@ -4,7 +4,7 @@ WORKDIR /front
 
 ENV PATH /front/node_modules/.bin:$PATH
 
-ENV REACT_APP_SIGNALING_SERVER =http://k10c109.p.ssafy.io:3000
+ENV REACT_APP_SIGNALING_SERVER=http://k10c109.p.ssafy.io:3000
 ENV REACT_APP_STUN_SERVERS=stun:stun4.l.google.com:19302
 ENV REACT_APP_TURN_SERVERS=turn:numb.viagenie.ca
 ENV CORS_ORIGIN=http://k10c109.p.ssafy.io:3000
