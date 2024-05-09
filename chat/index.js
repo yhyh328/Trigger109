@@ -3,7 +3,7 @@ const app = require("./app")
 const { Server } = require("socket.io")
 require("dotenv").config()
 
-const allowedOrigins = ["https://k10c109.p.ssafy.io", "https://k10c109.p.ssafy.io:3000" , "https://k10c109.p.ssafy.io:3001" , "https://k10c109.p.ssafy.io:5001" ,  "https://trigger109.com", "https://jenkins.trigger109.com"];
+const allowedOrigins = ["http://k10c109.p.ssafy.io", "http://k10c109.p.ssafy.io:3000" , "http://k10c109.p.ssafy.io:3001" , "http://k10c109.p.ssafy.io:5001" ,  "http://trigger109.com", "http://jenkins.trigger109.com"];
 
 // const httpServer = createServer(app)
 // const io = new Server(httpServer, {
