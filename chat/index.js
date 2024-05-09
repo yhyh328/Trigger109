@@ -26,6 +26,9 @@ const io = new Server(httpServer, {
 // })
 
 require("./utils/io")(io)
-httpServer.listen(process.env.PORT,() => {
+// httpServer.listen(process.env.PORT,() => {
+//     console.log("server listening on port")
+// })
+httpServer.listen(3001,() => {
     console.log("server listening on port")
 })
