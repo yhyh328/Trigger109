@@ -29,7 +29,7 @@ export const generateToken = async () => {
             vapidKey: 
                 "BOfsVc6-5m98UdU9cd79oZC3Z5amKIdTNlH2EaVM7Pb8CKWHct0-ubSOx1XooLUSJkI9SrGaeDTvfQPdoSguXew"
         });
-        // console.log(token);
+        // console.log(token)
     }
     else {
         console.error('Error Occurs');
