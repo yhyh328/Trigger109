@@ -10,23 +10,13 @@ const io = new Server(httpServer, {
     }
 })
 
-// const allowedOrigins = ["http://k10c109.p.ssafy.io", "https://k10c109.p.ssafy.io", "http://k10c109.p.ssafy.io:3001", "http://k10c109.p.ssafy.io:5001", "http://trigger109.com", "http://jenkins.trigger109.com"];
-//
-// const httpServer = createServer(app)
-// const io = new Server(httpServer, {
-//     cors: {
-//         origin: function (origin, callback) {
-//             if (!origin || allowedOrigins.includes(origin)) {
-//                 callback(null, true)
-//             } else {
-//                 callback(new Error("Origin not allowed by CORS"))
-//             }
-//         }
-//     }
-// })
+// Socket.IO 연결 이벤트에 로그 추가
+io.on('connection', (socket) => {
+    console.log(`Client connected from origin: ${socket.handshake.headers.origin}`);
+});
 
 require("./utils/io")(io)
-
 httpServer.listen(5002, () => {
-    console.log("server listening on port 5002")
+    console.log("Server listening on port 5002")
+    console.log("CORS origin set to", corsOrigin)
 })
