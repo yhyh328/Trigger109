@@ -21,5 +21,5 @@ io.on('connection', (socket) => {
 require("./utils/io")(io)
 httpServer.listen(5002, () => {
     console.log("Server listening on port 5002")
-    console.log("CORS origin set to", corsOrigin)
+    // console.log("CORS origin set to", corsOrigin)
 })
