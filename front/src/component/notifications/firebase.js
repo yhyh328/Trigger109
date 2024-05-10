@@ -32,7 +32,7 @@ export const generateToken = async () => {
         console.log(token);
     }
     else {
-        console.log('123');
+        console.error('Error Occurs');
     }
 }
 
