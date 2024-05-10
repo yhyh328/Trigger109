@@ -11,6 +11,8 @@ import Live from './component/live/Live';
 import LiveDetail from './component/live/LiveDetail'
 import Guide from './component/guide/Guide';
 import Notifications from './component/notifications/Notifications';
+import SignUp from './component/member/SignUp'
+
 import './App.css';
 
 const App = () => {
@@ -39,6 +41,7 @@ const App = () => {
         <Route path="/notifications" element={
           <Notifications />
         } />
+        <Route path="/signup" element={<SignUp/>} />
       </Routes>
       <Footer />
     </Router>
