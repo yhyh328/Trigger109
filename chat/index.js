@@ -9,6 +9,7 @@ const httpServer = createServer(app)
 const io = new Server(httpServer, {
     cors: {
         origin: function (origin, callback) {
+            console.log('Request origin:', origin);
             if (!origin || allowedOrigins.includes(origin)) {
                 callback(null, true)
             } else {
