@@ -14,8 +14,17 @@ import Notifications from './component/notifications/Notifications';
 import SignUp from './component/member/SignUp'
 
 import './App.css';
-
+import { useEffect } from 'react';
+import { generateToken, messaging } from './component/notifications/firebase';
+import { onMessage } from 'firebase/messaging';
 const App = () => {
+
+  useEffect(() => {
+    generateToken();
+    onMessage(messaging, (payload) => {
+      console.log(payload);
+    });
+  }, []);
   
   return (
     <Router>
