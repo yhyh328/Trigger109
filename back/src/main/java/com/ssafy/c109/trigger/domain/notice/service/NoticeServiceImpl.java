@@ -1,15 +1,22 @@
 package com.ssafy.c109.trigger.domain.notice.service;
 
+import com.ssafy.c109.trigger.domain.member.entity.Member;
+import com.ssafy.c109.trigger.domain.member.repository.MemberRepository;
+import com.ssafy.c109.trigger.domain.notice.dto.request.PostNoticeRequest;
 import com.ssafy.c109.trigger.domain.notice.dto.response.GetNoticeDetailResponse;
 import com.ssafy.c109.trigger.domain.notice.dto.response.GetNoticeListResponse;
 import com.ssafy.c109.trigger.domain.notice.entity.Notice;
 import com.ssafy.c109.trigger.domain.notice.mapper.NoticeMapper;
 import com.ssafy.c109.trigger.domain.notice.repository.NoticeRepository;
+import com.ssafy.c109.trigger.global.s3.AwsS3Service;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @Slf4j
@@ -17,7 +24,9 @@ import java.util.List;
 @Transactional
 public class NoticeServiceImpl implements NoticeService {
 
+    private final AwsS3Service awsS3Service;
     private final NoticeRepository noticeRepository;
+    private final MemberRepository memberRepository;
     private final NoticeMapper noticeMapper;
     @Override
     public List<GetNoticeListResponse> getNoticeList() {
@@ -49,4 +58,36 @@ public class NoticeServiceImpl implements NoticeService {
             throw new RuntimeException("공지사항 상세 정보를 불러오는 중 에러 발생했습니다.");
         }
     }
+    @Override
+    public void postNotice(String email, PostNoticeRequest postNoticeRequest) {
+        try {
+            Optional<Member> optionalMember = memberRepository.findByEmail(email);
+            if (!optionalMember.isPresent()) {
+                throw new RuntimeException("해당하는 회원을 찾을 수 없습니다. Email: " + email);
+            }
+
+            Member member = optionalMember.get();
+            Notice notice = Notice.builder()
+                    .member(member)
+                    .noticeTitle(postNoticeRequest.noticeTitle())
+                    .noticeContent(postNoticeRequest.noticeContent())
+                    .noticeCreatedAt(LocalDate.now())
+                    .noticeEmergency(0)
+                    .noticeViewCnt(0)
+                    .noticeImg(awsS3Service.uploadFile(postNoticeRequest.noticeImg()))
+                    .build();
+
+            if (notice == null) {
+                throw new RuntimeException("공지사항을 생성할 수 없습니다.");
+            }
+
+            noticeRepository.save(notice);
+
+        } catch (Exception e) {
+            // 예외 발생 시 로그를 남기고 예외 처리
+            log.error("공지사항 등록 중 에러 발생: {}", e.getMessage());
+            throw new RuntimeException("공지사항을 등록하는 데 에러가 발생했습니다.");
+        }
+    }
+
 }
