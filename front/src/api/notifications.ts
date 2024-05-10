@@ -20,10 +20,10 @@ async function postNotification(notice: Notice): Promise<void> {
   }
 
   try {
-    // const accessToken = localStorage.getItem("accessToken");
-    // if (accessToken) {
-    //   local.defaults.headers.Authorization = `Bearer ${accessToken}`;
-    // }
+    const accessToken = localStorage.getItem("accessToken");
+    if (accessToken) {
+      local.defaults.headers.Authorization = `Bearer ${accessToken}`;
+    }
 
     await local.post(`${url}/register`, JSON.stringify(notice));
   } catch (error) {
@@ -38,10 +38,10 @@ async function getNotificationList(): Promise<Notices[]> {
     }
   
     try {
-    //   const accessToken = localStorage.getItem("accessToken");
-    //   if (accessToken) {
-    //     local.defaults.headers.Authorization = `Bearer ${accessToken}`;
-    //   }
+      const accessToken = localStorage.getItem("accessToken");
+      if (accessToken) {
+        local.defaults.headers.Authorization = `Bearer ${accessToken}`;
+      }
   
       const response = await local.get(`${url}`);
       return response.data;

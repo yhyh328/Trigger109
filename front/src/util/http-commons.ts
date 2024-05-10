@@ -6,7 +6,8 @@ function localAxios() {
     baseURL: "http://localhost:8080/", // Local server
   });
 
-  const token: string | null = localStorage.getItem('accessToken');
+  // const token: string | null = localStorage.getItem('accessToken');
+  const token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJBY2Nlc3NUb2tlbiIsImV4cCI6MTcxNTMzMjkzNiwiZW1haWwiOiJleGFtcGxlMUBleGFtcGxlLmNvbSJ9.ZFx70CXvoBn_CkUAwsimKjDFH4dCm51MQw77gj596fTA0OkKprBuorCndducWmB1SHNjc1UjzwA1fwm3yKG9Dw"
   instance.defaults.headers.post["Content-Type"] = "application/json";
   instance.defaults.headers.put["Content-Type"] = "application/json";
 
