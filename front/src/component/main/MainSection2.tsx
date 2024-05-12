@@ -1,6 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
-import { playGunShot } from '../../soundEffects';
+import GuideButton from './GuideButton';
+import { useNavigate } from 'react-router-dom';
+import { playGunShot, playGunLoad } from '../../soundEffects';
 
 const NewsSectionContainer = styled.section`
   background-color: #1a1a1d;
@@ -63,6 +65,12 @@ const NewsTitleContainer = styled.div`
   display: flex;
   `;
 
+const NotificationsButtonContainer = styled.div`
+  display: flex;
+  justify-content: center; 
+  align-items: center;
+`;
+
 interface NewsItemProps {
     title: string;
     date: string;
@@ -101,6 +109,19 @@ const GoToNewsPageLink = styled.div`
 
 // 최신 소식 섹션을 만듭니다.
 const MainSection2 = () => {
+
+    const handleNotificationsButtonEnter = () => {
+      playGunLoad();
+    }
+
+    const navigate = useNavigate();
+
+    const handleNotificationsButtonClick = () => {
+      playGunShot();
+      navigate('/notifications');
+      window.scrollTo(0, 0);
+    }
+
     const newsData = [
         { title: "패치 노트 2.07 출시", date: "2024-04-17", summary: "새로운 패치 노트를 확인하세요. 이번 패치에서는...", image:'valorent.jpg' },
         { title: "신규 이벤트 시작", date: "2024-04-20", summary: "신규 이벤트가 시작됩니다. 참여하여 독특한 보상을 얻으세요!", image:'valorent.jpg' },
@@ -114,7 +135,11 @@ const MainSection2 = () => {
           <NewsTitleContainer>
             <NewsHeader>최신소식</NewsHeader>
             <GoToNewsPageLink>
-              <a href="/notifications">소식 페이지 바로가기</a>
+            <GuideButton 
+            label="더 많은 소식들" 
+            onMouseEnter={handleNotificationsButtonEnter} 
+            onClick={handleNotificationsButtonClick} 
+          />
             </GoToNewsPageLink>
           </NewsTitleContainer>
           <NewsItemsContainer>

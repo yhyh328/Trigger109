@@ -11,6 +11,7 @@ import Live from './component/live/Live';
 import LiveDetail from './component/live/LiveDetail'
 import Guide from './component/guide/Guide';
 import Notifications from './component/notifications/Notifications';
+import Admin from './component/admin/Admin';
 import './App.css';
 import { useEffect } from 'react';
 import { generateToken, messaging } from './component/notifications/firebase';
@@ -47,6 +48,9 @@ const App = () => {
         } />
         <Route path="/notifications" element={
           <Notifications />
+        } />
+        <Route path="/admin" element={
+          <Admin />
         } />
       </Routes>
       <Footer />
