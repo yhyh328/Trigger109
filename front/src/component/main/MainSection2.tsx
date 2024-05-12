@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import GuideButton from './GuideButton';
+import Button from './Button';
 import { useNavigate } from 'react-router-dom';
 import { prepareGunShot, prepareGunLoad } from '../../soundEffects/soundEffects';
 import { useSound } from '../../soundEffects/soundContext';
@@ -48,10 +48,9 @@ const NewsHeader = styled.div`
   font-weight: bold;
   font-size: 50px;
   color: #00FCCE;
-  text-align: left; /* 왼쪽 정렬로 변경 */
-  padding-bottom: 20px; /* 최신소식 아래에 패딩 추가 */
-  padding-top: 50px;
-  padding-left: 40px;
+  text-align: left;
+  margin: 0;  // 모든 마진 제거
+  padding: 0;  // 모든 패딩 제거
 `;
 
 const NewsItemsContainer = styled.div`
@@ -64,12 +63,15 @@ const NewsItemsContainer = styled.div`
 
 const NewsTitleContainer = styled.div`
   display: flex;
-  `;
-
-const NotificationsButtonContainer = styled.div`
-  display: flex;
-  justify-content: center; 
+  justify-content: space-between;
   align-items: center;
+  padding: 20px 40px;
+`;
+
+const NoticeButton = styled(Button)`
+  padding: 10px 20px;  // 버튼 내부 패딩 조정
+  font-size: 16px; 
+  margin: 0;  // 마진 제거
 `;
 
 interface NewsItemProps {
@@ -119,6 +121,7 @@ const MainSection2 = () => {
     const handleNotificationsButtonEnter = () => {
       if (isSoundEnabled) {
         playGunLoad.play().catch(err => console.error('Error playing gun load:', err));
+        console.log('entered')
       }
     }
 
@@ -144,13 +147,11 @@ const MainSection2 = () => {
         <NewsSectionContainer>
           <NewsTitleContainer>
             <NewsHeader>최신소식</NewsHeader>
-            <GoToNewsPageLink>
-            <GuideButton 
+            <NoticeButton 
             label="더 많은 소식들" 
             onMouseEnter={handleNotificationsButtonEnter} 
             onClick={handleNotificationsButtonClick} 
           />
-            </GoToNewsPageLink>
           </NewsTitleContainer>
           <NewsItemsContainer>
             {newsData.map((news, index) => (

@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import GuideButton from './GuideButton';
+import GuideButton from './Button';
 import { useNavigate } from 'react-router-dom';
 import { prepareGunShot, prepareGunLoad } from '../../soundEffects/soundEffects';
 import { useSound } from '../../soundEffects/soundContext';
