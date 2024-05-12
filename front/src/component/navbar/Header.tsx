@@ -18,11 +18,11 @@ const Logo = styled.h1`
   font-size: 24px;
   color: #FFFFFF;
   font-family: 'Audiowide', sans-serif;
-  margin-right: 20px; // 로고와 네비게이션 사이의 간격
+  margin-right: 20px;
 
   a, a:hover, a:active, a:visited {
-    color: inherit; // Inherits the color from the parent h1 element
-    text-decoration: none; // Removes underline from all link states
+    color: inherit;
+    text-decoration: none;
   }
 
   span {
@@ -44,7 +44,7 @@ const Nav = styled.nav`
 `;
 
 const PlayButton = styled.button`
-  margin-left: auto; // 왼쪽에 있는 요소들로부터 자동으로 오른쪽으로 밀려나게 설정
+  margin-left: auto;
   background-color: #00FCCE;
   color: white;
   border: none;
@@ -56,8 +56,22 @@ const PlayButton = styled.button`
   }
 `;
 
-export const Header: React.FC = () => {
+const CheckboxContainer = styled.label`
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+  color: white;
+  cursor: pointer;
+  margin-right: 20px;
+  font-size: 10px;
+`;
 
+const Checkbox = styled.input`
+  accent-color: #00FCCE; /* This changes the color of the checkbox */
+  margin-right: 8px;
+`;
+
+export const Header: React.FC = () => {
   const { isSoundEnabled, toggleSound } = useSound();
 
   return (
@@ -71,9 +85,14 @@ export const Header: React.FC = () => {
         <a href="/live">라이브</a>
         <a href="/guide">가이드</a>
       </Nav>
-      <PlayButton onClick={toggleSound}>
-        {isSoundEnabled ? 'Sound Effect Enabled' : 'Sound Effect Disabled'}
-      </PlayButton>
+      <CheckboxContainer>
+        Sound Effects
+        <Checkbox 
+          type="checkbox" 
+          checked={isSoundEnabled} 
+          onChange={toggleSound}
+        />
+      </CheckboxContainer>
       <PlayButton>지금 플레이하기</PlayButton>
     </HeaderContainer>
   );

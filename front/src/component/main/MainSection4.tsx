@@ -2,7 +2,8 @@ import React from 'react';
 import styled from 'styled-components';
 import GuideButton from './GuideButton';
 import { useNavigate } from 'react-router-dom';
-import { playGunShot, playGunLoad } from '../../soundEffects/soundEffects';
+import { prepareGunShot, prepareGunLoad } from '../../soundEffects/soundEffects';
+import { useSound } from '../../soundEffects/soundContext';
 
 // 이미지 파일 경로를 import합니다. 경로는 실제 파일 위치에 따라 달라집니다.
 // import valorantImage from './path/to/valorant3.png'; 
@@ -67,16 +68,23 @@ const StyledImage = styled.img`
 // 컴포넌트 정의...
 const MainSection4 = () => {
 
+  const playGunLoad = prepareGunLoad();
+  const playGunShot = prepareGunShot();
+
+  const { isSoundEnabled } = useSound();
+
   const handleGuideButtonEnter = () => {
-    console.log("Guide Button entered!")
-    playGunLoad();
+    if (isSoundEnabled) {
+      playGunLoad.play().catch(err => console.error('Error playing gun load:', err));
+    }
   }
 
   const navigate = useNavigate();
 
   const handleGuideButtonClick = () => {
-    console.log("Guide Button clicked!")
-    playGunShot();
+    if (isSoundEnabled) {
+      playGunShot.play().catch(err => console.error('Error playing gunshot:', err));
+    }
     navigate('/guide');
     window.scrollTo(0, 0);
   }

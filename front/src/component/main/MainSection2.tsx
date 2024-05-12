@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import GuideButton from './GuideButton';
 import { useNavigate } from 'react-router-dom';
-import { playGunShot, playGunLoad } from '../../soundEffects/soundEffects';
+import { prepareGunShot, prepareGunLoad } from '../../soundEffects/soundEffects';
 import { useSound } from '../../soundEffects/soundContext';
 
 const NewsSectionContainer = styled.section`
@@ -111,11 +111,14 @@ const GoToNewsPageLink = styled.div`
 // 최신 소식 섹션을 만듭니다.
 const MainSection2 = () => {
 
+    const playGunLoad = prepareGunLoad();
+    const playGunShot = prepareGunShot();
+
     const { isSoundEnabled } = useSound();
 
     const handleNotificationsButtonEnter = () => {
       if (isSoundEnabled) {
-        playGunLoad();
+        playGunLoad.play().catch(err => console.error('Error playing gun load:', err));
       }
     }
 
@@ -123,7 +126,7 @@ const MainSection2 = () => {
 
     const handleNotificationsButtonClick = () => {
       if (isSoundEnabled) {
-        playGunShot();
+        playGunShot.play().catch(err => console.error('Error playing gunshot:', err));
       }
       navigate('/notifications');
       window.scrollTo(0, 0);
@@ -162,6 +165,7 @@ const MainSection2 = () => {
           </NewsItemsContainer>
         </NewsSectionContainer>
       );
+  
 };
 
 export default MainSection2;
