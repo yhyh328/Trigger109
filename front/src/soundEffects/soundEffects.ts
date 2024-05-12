@@ -1,5 +1,5 @@
-import GunShot from './audios/GunShot.wav';
-import GunLoad from './audios/GunLoad.wav';
+import GunShot from './GunShot.wav';
+import GunLoad from './GunLoad.wav';
 
 export const playGunShot = (volume = 1.0) => {
     const audioGunShot = new Audio(GunShot);

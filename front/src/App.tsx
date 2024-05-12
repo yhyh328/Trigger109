@@ -12,22 +12,15 @@ import LiveDetail from './component/live/LiveDetail'
 import Guide from './component/guide/Guide';
 import Notifications from './component/notifications/Notifications';
 import Admin from './component/admin/Admin';
+import { SoundProvider } from './soundEffects/soundContext';
 import './App.css';
-import { useEffect } from 'react';
-import { generateToken, messaging } from './component/notifications/firebase';
-import { onMessage } from 'firebase/messaging';
-const App = () => {
 
-  useEffect(() => {
-    generateToken();
-    onMessage(messaging, (payload) => {
-      console.log(payload);
-    });
-  }, []);
+const App = () => {
   
   return (
     <Router>
       <GlobalStyle />
+      <SoundProvider>
       <Header />
       <Routes>
         <Route path="/" element={
@@ -53,6 +46,7 @@ const App = () => {
           <Admin />
         } />
       </Routes>
+      </SoundProvider>
       <Footer />
     </Router>
   );

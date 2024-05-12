@@ -2,7 +2,8 @@ import React from 'react';
 import styled from 'styled-components';
 import GuideButton from './GuideButton';
 import { useNavigate } from 'react-router-dom';
-import { playGunShot, playGunLoad } from '../../soundEffects';
+import { playGunShot, playGunLoad } from '../../soundEffects/soundEffects';
+import { useSound } from '../../soundEffects/soundContext';
 
 const NewsSectionContainer = styled.section`
   background-color: #1a1a1d;
@@ -110,14 +111,20 @@ const GoToNewsPageLink = styled.div`
 // 최신 소식 섹션을 만듭니다.
 const MainSection2 = () => {
 
+    const { isSoundEnabled } = useSound();
+
     const handleNotificationsButtonEnter = () => {
-      playGunLoad();
+      if (isSoundEnabled) {
+        playGunLoad();
+      }
     }
 
     const navigate = useNavigate();
 
     const handleNotificationsButtonClick = () => {
-      playGunShot();
+      if (isSoundEnabled) {
+        playGunShot();
+      }
       navigate('/notifications');
       window.scrollTo(0, 0);
     }

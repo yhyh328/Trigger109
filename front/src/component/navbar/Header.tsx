@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import { useSound } from '../../soundEffects/soundContext';
 
 const HeaderContainer = styled.header`
   background-color: #1a1a1a;
@@ -56,6 +57,9 @@ const PlayButton = styled.button`
 `;
 
 export const Header: React.FC = () => {
+
+  const { isSoundEnabled, toggleSound } = useSound();
+
   return (
     <HeaderContainer>
       <Logo>
@@ -67,6 +71,9 @@ export const Header: React.FC = () => {
         <a href="/live">라이브</a>
         <a href="/guide">가이드</a>
       </Nav>
+      <PlayButton onClick={toggleSound}>
+        {isSoundEnabled ? 'Sound Effect Enabled' : 'Sound Effect Disabled'}
+      </PlayButton>
       <PlayButton>지금 플레이하기</PlayButton>
     </HeaderContainer>
   );

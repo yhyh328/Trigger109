@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import GuideButton from './GuideButton';
 import { useNavigate } from 'react-router-dom';
-import { playGunShot, playGunLoad } from '../../soundEffects';
+import { playGunShot, playGunLoad } from '../../soundEffects/soundEffects';
 
 // 이미지 파일 경로를 import합니다. 경로는 실제 파일 위치에 따라 달라집니다.
 // import valorantImage from './path/to/valorant3.png'; 
