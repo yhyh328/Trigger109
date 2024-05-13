@@ -52,7 +52,7 @@ async function postNotification(notice: Notice): Promise<void> {
     // formData.append('noticeImg', notice.noticeImg)
   }
 
-  const token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJBY2Nlc3NUb2tlbiIsImV4cCI6MTcxNTU4NjYwMSwiZW1haWwiOiJ1c2VyQHVzZXIuY29tIn0.bONygzVDDj04Xeh-gG-OOTIbdYHJLgtJTOtm7eovKqXZ6TY8waW7SPbjeCubYJlJ-Su8q243doVnCLX9cq3N6A";
+  const token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJBY2Nlc3NUb2tlbiIsImV4cCI6MTcxNTYwMzkxNiwiZW1haWwiOiJ1c2VyQHVzZXIuY29tIn0.WqDkqysGLo5AevhfCSg0AQNjwGUoIHoT5GLepPrWAbq4fu1JYx3CvgJPCwY6NRTNzxSVaS3IlwcwWHULQR4Tbw";
   local.defaults.headers.Authorization = "Bearer " + token;
     
   try {
