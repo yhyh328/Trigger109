@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import { ReactNode, useEffect, useState } from "react";
 import Posts, { Post } from "./Posts";
-import { Notice, Notices, getNotificationDetail, getNotificationList, postNotification} from '../../api/notifications';
+import { Notice, Notices, getNotificationDetail, getNotificationList } from '../../api/notifications';
 import ErrorMessage from "./ErrorMessage";
 import defaultIMG from './DefaultNotificationIMG.webp';
 import './Notifications.css';
@@ -45,11 +45,11 @@ function Notifications() {
   if (error) {
     content = <ErrorMessage text={error} />;
   } else if (isFetching) {
-    content = <p id="loading-fallback">Fetching posts...</p>;
+    content = <p id="loading-fallback">Loading...</p>;
   } else if (fetchedPosts.length > 0) {
     content = <Posts posts={fetchedPosts} />;
   } else {
-    content = <p>No posts found.</p>;
+    content = <p>공지 사항이 없습니다.</p>;
   }
 
   return (

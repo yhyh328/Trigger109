@@ -66,6 +66,15 @@ public class NoticeServiceImpl implements NoticeService {
                 throw new RuntimeException("해당하는 회원을 찾을 수 없습니다. Email: " + email);
             }
 
+            String profileImgUrl;
+            if (postNoticeRequest.noticeImg() == null) {
+                // 기본 이미지의 URL을 사용하도록 설정
+                profileImgUrl = "기본 이미지 URL"; // 예시로 기본 이미지의 URL을 넣어주세요
+            } else {
+                // 프로필 이미지를 S3에 업로드하고 URL을 받아옴
+                profileImgUrl = awsS3Service.uploadFile(postNoticeRequest.noticeImg());
+            }
+
             Member member = optionalMember.get();
             Notice notice = Notice.builder()
                     .member(member)
@@ -74,7 +83,7 @@ public class NoticeServiceImpl implements NoticeService {
                     .noticeCreatedAt(LocalDate.now())
                     .noticeEmergency(0)
                     .noticeViewCnt(0)
-                    .noticeImg(awsS3Service.uploadFile(postNoticeRequest.noticeImg()))
+                    .noticeImg(profileImgUrl)
                     .build();
 
             if (notice == null) {
