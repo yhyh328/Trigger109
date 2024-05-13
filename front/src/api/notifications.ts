@@ -102,7 +102,7 @@ async function getNotificationList(): Promise<Notices[]> {
   }
 }
 
-async function getNotificationDetail(noticeId: string): Promise<Notice> {
+async function getNotificationDetail(noticeId: number): Promise<Notice> {
   if (!local) {
     throw new Error("Unable to create Axios instance.");
   }

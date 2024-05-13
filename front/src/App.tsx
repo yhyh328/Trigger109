@@ -17,6 +17,7 @@ import SignUp from './component/member/SignUp'
 import './App.css';
 import { useEffect } from 'react';
 import { generateToken } from './component/notifications/firebase';
+import NotificationDetail from './component/notifications/NotificationDetail';
 
 const App = () => {
 
@@ -42,17 +43,24 @@ const App = () => {
         <Route path="/live" element={
           <Live />
         }  />
-        <Route path="/live/:userId" element={<LiveDetail />} /> // 사용자 상세 페이지 경로
+        <Route path="/live/:userId" element={
+          <LiveDetail /> // 사용자 상세 페이지 경로
+        } /> 
         <Route path="/guide" element={
           <Guide />
         } />
         <Route path="/notifications" element={
           <Notifications />
         } />
+        <Route path="/notifications/:noticeId" element={
+          <NotificationDetail />
+        } />
         <Route path="/admin" element={
           <Admin />
         } />
-        <Route path="/signup" element={<SignUp/>} />
+        <Route path="/signup" element={
+          <SignUp/>
+        } />
       </Routes>
       </SoundProvider>
       <Footer />
