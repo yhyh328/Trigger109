@@ -1,5 +1,6 @@
 package com.ssafy.c109.trigger.domain.notice.controller;
 
+import com.ssafy.c109.trigger.domain.notice.dto.request.PostNoticeRequest;
 import com.ssafy.c109.trigger.domain.notice.dto.response.GetNoticeDetailResponse;
 import com.ssafy.c109.trigger.domain.notice.dto.response.GetNoticeListResponse;
 import com.ssafy.c109.trigger.domain.notice.service.NoticeService;
@@ -8,10 +9,10 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.web.bind.annotation.*;
+
 import java.util.List;
 
 @RestController
@@ -40,6 +41,22 @@ public class NoticeController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(errorMessage);
         } else {
             return ResponseEntity.ok(getNoticeDetailResponse);
+        }
+    }
+
+    @PostMapping("/register")
+    public ResponseEntity<Void> postNotice(Authentication authentication, @ModelAttribute PostNoticeRequest postNoticeRequest){
+        if (authentication == null || !authentication.isAuthenticated()) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+        }
+        else if (postNoticeRequest == null || postNoticeRequest.noticeTitle() == null || postNoticeRequest.noticeContent() == null) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+        }
+        else {
+            UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+            String email = userDetails.getUsername();
+            noticeService.postNotice(email,postNoticeRequest);
+            return ResponseEntity.status(HttpStatus.CREATED).build();
         }
     }
 }
