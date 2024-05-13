@@ -67,7 +67,7 @@ public class SecurityConfig {
                         .requestMatchers("/api/v1/users/login").permitAll() // 로그인 엔드포인트 허용
                         .requestMatchers("/api/v1/notice/**").permitAll()
                         .requestMatchers("/api/v1/ranking/**").permitAll()
-                        .requestMatchers("/login/oauth2/code/**").permitAll()
+//                        .requestMatchers("/login/oauth2/code/google").permitAll()
                         .anyRequest().authenticated() // 그 외의 모든 요청은 인증된 사용자에게만 허용
                 )
                 .oauth2Login(oauth2 -> oauth2

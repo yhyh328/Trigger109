@@ -11,17 +11,26 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @Slf4j
 @RequiredArgsConstructor
-@RequestMapping("/login/oauth2/code")
+@RequestMapping("/api/v1/users/oauth2/code")
 public class OauthController {
+
 
     private final MemberService memberService;
     @GetMapping("/jwt-test")
     public String jwtTest() {
         return "jwtTest 요청 성공";
     }
-    @PostMapping("/kakao")
+    @GetMapping("/kakao")
     public String kakaoTest(){
         return "kakao 로그인 성공!!!";
+    }
+    @GetMapping("/google")
+    public String googleTest(){
+        return "google 로그인 성공!!!";
+    }
+    @GetMapping("/naver")
+    public String naverTest(){
+        return "naver 로그인 성공!!!";
     }
     @PostMapping("/signup")
     public ResponseEntity<?> signUp(@ModelAttribute SignUpRequest signUpRequest) {
