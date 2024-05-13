@@ -1,5 +1,6 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
+import Modal from '../../component/member/MemberModal';  // 모달 컴포넌트를 임포트
 
 const HeaderContainer = styled.header`
   background-color: #1a1a1a;
@@ -17,11 +18,11 @@ const Logo = styled.h1`
   font-size: 24px;
   color: #FFFFFF;
   font-family: 'Audiowide', sans-serif;
-  margin-right: 20px; // 로고와 네비게이션 사이의 간격
+  margin-right: 20px;
 
   a, a:hover, a:active, a:visited {
-    color: inherit; // Inherits the color from the parent h1 element
-    text-decoration: none; // Removes underline from all link states
+    color: inherit;
+    text-decoration: none;
   }
 
   span {
@@ -43,7 +44,7 @@ const Nav = styled.nav`
 `;
 
 const PlayButton = styled.button`
-  margin-left: auto; // 왼쪽에 있는 요소들로부터 자동으로 오른쪽으로 밀려나게 설정
+  margin-left: auto;
   background-color: #00FCCE;
   color: white;
   border: none;
@@ -55,19 +56,27 @@ const PlayButton = styled.button`
   }
 `;
 
-export const Header: React.FC = () => {
+export const Header = () => {
+  const [showModal, setShowModal] = useState(false);  // 모달의 표시 상태를 관리하는 state
+
+  const handleOpenModal = () => setShowModal(true);
+  const handleCloseModal = () => setShowModal(false);
+
   return (
-    <HeaderContainer>
-      <Logo>
-        <a href="/">Tri<span>gg</span>er</a>
-      </Logo>
-      <Nav>
-        <a href="/notifications">공지사항</a>
-        <a href="#">랭킹</a>
-        <a href="/live">라이브</a>
-        <a href="/guide">가이드</a>
-      </Nav>
-      <PlayButton>지금 플레이하기</PlayButton>
-    </HeaderContainer>
+    <>
+      <HeaderContainer>
+        <Logo>
+          <a href="/">Tri<span>gg</span>er</a>
+        </Logo>
+        <Nav>
+          <a href="/notifications">공지사항</a>
+          <a href="#">랭킹</a>
+          <a href="/live">라이브</a>
+          <a href="/guide">가이드</a>
+        </Nav>
+        <PlayButton onClick={handleOpenModal}>지금 플레이하기</PlayButton>
+      </HeaderContainer>
+      {showModal && <Modal onClose={handleCloseModal} />}  // 모달 컴포넌트를 조건부 렌더링
+    </>
   );
 }
