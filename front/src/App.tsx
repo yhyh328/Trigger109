@@ -13,6 +13,7 @@ import Guide from './component/guide/Guide';
 import Notifications from './component/notifications/Notifications';
 import Admin from './component/admin/Admin';
 import { SoundProvider } from './soundEffects/soundContext';
+import SignUp from './component/member/SignUp'
 import './App.css';
 import { useEffect } from 'react';
 import { generateToken } from './component/notifications/firebase';
@@ -51,6 +52,7 @@ const App = () => {
         <Route path="/admin" element={
           <Admin />
         } />
+        <Route path="/signup" element={<SignUp/>} />
       </Routes>
       </SoundProvider>
       <Footer />

@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import { useSound } from '../../soundEffects/soundContext';
+import Modal from '../../component/member/MemberModal'; // 모달 컴포넌트를 임포트
 
 const HeaderContainer = styled.header`
   background-color: #1a1a1a;
@@ -58,7 +59,6 @@ const PlayButton = styled.button`
 `;
 
 const CheckboxContainer = styled.div`
-  float: right;
   margin-left: auto;
   display: flex;
   flex-direction: column; 
@@ -77,7 +77,6 @@ const CheckboxLabel = styled.div`
   margin-bottom: 5px; // 각 체크박스 사이의 간격 조정
 `;
 
-
 const Checkbox = styled.input`
   accent-color: #00FCCE; /* This changes the color of the checkbox */
   margin-right: 8px;
@@ -85,40 +84,44 @@ const Checkbox = styled.input`
 
 export const Header: React.FC = () => {
   const { isSoundEnabled, toggleSound } = useSound();
+  const [showModal, setShowModal] = useState(false); // 모달의 표시 상태를 관리하는 state
+
+  const handleOpenModal = () => setShowModal(true);
+  const handleCloseModal = () => setShowModal(false);
 
   return (
-    <HeaderContainer>
-      <Logo>
-        <a href="/">Tri<span>gg</span>er</a>
-      </Logo>
-      <Nav>
-        <a href="/notifications">공지사항</a>
-        <a href="#">랭킹</a>
-        <a href="/live">라이브</a>
-        <a href="/guide">가이드</a>
-      </Nav>
-      <CheckboxContainer>
-        <CheckboxLabel>
-          Allow Sound Effects
-          <Checkbox 
-            type="checkbox" 
-            checked={isSoundEnabled} 
-            onChange={toggleSound}
-          />
-        </CheckboxLabel>
-        <CheckboxLabel>
-          Allow Push Notifications
-          <Checkbox 
-            type="checkbox" 
-            checked={isSoundEnabled} // 따로 관련 함수 만들어야 함
-            onChange={toggleSound} // 따로 관련 함수 만들어야 함
-          />
-        </CheckboxLabel>
-      </CheckboxContainer>
-      <PlayButton>지금 플레이하기</PlayButton>
-    </HeaderContainer>
+    <>
+      <HeaderContainer>
+        <Logo>
+          <a href="/">Tri<span>gg</span>er</a>
+        </Logo>
+        <Nav>
+          <a href="/notifications">공지사항</a>
+          <a href="#">랭킹</a>
+          <a href="/live">라이브</a>
+          <a href="/guide">가이드</a>
+        </Nav>
+        <CheckboxContainer>
+          <CheckboxLabel>
+            Allow Sound Effects
+            <Checkbox 
+              type="checkbox" 
+              checked={isSoundEnabled} 
+              onChange={toggleSound} 
+            />
+          </CheckboxLabel>
+          <CheckboxLabel>
+            Allow Push Notifications
+            <Checkbox 
+              type="checkbox" 
+              checked={false} // 따로 관련 함수 만들어야 함
+              onChange={() => {}} // 따로 관련 함수 만들어야 함
+            />
+          </CheckboxLabel>
+        </CheckboxContainer>
+        <PlayButton onClick={handleOpenModal}>지금 플레이하기</PlayButton>
+      </HeaderContainer>
+      {showModal && <Modal onClose={handleCloseModal} />} // 모달 컴포넌트를 조건부 렌더링
+    </>
   );
 }
-
-
-
