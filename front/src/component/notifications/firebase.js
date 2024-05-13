@@ -29,11 +29,13 @@ export const generateToken = async () => {
             vapidKey: 
                 "BOfsVc6-5m98UdU9cd79oZC3Z5amKIdTNlH2EaVM7Pb8CKWHct0-ubSOx1XooLUSJkI9SrGaeDTvfQPdoSguXew"
         });
-        return FCMToken
+        console.log('FCMToken: ', FCMToken)
+        return FCMToken;
     }
     else {
         console.error('Error Occurs');
+        return null;
     }
 }
 
-export { messaging };
+export { messaging, app };

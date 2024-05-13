@@ -52,7 +52,7 @@ async function postNotification(notice: Notice): Promise<void> {
     // formData.append('noticeImg', notice.noticeImg)
   }
 
-  const token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJBY2Nlc3NUb2tlbiIsImV4cCI6MTcxNTQzMjgxOCwiZW1haWwiOiJleGFtcGxlMUBleGFtcGxlLmNvbSJ9.wOYtp2_h3-qAQM1tAMSnsuHRsbJFfXE6FfQ9OdyOPpdxGC1U-UMlaQUa1l9q8XX3Pj7TtcOR5n7TTLV6pGm5WQ";
+  const token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJBY2Nlc3NUb2tlbiIsImV4cCI6MTcxNTU4NjYwMSwiZW1haWwiOiJ1c2VyQHVzZXIuY29tIn0.bONygzVDDj04Xeh-gG-OOTIbdYHJLgtJTOtm7eovKqXZ6TY8waW7SPbjeCubYJlJ-Su8q243doVnCLX9cq3N6A";
   local.defaults.headers.Authorization = "Bearer " + token;
     
   try {
@@ -61,6 +61,28 @@ async function postNotification(notice: Notice): Promise<void> {
         'Content-Type': 'multipart/form-data'
       }
     });
+
+    const fcmToken = await generateToken();
+    // const fcmToken = "fT37wSAG32wvDrz8k4q8eA:APA91bGLoWqhmXLwYad_HW_eDNEWMuInraZC_nzfiRatwCVwFM7GAtKhfM2FqDM_5QPdsAD7SJG1PK9gDcX5VSBIiUBamJ2BrbD3mMOp5ITBemSA7Dez9bRcv2KpfnW1k2zj4JCJW2jT"
+    const fcmUrl = "https://fcm.googleapis.com/fcm/send";
+    const fcmHeaders = {
+      'Content-Type': 'application/json',
+      'Authorization': 'key=AAAAaTWX5Gs:APA91bHzgQp6joaC4Kv2aTDyX-baS5DmmVvj4StsgV7FYIYLMhaCMXeCImEF6hUJDfEUbvTar9zVt2sw3xTbN70i6rL0IwtrrxJSLXo-aYA5NKuJyhU0EpUyD45mP_LktxYECLBxHw4X'
+    };
+
+    const notificationPayload = JSON.stringify({
+      to: fcmToken,
+      notification: {
+        title: notice.noticeTitle,
+        body: notice.noticeContent
+      }
+    });
+
+    console.log("Sending notification with payload:", notificationPayload);
+    await axios.post(fcmUrl, notificationPayload, { headers: fcmHeaders })
+      .then(response => console.log("Notification sent successfully:", response))
+      .catch(error => console.error("Failed to send notification:", error));
+
   } catch (error) {
     console.error("Error posting notification:", error);
     throw new Error("Error occurred while posting the notification.");

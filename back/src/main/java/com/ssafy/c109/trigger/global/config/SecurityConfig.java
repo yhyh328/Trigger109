@@ -9,13 +9,11 @@ import com.ssafy.c109.trigger.global.login.handler.LoginFailureHandler;
 import com.ssafy.c109.trigger.global.login.handler.LoginSuccessHandler;
 import com.ssafy.c109.trigger.global.login.service.LoginService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.ProviderManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
-import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
@@ -24,15 +22,7 @@ import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.logout.LogoutFilter;
-import org.springframework.web.cors.CorsConfiguration;
-import org.springframework.web.cors.CorsConfigurationSource;
-import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.filter.CorsFilter;
-
-
-import java.util.Arrays;
-
-import static org.springframework.security.config.Customizer.withDefaults;
 
 /**
  * 인증은 CustomJsonUsernamePasswordAuthenticationFilter에서 authenticate()로 인증된 사용자로 처리
@@ -48,22 +38,6 @@ public class SecurityConfig {
     private final MemberRepository memberRepository;
     private final ObjectMapper objectMapper;
     private final  CorsFilter corsFilter;
-
-//    @Bean
-//    public CorsConfigurationSource corsConfigurationSource() {
-//        CorsConfiguration configuration = new CorsConfiguration();
-//
-//        configuration.setAllowedOrigins(Arrays.asList("https://k10c109.p.ssafy.io", "https://trigger109.com", "https://chat.trigger109.com"));
-//        configuration.setAllowedHeaders(Arrays.asList("*"));
-//        configuration.setExposedHeaders(Arrays.asList("Authorization", "Cache-Control", "Content-Type"));
-//        configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"));
-//        configuration.setAllowCredentials(true);
-//
-//        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-//        source.registerCorsConfiguration("/**", configuration);
-//        return source;
-//    }
-
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
@@ -80,6 +54,8 @@ public class SecurityConfig {
                     authorizeRequests
                         .requestMatchers("/api/v1/users/signup").permitAll() // 회원가입 엔드포인트 허용
                         .requestMatchers("/api/v1/users/login").permitAll() // 로그인 엔드포인트 허용
+                        .requestMatchers("/api/v1/notice/**").permitAll()
+                        .requestMatchers("/api/v1/ranking/**").permitAll()
                         .anyRequest().authenticated() // 그 외의 모든 요청은 인증된 사용자에게만 허용
                 );
 //                .formLogin(form-> form

@@ -16,7 +16,6 @@ import { SoundProvider } from './soundEffects/soundContext';
 import './App.css';
 
 const App = () => {
-  
   return (
     <Router>
       <GlobalStyle />
