@@ -2,6 +2,7 @@ package com.ssafy.c109.trigger.domain.member.entity;
 
 import com.ssafy.c109.trigger.global.jpaEnum.Gender;
 import com.ssafy.c109.trigger.global.jpaEnum.Role;
+import com.ssafy.c109.trigger.global.jpaEnum.SocialType;
 import com.ssafy.c109.trigger.global.jpaEnum.Status;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -47,6 +48,11 @@ public class Member {
 
     private String refreshToken; // 리프레시 토큰
 
+    private String socialId; // 로그인한 소셜 타입의 식별자 값 (일반 로그인인 경우 null)
+
+    @Enumerated(EnumType.STRING)
+    private SocialType socialType;
+
     public Member() {
 
     }
@@ -58,6 +64,11 @@ public class Member {
 
     public void updateRefreshToken(String updateRefreshToken) {
         this.refreshToken = updateRefreshToken;
+    }
+
+    // 유저 권한 설정 메소드
+    public void authorizeUser() {
+        this.role = Role.USER;
     }
 
 }

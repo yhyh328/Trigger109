@@ -23,17 +23,19 @@ const messaging = getMessaging(app);
 
 export const generateToken = async () => {
     const permission = await Notification.requestPermission();
-    console.log(permission);
+    // console.log(permission);
     if (permission === "granted") {
-        const token = await getToken(messaging, {
+        const FCMToken = await getToken(messaging, {
             vapidKey: 
                 "BOfsVc6-5m98UdU9cd79oZC3Z5amKIdTNlH2EaVM7Pb8CKWHct0-ubSOx1XooLUSJkI9SrGaeDTvfQPdoSguXew"
         });
-        // console.log(token)
+        console.log('FCMToken: ', FCMToken)
+        return FCMToken;
     }
     else {
         console.error('Error Occurs');
+        return null;
     }
 }
 
-export { messaging };
+export { messaging, app };
