@@ -9,8 +9,6 @@ import com.ssafy.c109.trigger.global.s3.AwsS3Service;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.springframework.web.multipart.MultipartFile;
-
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
@@ -23,7 +21,7 @@ public class MemberServiceImpl implements MemberService {
     private final PasswordEncoder passwordEncoder;
 
     @Override
-    public void singUp(SignUpRequest signUpRequest, MultipartFile profileImg) throws Exception {
+    public void singUp(SignUpRequest signUpRequest) throws Exception {
         if (memberRepository.findByEmail(signUpRequest.email()).isPresent()) { // getEmail() 메서드 호출로 수정합니다.
             throw new Exception("이미 존재하는 이메일입니다.");
         }
@@ -33,12 +31,12 @@ public class MemberServiceImpl implements MemberService {
         }
 
         String profileImgUrl;
-        if (profileImg == null) {
+        if (signUpRequest.profileImg() == null) {
             // 기본 이미지의 URL을 사용하도록 설정
             profileImgUrl = "기본 이미지 URL"; // 예시로 기본 이미지의 URL을 넣어주세요
         } else {
             // 프로필 이미지를 S3에 업로드하고 URL을 받아옴
-            profileImgUrl = awsS3Service.uploadFile(profileImg);
+            profileImgUrl = awsS3Service.uploadFile(signUpRequest.profileImg());
         }
 
         Member member = Member.builder()
