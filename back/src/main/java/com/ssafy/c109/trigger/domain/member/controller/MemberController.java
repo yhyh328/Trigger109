@@ -21,10 +21,10 @@ public class MemberController {
         return "jwtTest 요청 성공";
     }
     @PostMapping("/signup")
-    public ResponseEntity<?> signUp(@ModelAttribute SignUpRequest signUpRequest) {
+    public ResponseEntity<?> signUp(@RequestBody SignUpRequest signUpRequest, @RequestParam MultipartFile profileImg) {
         log.info("signUpRequest : " + signUpRequest);
         try {
-            memberService.singUp(signUpRequest);
+            memberService.singUp(signUpRequest, profileImg);
             return ResponseEntity.ok("사용자 등록이 성공했습니다.");
         } catch (Exception e) {
             log.error("사용자 등록 중 오류가 발생했습니다: {}", e.getMessage());
