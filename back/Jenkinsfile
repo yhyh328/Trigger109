@@ -4,20 +4,6 @@ pipeline {
     // 파이프라인에서 사용될 환경 변수 선언
     environment {
         REPO = "s10-final/S10P31C109"  // 원격 저장소 식별자, 새 프로젝트의 저장소 URL로 변경 필요
-        // 아래 환경 변수들은 필요에 따라 주석을 해제하고 값을 설정
-        // DB_URL = "${env.DB_URL}"
-        // DB_USER = "${env.DB_USER}"
-        // DB_PASSWORD = "${env.DB_PASSWORD}"
-        // REDIS_HOST = "${env.REDIS_HOST}"
-        // REDIS_PASSWORD = "${env.REDIS_PASSWORD}"
-        // REDIS_PORT = "${env.REDIS_PORT}"
-        // KAKAO_ID = "${env.KAKAO_ID}"
-        // KAKAO_REDIRECT_URI = "${env.KAKAO_REDIRECT_URI}"
-        // KAKAO_PW = "${env.KAKAO_PW}"
-        // S3_ACCESS_KEY = "${env.S3_ACCESS_KEY}"
-        // S3_SECRET_KEY = "${env.S3_SECRET_KEY}"
-        // S3_REGION = "${env.S3_REGION}"
-        // S3_BUCKET = "${env.S3_BUCKET}"
     }
 
     stages {
@@ -30,12 +16,16 @@ pipeline {
             steps {
                 // 지정된 디렉토리로 이동
                 dir("${env.WORKSPACE}/back"){
+                    withCredentials([file(credentialsId: 'application', variable: 'application')]) {
+//                        sh "cat ./src/main/resources/application.yml"  // 설정 파일 내용 출력
+                       sh 'cp ${application}  src/main/resources/application.yml' // jenkins 글로벌 변수로 yml 파일을 등록해서 사용
+                    }
                     script {
                         sh "ls -al"  // 현재 디렉토리의 파일 리스트 출력
                         sh "echo 'SUBMODULE CHECK'"  // 서브모듈 체크 메시지 출력
                         sh "ls ./src/main/resources"  // 리소스 디렉토리의 파일 리스트 출력
                         sh "chmod +x ./gradlew"  // gradlew 파일 실행 권한 부여
-                        sh "cat ./src/main/resources/application.yml"  // 설정 파일 내용 출력
+//                         sh "cat ./src/main/resources/application.yml"  // 설정 파일 내용 출력
                     }
                 }
             }
@@ -46,8 +36,8 @@ pipeline {
                     sh "ls -al"
                     // Docker Hub에 로그인하기 위한 자격증명 사용
                     withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: 'Docker-hub', usernameVariable: 'DOCKER_USER_ID', passwordVariable: 'DOCKER_USER_PASSWORD']]) {
-                        echo "도커허브 아이디: ${DOCKER_USER_ID}"
-                        echo "도커허브 비밀번호: ${DOCKER_USER_PASSWORD}"
+//                         echo "도커허브 아이디: ${DOCKER_USER_ID}"
+//                         echo "도커허브 비밀번호: ${DOCKER_USER_PASSWORD}"
                         sh "docker build --no-cache -t ${DOCKER_USER_ID}/back back"  // Docker 이미지 빌드, 이미지 이름 변경 필요
                     }
                 }
@@ -106,7 +96,7 @@ pipeline {
                             sh "docker stop back || true"
                             sh "docker rm -f back || true"
                             sh "docker rmi back || true"
-                            sh "docker run -d --name back -p 8082:8080 ${DOCKER_USER_ID}/back"
+                            sh "docker run -d --name back -p 8082:8080 -e db_url -e db_password ${DOCKER_USER_ID}/back"
 //                             sh "docker run -d --name back -p 8082:8080 -e DB_URL=${env.DB_URL} -e DB_USER=${env.DB_USER} -e DB_PASSWORD=${env.DB_PASSWORD} -e REDIS_HOST=${env.REDIS_HOST} -e REDIS_PASSWORD=${env.REDIS_PASSWORD} -e REDIS_PORT=${env.REDIS_PORT} -e KAKAO_ID=${env.KAKAO_ID} -e KAKAO_REDIRECT_URI=${env.KAKAO_REDIRECT_URI} -e KAKAO_PW=${env.KAKAO_PW} -e S3_ACCESS_KEY=${env.S3_ACCESS_KEY} -e S3_SECRET_KEY=${env.S3_SECRET_KEY} -e S3_REGION=${env.S3_REGION} -e S3_BUCKET=${env.S3_BUCKET} ${DOCKER_USER_ID}/back && docker ps"
                         } catch (Exception e) {
                             sh "docker restart back || true"  // Ignore error if container doesn't exist

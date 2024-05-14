@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import { ReactNode, useEffect, useState } from "react";
 import Posts, { Post } from "./Posts";
-import { Notice, Notices, getNotificationDetail, getNotificationList } from '../../api/notifications';
+import { Notice, Notices, getNotificationList } from '../../api/notifications';
 import ErrorMessage from "./ErrorMessage";
 import defaultIMG from './DefaultNotificationIMG.webp';
 import './Notifications.css';
@@ -27,7 +27,8 @@ function Notifications() {
           id: notice.noticeId, 
           title: notice.noticeTitle,
           text: notice.noticeContent,
-          image: notice.noticeImg ?? defaultIMG,
+          // image: notice.noticeImg ?? defaultIMG,
+          image: notice.noticeImg
         }));
         setFetchedPosts(posts); // Set fetched posts directly
       } catch (error) {

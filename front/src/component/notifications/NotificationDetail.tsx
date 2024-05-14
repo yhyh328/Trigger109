@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 import { useEffect, useState } from "react";
 import { useParams } from 'react-router-dom';
+import Posts, { Post } from "./Posts";
 import { Notice, getNotificationDetail } from '../../api/notifications';
 import ErrorMessage from "./ErrorMessage";
 import defaultIMG from './DefaultNotificationIMG.webp';
@@ -33,10 +34,9 @@ function NotificationDetail() {
         setError("No notice ID provided.");
         return;
       }
-      
       setIsFetching(true);
       try {
-        const data = await getNotificationDetail(parseInt(noticeId)); // Fetching the notification detail
+        const data = await getNotificationDetail(parseInt(noticeId)) as Notice; // Fetching the notification detail
         setPost(data);
         console.log(data)
       } catch (error) {
@@ -61,7 +61,8 @@ function NotificationDetail() {
     content = (
       <PostContainer>
         <Title>{post.noticeTitle}</Title>
-        <img src={post.noticeImg ?? defaultIMG} alt="Notice" />
+        {/* <img src={post.noticeImg ?? defaultIMG} alt="Notice" /> */}
+        {post.image && <img src={post.image} alt={post.title} />}
         <p>{post.noticeContent}</p>
       </PostContainer>
     );
