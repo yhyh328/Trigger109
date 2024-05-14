@@ -131,7 +131,7 @@ const MainSection2 = () => {
     return (
         <NewsSectionContainer>
           <NewsTitleContainer>
-            <NewsHeader>최신소식</NewsHeader>
+          <NewsHeader>최신소식</NewsHeader>
             <NoticeButton 
             label="더 많은 소식들" 
             onMouseEnter={handleNotificationsButtonEnter} 

@@ -13,6 +13,7 @@ export type Notice = {
   noticeImg?: string | null | undefined;
   noticeEmergency: number;
   noticeViewCnt: number;
+  createdAt: Date;
 };
 
 export type Notices = [];
@@ -44,6 +45,7 @@ async function postNotification(notice: Notice): Promise<void> {
   formData.append('noticeContent', notice.noticeContent);
   formData.append('noticeEmergency', notice.noticeEmergency.toString());
   formData.append('noticeViewCnt', notice.noticeViewCnt.toString());
+  formData.append('createdAt', notice.createdAt.toISOString());
 
   if (notice.noticeImg) {
     // Assuming noticeImg is a base64 string of the image, we need to convert it to a File/Blob object
@@ -52,7 +54,7 @@ async function postNotification(notice: Notice): Promise<void> {
     // formData.append('noticeImg', notice.noticeImg)
   }
 
-  const token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJBY2Nlc3NUb2tlbiIsImV4cCI6MTcxNTY1NTMzNiwiZW1haWwiOiJ1c2VyQHVzZXIuY29tIn0.-uR0l6nygmDOrzvnl-Cx_JYvsK45BEiTyolR1FA8QVBPB3VMYb-yxayGXzQjkYEqs-sc80TH5AomgaXrxXUQrg";
+  const token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJBY2Nlc3NUb2tlbiIsImV4cCI6MTcxNTY1OTIzOCwiZW1haWwiOiJ1c2VyQHVzZXIuY29tIn0.6tnWm4jLwQOS-FhYx9gLtTnZwsb9jDjaKHyN86Tdsp-1CGMIvi171tXmQgd3B2M47uOXSQAhdZ5wBMDw7Hy3Gw";
   local.defaults.headers.Authorization = "Bearer " + token;
     
   try {
@@ -107,7 +109,7 @@ async function getNotificationDetail(noticeId: number): Promise<Notice> {
     throw new Error("Unable to create Axios instance.");
   }
   try {
-    const response = await local.get(`${url}?noticeId=${noticeId}`);
+    const response = await local.get(`${url}/detail?noticeId=${noticeId}`);
     return response.data;
   } catch (error) {
     console.error(`Error getting notification detail for ID: ${noticeId}`, error);
