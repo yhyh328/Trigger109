@@ -12,7 +12,7 @@ export type SignUpData = {
   profileImg: File | null;
 };
 
-const url = "https://trigger109/api/v1/users/signup";
+const url = "https://trigger109.com/api/v1/users/signup";
 
 // 회원가입 함수
 // API 호출 함수를 수정하여 FormData를 받도록 하고, 해당 함수 내에서 FormData 객체를 생성하는 부분을 제거
