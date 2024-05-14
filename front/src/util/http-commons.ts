@@ -3,7 +3,7 @@ import axios from "axios";
 // Local Vue API axios instance
 function localAxios() {
   const instance = axios.create({
-    baseURL: "https://trigger109.com/", // Local server
+    baseURL: "http://localhost:8080/", // Local server
   });
 
   // const token: string | null = localStorage.getItem('accessToken');
