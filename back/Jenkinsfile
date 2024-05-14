@@ -5,8 +5,8 @@ pipeline {
     environment {
         REPO = "s10-final/S10P31C109"  // 원격 저장소 식별자, 새 프로젝트의 저장소 URL로 변경 필요
         // 아래 환경 변수들은 필요에 따라 주석을 해제하고 값을 설정
-        db_url = "${env.db_url}"
-        db_password = "${env.db_password}"
+        //db_url = "${env.db_url}"
+        //db_password = "${env.db_password}"
         // DB_USER = "${env.DB_USER}"
         // DB_PASSWORD = "${env.DB_PASSWORD}"
         // REDIS_HOST = "${env.REDIS_HOST}"
@@ -31,12 +31,16 @@ pipeline {
             steps {
                 // 지정된 디렉토리로 이동
                 dir("${env.WORKSPACE}/back"){
+                    withCredentials([file(credentialsId: 'application', variable: 'application')]) {
+                       sh "cat ./src/main/resources/application.yml"  // 설정 파일 내용 출력
+                       sh 'cp ${application}  src/main/resources/application.yml'
+                    }
                     script {
                         sh "ls -al"  // 현재 디렉토리의 파일 리스트 출력
                         sh "echo 'SUBMODULE CHECK'"  // 서브모듈 체크 메시지 출력
                         sh "ls ./src/main/resources"  // 리소스 디렉토리의 파일 리스트 출력
                         sh "chmod +x ./gradlew"  // gradlew 파일 실행 권한 부여
-                        sh "cat ./src/main/resources/application.yml"  // 설정 파일 내용 출력
+//                         sh "cat ./src/main/resources/application.yml"  // 설정 파일 내용 출력
                     }
                 }
             }
