@@ -9,7 +9,6 @@ public record SignUpRequest(
         String password,
         String nickName,
         Gender gender
-//        MultipartFile profileImg
 )
 {}
 

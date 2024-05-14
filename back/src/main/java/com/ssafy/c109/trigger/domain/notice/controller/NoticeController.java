@@ -12,6 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -45,7 +46,7 @@ public class NoticeController {
     }
 
     @PostMapping("/register")
-    public ResponseEntity<Void> postNotice(Authentication authentication, @ModelAttribute PostNoticeRequest postNoticeRequest){
+    public ResponseEntity<Void> postNotice(Authentication authentication, @RequestBody PostNoticeRequest postNoticeRequest, @RequestParam(required = false) MultipartFile noticeImg){
         if (authentication == null || !authentication.isAuthenticated()) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
         }
@@ -55,7 +56,7 @@ public class NoticeController {
         else {
             UserDetails userDetails = (UserDetails) authentication.getPrincipal();
             String email = userDetails.getUsername();
-            noticeService.postNotice(email,postNoticeRequest);
+            noticeService.postNotice(email,postNoticeRequest,noticeImg);
             return ResponseEntity.status(HttpStatus.CREATED).build();
         }
     }
