@@ -77,6 +77,7 @@ public class NoticeServiceImpl implements NoticeService {
 
             Member member = optionalMember.get();
             Notice notice = Notice.builder()
+                    .noticeCreatedAt(LocalDate.now())
                     .member(member)
                     .noticeTitle(postNoticeRequest.noticeTitle())
                     .noticeContent(postNoticeRequest.noticeContent())

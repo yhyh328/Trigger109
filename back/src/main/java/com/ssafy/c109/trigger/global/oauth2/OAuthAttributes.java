@@ -10,6 +10,7 @@ import com.ssafy.c109.trigger.global.oauth2.userinfo.OAuth2UserInfo;
 import lombok.Builder;
 import lombok.Getter;
 
+import java.time.LocalDate;
 import java.util.Map;
 import java.util.UUID;
 
@@ -76,10 +77,11 @@ public class OAuthAttributes {
      */
     public Member toEntity(SocialType socialType, OAuth2UserInfo oauth2UserInfo) {
         return Member.builder()
+                .createdAt(LocalDate.now())
                 .socialType(socialType)
                 .socialId(oauth2UserInfo.getId())
-                .email(UUID.randomUUID() + "@socialUser.com")
-//                .email(oauth2UserInfo.getEmail())
+//                .email(UUID.randomUUID() + "@socialUser.com")
+                .email(oauth2UserInfo.getEmail())
                 .nickName(oauth2UserInfo.getNickname())
                 .profileImg(oauth2UserInfo.getImageUrl())
                 .role(Role.gamer)
