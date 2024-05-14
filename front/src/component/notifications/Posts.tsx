@@ -18,7 +18,8 @@ export default function Posts({ posts }: PostsProps) {
         {posts.map((post) => (
           <li key={post.id}>
             <h2>{post.title}</h2>
-            <img src={post.image || defaultIMG} alt={post.title} />
+            {/* <img src={post.image} alt={post.title} /> */}
+            {post.image && <img src={post.image} alt={post.title} />}
             <p>{post.text}</p>
           </li>
         ))}

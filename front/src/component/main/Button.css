@@ -1,4 +1,4 @@
-.guide-btn {
+.btn {
     text-transform: uppercase;
     text-decoration: none;
     border: 0;
@@ -10,7 +10,7 @@
     font-weight: 600;
     background: none;
   }
-  .guide-btn:before {
+  .btn:before {
     content: "";
     position: absolute;
     top: 0;
@@ -25,7 +25,7 @@
     transition: all .4s;
     display: block;
   }
-  .guide-btn:after {
+  .btn:after {
     content: "";
     position: absolute;
     bottom: 0;
@@ -40,7 +40,7 @@
     transition: all .4s;
     display: block;
   }
-  .guide-btn .underlay {
+  .btn .underlay {
     display: block;
     width: 100%;
     height: 100%;
@@ -52,7 +52,7 @@
     z-index: 5;
     overflow: hidden;
   }
-  .guide-btn .underlay:before {
+  .btn .underlay:before {
     content: "";
     display: block;
     width: 150%;
@@ -68,7 +68,7 @@
     transform: translateX(-110%)  translateY(-50%) rotate(15deg);
     z-index: 10;
   }
-  .guide-btn .underlay:after {
+  .btn .underlay:after {
     content: "";
     z-index: 5;
     width: 100%;
@@ -80,7 +80,7 @@
     transform: translate(3px, 3px);
     background: #00FCCE;
   }
-  .guide-btn .label {
+  .btn .label {
     display: block;
     width: 100%;
     height: 100%;
@@ -91,7 +91,7 @@
     font-size: 16px;
     line-height: 1;
   }
-  .guide-btn .label:after {
+  .btn .label:after {
     content: "";
     display: block;
     width: 5px;
@@ -104,22 +104,22 @@
     bottom: -3px;
     transition: all .4s 0s;
   }
-  .guide-btn:hover {
+  .btn:hover {
     cursor: none;
     background-image: url('./pnghut_stock-photography-shooting-target-clip-art-reticle-vector.png'), auto;
   }
-  .guide-btn:hover .underlay:before {
+  .btn:hover .underlay:before {
     transform: translateX(-10%)  translateY(-50%) rotate(15deg);
   }
-  .guide-btn:hover .label:after {
+  .btn:hover .label:after {
     background: #fff;
     transition: all .4s .4s;
   }
-  .guide-btn:active:before {
+  .btn:active:before {
     transform: translateY(-5px) translateX(-50%);
     padding: 10px 5px;
   }
-  .guide-btn:active:after {
+  .btn:active:after {
     transform: translateY(5px) translateX(-50%);
     padding: 10px 5px;
   }

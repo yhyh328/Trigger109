@@ -11,24 +11,24 @@ import Live from './component/live/Live';
 import LiveDetail from './component/live/LiveDetail'
 import Guide from './component/guide/Guide';
 import Notifications from './component/notifications/Notifications';
+import Admin from './component/admin/Admin';
+import { SoundProvider } from './soundEffects/soundContext';
 import SignUp from './component/member/SignUp'
-
 import './App.css';
 import { useEffect } from 'react';
-import { generateToken, messaging } from './component/notifications/firebase';
-import { onMessage } from 'firebase/messaging';
+import { generateToken } from './component/notifications/firebase';
+import NotificationDetail from './component/notifications/NotificationDetail';
+
 const App = () => {
 
   useEffect(() => {
     generateToken();
-    onMessage(messaging, (payload) => {
-      console.log(payload);
-    });
   }, []);
-  
+
   return (
     <Router>
       <GlobalStyle />
+      <SoundProvider>
       <Header />
       <Routes>
         <Route path="/" element={
@@ -43,15 +43,26 @@ const App = () => {
         <Route path="/live" element={
           <Live />
         }  />
-        <Route path="/live/:userId" element={<LiveDetail />} /> // 사용자 상세 페이지 경로
+        <Route path="/live/:userId" element={
+          <LiveDetail /> // 사용자 상세 페이지 경로
+        } /> 
         <Route path="/guide" element={
           <Guide />
         } />
         <Route path="/notifications" element={
           <Notifications />
         } />
-        <Route path="/signup" element={<SignUp/>} />
+        <Route path="/notifications/:noticeId" element={
+          <NotificationDetail />
+        } />
+        <Route path="/admin" element={
+          <Admin />
+        } />
+        <Route path="/signup" element={
+          <SignUp/>
+        } />
       </Routes>
+      </SoundProvider>
       <Footer />
     </Router>
   );
