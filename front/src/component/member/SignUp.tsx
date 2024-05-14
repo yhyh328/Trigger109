@@ -140,8 +140,8 @@ const SignUp = (): JSX.Element => {
             <Input
               type="radio"
               name="gender"
-              value="Male"
-              checked={gender === 'Male'}
+              value="male"
+              checked={gender === 'male'}
               onChange={(e) => setGender(e.target.value)}
             /> 남
           </label>
@@ -149,8 +149,8 @@ const SignUp = (): JSX.Element => {
             <Input
               type="radio"
               name="gender"
-              value="Female"
-              checked={gender === 'Female'}
+              value="female"
+              checked={gender === 'female'}
               onChange={(e) => setGender(e.target.value)}
             /> 여
           </label>
