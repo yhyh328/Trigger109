@@ -52,7 +52,7 @@ async function postNotification(notice: Notice): Promise<void> {
     // formData.append('noticeImg', notice.noticeImg)
   }
 
-  const token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJBY2Nlc3NUb2tlbiIsImV4cCI6MTcxNTY1MDc0NSwiZW1haWwiOiJ1c2VyQHVzZXIuY29tIn0.dSdcWDxagyRIhR9ck7Eqtz7ixqbMh0SkxnqGV_h_vgPyPckx8RjWxTWhsbR0S5fHhgq-dvB591NMP4Yelz1reg";
+  const token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJBY2Nlc3NUb2tlbiIsImV4cCI6MTcxNTY1NTMzNiwiZW1haWwiOiJ1c2VyQHVzZXIuY29tIn0.-uR0l6nygmDOrzvnl-Cx_JYvsK45BEiTyolR1FA8QVBPB3VMYb-yxayGXzQjkYEqs-sc80TH5AomgaXrxXUQrg";
   local.defaults.headers.Authorization = "Bearer " + token;
     
   try {
@@ -107,7 +107,7 @@ async function getNotificationDetail(noticeId: number): Promise<Notice> {
     throw new Error("Unable to create Axios instance.");
   }
   try {
-    const response = await local.get(`${url}/${noticeId}`);
+    const response = await local.get(`${url}?noticeId=${noticeId}`);
     return response.data;
   } catch (error) {
     console.error(`Error getting notification detail for ID: ${noticeId}`, error);

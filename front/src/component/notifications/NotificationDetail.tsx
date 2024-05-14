@@ -1,21 +1,20 @@
+// Assuming getNotificationDetail now correctly returns Promise<Notice[]>
 import styled from 'styled-components';
-import { useEffect, useState } from "react";
+import { ReactNode, useEffect, useState } from "react";
 import { useParams } from 'react-router-dom';
-import Posts, { Post } from "./Posts";
+import { Post } from "./Posts";
 import { Notice, getNotificationDetail } from '../../api/notifications';
 import ErrorMessage from "./ErrorMessage";
-import defaultIMG from './DefaultNotificationIMG.webp';
 import './Notifications.css';
 
 const Title = styled.h2`
-  font-size: 40px; // Adjusted for detail view
+  font-size: 40px;
   font-family: 'Black Han Sans', sans-serif;
   color: #00FCCE;
   margin: 0;
 `;
 
 const PostContainer = styled.div`
-  background: #1a1a1a;
   color: white;
   margin: 20px;
   padding: 20px;
@@ -23,8 +22,8 @@ const PostContainer = styled.div`
 `;
 
 function NotificationDetail() {
-  const { noticeId } = useParams<{ noticeId: string }>(); // Extracting the noticeId from route parameters
-  const [post, setPost] = useState<Notice | null>(null);
+  const { noticeId } = useParams<{ noticeId: string }>();
+  const [post, setPost] = useState<Post>();
   const [isFetching, setIsFetching] = useState(false);
   const [error, setError] = useState<string>();
 
@@ -36,22 +35,29 @@ function NotificationDetail() {
       }
       setIsFetching(true);
       try {
-        const data = await getNotificationDetail(parseInt(noticeId)) as Notice; // Fetching the notification detail
-        setPost(data);
-        console.log(data)
-      } catch (error) {
-        if (error instanceof Error) {
-          setError(error.message);
+        const response = await getNotificationDetail(parseInt(noticeId));
+        if (Array.isArray(response) && response.length > 0) {
+          const data = response[0]; 
+          const post: Post = {
+            id: data.noticeId,
+            title: data.noticeTitle,
+            text: data.noticeContent,
+            image: data.noticeImg
+          };
+          setPost(post);
         } else {
-          setError("An unknown error occurred");
+          setError("No data returned from the API");
         }
+      } catch (error) {
+        const errorMessage = error instanceof Error ? error.message : "An unknown error occurred";
+        setError(errorMessage);
       }
       setIsFetching(false);
     }
     fetchOnePost();
   }, [noticeId]);
 
-  let content;
+  let content: ReactNode;
 
   if (error) {
     content = <ErrorMessage text={error} />;
@@ -60,10 +66,9 @@ function NotificationDetail() {
   } else if (post) {
     content = (
       <PostContainer>
-        <Title>{post.noticeTitle}</Title>
-        {/* <img src={post.noticeImg ?? defaultIMG} alt="Notice" /> */}
-        {post.image && <img src={post.image} alt={post.title} />}
-        <p>{post.noticeContent}</p>
+        <Title>{post.title}</Title>
+        {post.image ? <img src={post.image} alt={post.title} /> : <p></p>}
+        <p>{post.text}</p>
       </PostContainer>
     );
   } else {
