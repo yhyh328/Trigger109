@@ -4,7 +4,6 @@ import Button from './Button';
 import { useNavigate } from 'react-router-dom';
 import { prepareGunShot, prepareGunLoad } from '../../soundEffects/soundEffects';
 import { useSound } from '../../soundEffects/soundContext';
-
 const NewsSectionContainer = styled.section`
   background-color: #1a1a1d;
   padding: 20px 30px; /* 좌우 패딩을 30px로 조정 */
@@ -55,17 +54,19 @@ const NewsHeader = styled.div`
 
 const NewsItemsContainer = styled.div`
   display: flex;
-  justify-content: center;
+  justify-content: space-between; /* 간격을 균등하게 배치 */
   overflow-x: auto;
   gap: 20px; /* 카드 간 간격을 gap 속성으로 조정 */
   padding: 20px; /* 상하 패딩만 적용 */
+  width: 100%;
+  box-sizing: border-box;
 `;
 
 const NewsTitleContainer = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 20px 40px;
+  padding: 20px 30px;
 `;
 
 const NoticeButton = styled(Button)`
@@ -79,7 +80,7 @@ interface NewsItemProps {
     date: string;
     summary: string;
     image: string;
-  }
+}
 
 // 데이터와 구조를 감안하여 컴포넌트를 만듭니다.
 const NewsItem: React.FC<NewsItemProps> = ({ title, date, summary, image }) => {
