@@ -95,21 +95,6 @@ const NewsItem: React.FC<NewsItemProps> = ({ title, date, summary, image }) => {
   );
 };
 
-const GoToNewsPageLink = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: right; // 링크를 중앙 정렬
-  font-weight: bold;
-  margin-left: auto; // 이전 아이템과의 간격을 유지
-  padding-right: 60px;
-  padding-top: 100px;
-  cursor: pointer;
-  a {
-    text-decoration: none; // 밑줄 제거
-    color: #00FCCE;
-  }
-`;
-
 // 최신 소식 섹션을 만듭니다.
 const MainSection2 = () => {
 
