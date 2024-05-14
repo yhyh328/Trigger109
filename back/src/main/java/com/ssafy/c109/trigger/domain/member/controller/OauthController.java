@@ -7,7 +7,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 
 @RestController
 @Slf4j
@@ -34,10 +33,10 @@ public class OauthController {
         return "naver 로그인 성공!!!";
     }
     @PostMapping("/signup")
-    public ResponseEntity<?> signUp(@RequestParam SignUpRequest signUpRequest, @RequestParam MultipartFile profileImg) {
+    public ResponseEntity<?> signUp(@ModelAttribute SignUpRequest signUpRequest) {
         log.info("signUpRequest : " + signUpRequest);
         try {
-            memberService.singUp(signUpRequest,profileImg);
+            memberService.singUp(signUpRequest);
             return ResponseEntity.ok("사용자 등록이 성공했습니다.");
         } catch (Exception e) {
             log.error("사용자 등록 중 오류가 발생했습니다: {}", e.getMessage());
