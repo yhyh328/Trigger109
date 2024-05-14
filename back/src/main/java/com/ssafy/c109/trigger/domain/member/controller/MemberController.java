@@ -21,7 +21,7 @@ public class MemberController {
         return "jwtTest 요청 성공";
     }
     @PostMapping("/signup")
-    public ResponseEntity<?> signUp(@RequestBody SignUpRequest signUpRequest, @RequestParam MultipartFile profileImg) {
+    public ResponseEntity<?> signUp(@RequestBody SignUpRequest signUpRequest, @RequestParam(required = false) MultipartFile profileImg) {
         log.info("signUpRequest : " + signUpRequest);
         try {
             memberService.singUp(signUpRequest, profileImg);
