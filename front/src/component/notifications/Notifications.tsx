@@ -55,7 +55,7 @@ function Notifications() {
   return (
     <main>
       <br />
-      <Title>공지 사항</Title>
+      <Title>공지사항</Title>
       {content}
     </main>
   );
