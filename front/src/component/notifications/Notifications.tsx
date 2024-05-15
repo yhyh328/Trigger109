@@ -10,20 +10,39 @@ const NewsSectionContainer = styled.section`
 `;
 
 const NewsCard = styled.div`
+  flex: 0 0 auto;
+  width: 300px;
+  margin-right: 20px;
   color: white;
   border-radius: 10px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
   overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+`;
+
+const ImageContainer = styled.div`
+  width: 100%;
+  padding-top: 75%; /* Aspect ratio of 4:3 */
+  position: relative;
 `;
 
 const NewsImage = styled.img`
+  position: absolute;
+  top: 0;
+  left: 0;
   width: 100%;
-  height: 200px;
-  object-fit: cover;
+  height: 100%;
+  object-fit: contain;
 `;
 
 const NewsContent = styled.div`
   padding: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
 `;
 
 const NewsTitle = styled.h3`
@@ -50,13 +69,16 @@ const NewsHeader = styled.div`
   padding-left: 40px;
 `;
 
+const NewsTitleContainer = styled.div`
+  display: flex;
+`;
+
 const NewsItemsContainer = styled.div`
   display: grid;
   grid-template-columns: repeat(3, 1fr); /* Three columns */
   gap: 20px;
   padding: 20px;
 `;
-
 
 interface NewsItemProps {
   title: string;
@@ -65,11 +87,20 @@ interface NewsItemProps {
   summary: string;
 }
 
+const truncateText = (text: string, maxLength: number) => {
+  if (text.length > maxLength) {
+    return text.slice(0, maxLength) + '...';
+  }
+  return text;
+};
+
 const NewsItem: React.FC<NewsItemProps> = ({ title, date, image, summary }) => (
   <NewsCard>
-    <NewsImage src={image} alt="news image" />
+    <ImageContainer>
+      <NewsImage src={image} alt="news image" />
+    </ImageContainer>
     <NewsContent>
-      <NewsTitle>{title}</NewsTitle>
+      <NewsTitle>{truncateText(title, 15)}</NewsTitle>
       <NewsDate>{date}</NewsDate>
       <NewsSummary>{summary}</NewsSummary>
     </NewsContent>
@@ -105,21 +136,27 @@ const Notifications = () => {
   }, []);
 
   return (
-    <NewsSectionContainer>
-      <NewsItemsContainer>
-        {isFetching && <p>Loading...</p>}
-        {error && <p>Error: {error}</p>}
-        {!isFetching && !error && fetchedNotifications.map((news) => (
-          <NewsItem
-            key={news.id}
-            title={news.title}
-            date={news.date}
-            summary={news.content}
-            image={news.image ?? 'defaultIMG'}
-          />
-        ))}
-      </NewsItemsContainer>
-    </NewsSectionContainer>
+    <>
+      <br></br>
+      <NewsSectionContainer>
+        <NewsTitleContainer>
+          <NewsHeader>공지사항</NewsHeader>
+        </NewsTitleContainer>
+        <NewsItemsContainer>
+          {isFetching && <p>Loading...</p>}
+          {error && <p>Error: {error}</p>}
+          {!isFetching && !error && fetchedNotifications.map((news) => (
+            <NewsItem
+              key={news.id}
+              title={news.title}
+              date={news.date}
+              summary={news.content}
+              image={news.image ?? defaultIMG} // Correct usage of defaultIMG
+            />
+          ))}
+        </NewsItemsContainer>
+      </NewsSectionContainer>
+    </>
   );
 };
 

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { Notice, Notices, getNotificationList } from '../../api/notifications';
 import { Post } from '../notifications/Posts';
-// import defaultIMG from './DefaultNotificationIMG.webp';
+import defaultIMG from './DefaultNotificationIMG.webp';
 
 const NewsSectionContainer = styled.section`
   background-color: #1a1a1d;
@@ -17,16 +17,32 @@ const NewsCard = styled.div`
   border-radius: 10px;
   box-shadow: 0 4px 8px rgba(0,0,0,0.1);
   overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+`;
+
+const ImageContainer = styled.div`
+  width: 100%;
+  padding-top: 75%; /* Aspect ratio of 4:3 */
+  position: relative;
 `;
 
 const NewsImage = styled.img`
+  position: absolute;
+  top: 0;
+  left: 0;
   width: 100%;
-  height: 200px;
-  object-fit: cover;
+  height: 100%;
+  object-fit: contain;
 `;
 
 const NewsContent = styled.div`
   padding: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
 `;
 
 const NewsTitle = styled.h3`
@@ -72,13 +88,22 @@ interface NewsItemProps {
   summary: string;
 }
 
+const truncateText = (text: string, maxLength: number) => {
+  if (text.length > maxLength) {
+    return text.slice(0, maxLength) + '...';
+  }
+  return text;
+};
+
 const NewsItem: React.FC<NewsItemProps> = ({ title, date, image, summary }) => (
   <NewsCard>
-    <NewsImage src={image} alt="news image" />
+    <ImageContainer>
+      <NewsImage src={image} alt="news image" />
+    </ImageContainer>
     <NewsContent>
-      <NewsTitle>{title}</NewsTitle>
+      <NewsTitle>{truncateText(title, 15)}</NewsTitle>
       <NewsDate>{date}</NewsDate>
-      <NewsSummary>{summary}</NewsSummary>
+      <NewsSummary>{truncateText(summary, 15)}</NewsSummary>
     </NewsContent>
   </NewsCard>
 );
@@ -144,7 +169,7 @@ const MainSection2 = () => {
             title={news.title}
             date={news.date}
             summary={news.content}
-            image={news.image ?? 'defaultIMG'}
+            image={news.image ?? defaultIMG}
           />
         ))}
       </NewsItemsContainer>
