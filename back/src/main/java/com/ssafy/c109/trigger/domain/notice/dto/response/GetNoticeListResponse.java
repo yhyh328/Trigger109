@@ -6,7 +6,7 @@ public record GetNoticeListResponse(
     Long noticeId,
     String noticeTitle,
     String noticeContent,
-    LocalDate createdAt,
+    LocalDate noticeCreatedAt,
     int noticeEmergency,
     int noticeViewCnt
 ) {}
