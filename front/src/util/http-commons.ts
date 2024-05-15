@@ -4,7 +4,7 @@ import axios from "axios";
 function localAxios() {
   const instance = axios.create({
     // baseURL: "http://localhost:8080/", // Local server
-    baseURL: "k10c109.p.ssafy.io:10912" // EC2 server
+    baseURL: "https://k10c109.p.ssafy.io" // EC2 server
   });
 
   // const token: string | null = localStorage.getItem('accessToken');
