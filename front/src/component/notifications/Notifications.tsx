@@ -1,8 +1,8 @@
+import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { Notice, Notices, getNotificationList } from '../../api/notifications';
 import { Post } from '../notifications/Posts';
-import defaultIMG from './DefaultNotificationIMG.webp';
 
 const NewsSectionContainer = styled.section`
   background-color: #1a1a1d;
@@ -81,6 +81,7 @@ const NewsItemsContainer = styled.div`
 `;
 
 interface NewsItemProps {
+  id: number;
   title: string;
   date: string;
   image: string;
@@ -94,15 +95,17 @@ const truncateText = (text: string, maxLength: number) => {
   return text;
 };
 
-const NewsItem: React.FC<NewsItemProps> = ({ title, date, image, summary }) => (
+const NewsItem: React.FC<NewsItemProps> = ({ id, title, date, image, summary }) => (
   <NewsCard>
     <ImageContainer>
+      <Link to={`/notifications/${id}`}>
       <NewsImage src={image} alt="news image" />
+      </Link>
     </ImageContainer>
     <NewsContent>
       <NewsTitle>{truncateText(title, 15)}</NewsTitle>
       <NewsDate>{date}</NewsDate>
-      <NewsSummary>{summary}</NewsSummary>
+      <NewsSummary>{truncateText(summary, 15)}</NewsSummary>
     </NewsContent>
   </NewsCard>
 );
@@ -124,7 +127,8 @@ const Notifications = () => {
           image: notice.noticeImg,
           date: new Date(notice.createdAt).toLocaleDateString(), // Convert Date to string
         }));
-        setFetchedNotifications(posts);
+        const wholeNews = posts.reverse();
+        setFetchedNotifications(wholeNews);
       } catch (error) {
         if (error instanceof Error) {
           setError(error.message);
@@ -148,10 +152,11 @@ const Notifications = () => {
           {!isFetching && !error && fetchedNotifications.map((news) => (
             <NewsItem
               key={news.id}
+              id={news.id} 
               title={news.title}
               date={news.date}
               summary={news.content}
-              image={news.image ?? defaultIMG} // Correct usage of defaultIMG
+              image={news.image ?? 'defaultIMG'} // Correct usage of defaultIMG
             />
           ))}
         </NewsItemsContainer>

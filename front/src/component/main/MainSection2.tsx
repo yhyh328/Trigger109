@@ -1,8 +1,9 @@
+import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { Notice, Notices, getNotificationList } from '../../api/notifications';
 import { Post } from '../notifications/Posts';
-import defaultIMG from './DefaultNotificationIMG.webp';
+// import defaultIMG from './DefaultNotificationIMG.webp';
 
 const NewsSectionContainer = styled.section`
   background-color: #1a1a1d;
@@ -82,6 +83,7 @@ const NewsTitleContainer = styled.div`
 `;
 
 interface NewsItemProps {
+  id: number;
   title: string;
   date: string;
   image: string;
@@ -95,10 +97,12 @@ const truncateText = (text: string, maxLength: number) => {
   return text;
 };
 
-const NewsItem: React.FC<NewsItemProps> = ({ title, date, image, summary }) => (
+const NewsItem: React.FC<NewsItemProps> = ({ id, title, date, image, summary }) => (
   <NewsCard>
     <ImageContainer>
+      <Link to={`/notifications/${id}`}>
       <NewsImage src={image} alt="news image" />
+      </Link>
     </ImageContainer>
     <NewsContent>
       <NewsTitle>{truncateText(title, 15)}</NewsTitle>
@@ -166,10 +170,11 @@ const MainSection2 = () => {
         {!isFetching && !error && fetchedThree.map((news) => (
           <NewsItem
             key={news.id}
+            id={news.id} 
             title={news.title}
             date={news.date}
             summary={news.content}
-            image={news.image ?? defaultIMG}
+            image={news.image ?? 'defaultIMG'}
           />
         ))}
       </NewsItemsContainer>

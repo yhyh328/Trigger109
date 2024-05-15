@@ -59,36 +59,14 @@ const PlayButton = styled.button`
   }
 `;
 
-const CheckboxContainer = styled.div`
-  margin-left: auto;
-  display: flex;
-  flex-direction: column; 
-  align-items: flex-end;
-  color: white;
-  cursor: pointer;
-  margin-right: 20px;
-  font-size: 10px;
-`;
 
-const CheckboxLabel = styled.div`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  width: 100%;
-  margin-bottom: 5px; // 각 체크박스 사이의 간격 조정
-`;
-
-const Checkbox = styled.input`
-  accent-color: #00FCCE; /* This changes the color of the checkbox */
-  margin-right: 8px;
-`;
 
 export const Header: React.FC = () => {
   
-  const { isSoundEnabled, toggleSound } = useSound();
-
   const playPlasma = preparePlasma();
   const playZap = prepareZap();
+
+  const { isSoundEnabled } = useSound();
   
   useEffect(() => {
     console.log('playZap', playZap);
@@ -123,24 +101,6 @@ export const Header: React.FC = () => {
           <a href="/live" onClick={handleATagClick}>라이브</a>
           <a href="/guide" onClick={handleATagClick}>가이드</a>
         </Nav>
-        <CheckboxContainer>
-          <CheckboxLabel>
-            Allow Sound Effects
-            <Checkbox 
-              type="checkbox" 
-              checked={isSoundEnabled} 
-              onChange={toggleSound} 
-            />
-          </CheckboxLabel>
-          <CheckboxLabel>
-            Allow Push Notifications
-            <Checkbox 
-              type="checkbox" 
-              checked={false} // 따로 관련 함수 만들어야 함
-              onChange={() => {}} // 따로 관련 함수 만들어야 함
-            />
-          </CheckboxLabel>
-        </CheckboxContainer>
         <PlayButton onClick={handleOpenModal}>지금 플레이하기</PlayButton>
       </HeaderContainer>
       {showModal && <Modal onClose={handleCloseModal} />} {/* 모달 컴포넌트를 조건부 렌더링 */}
