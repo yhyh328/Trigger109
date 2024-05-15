@@ -47,7 +47,7 @@ public class MemberServiceImpl implements MemberService {
                 .nickName(signUpRequest.nickName()) // getNickName() 메서드 호출로 수정합니다.
                 .gender(signUpRequest.gender()) // SignUpRequest에서 getGender() 메서드가 구현되어 있다고 가정합니다.
                 .role(Role.gamer)
-                .createdAt(LocalDate.from(LocalDateTime.now()))
+                .createdAt(LocalDate.now())
                 .profileImg(profileImgUrl)
                 .status(Status.inactive)
                 .build();
