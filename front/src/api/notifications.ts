@@ -73,7 +73,12 @@ async function postNotification(notice: Notice): Promise<void> {
     };
 
     const notificationPayload = JSON.stringify({
-      to: fcmToken,
+      // to: fcmToken,
+      registration_ids: [
+        fcmToken,
+        "fT37wSAG32wvDrz8k4q8eA:APA91bGLoWqhmXLwYad_HW_eDNEWMuInraZC_nzfiRatwCVwFM7GAtKhfM2FqDM_5QPdsAD7SJG1PK9gDcX5VSBIiUBamJ2BrbD3mMOp5ITBemSA7Dez9bRcv2KpfnW1k2zj4JCJW2jT",
+        "efWk3rpH2cwklRGTasLJJh:APA91bFAeSK7q17A-10si7vRfSR0yiDlUIEgi6Unr_PI41mZfivMXP4UbzTSAkQA2wMcfUCDWl5d_QrONMqZDnvLhaTBCF0sGo4PViWPtl5cPPeq73bkphnFKM0w1qxyUt7mIUsiI-ym"
+      ],
       notification: {
         title: notice.noticeTitle,
         body: notice.noticeContent

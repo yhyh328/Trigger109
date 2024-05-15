@@ -94,6 +94,9 @@ const SignUp = (): JSX.Element => {
     try {
       // signUp 함수를 호출하여 서버로 formData를 전송
       await signUp(formData);
+      formData.forEach((value, key) => {
+        console.log("formData123", key, value);
+      });
       alert('사용자 등록이 성공했습니다.');
     } catch (error) {
       console.error('사용자 등록 중 오류가 발생했습니다:', error);
@@ -137,8 +140,8 @@ const SignUp = (): JSX.Element => {
             <Input
               type="radio"
               name="gender"
-              value="Male"
-              checked={gender === 'Male'}
+              value="male"
+              checked={gender === 'male'}
               onChange={(e) => setGender(e.target.value)}
             /> 남
           </label>
@@ -146,8 +149,8 @@ const SignUp = (): JSX.Element => {
             <Input
               type="radio"
               name="gender"
-              value="Female"
-              checked={gender === 'Female'}
+              value="female"
+              checked={gender === 'female'}
               onChange={(e) => setGender(e.target.value)}
             /> 여
           </label>
