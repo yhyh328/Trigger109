@@ -59,26 +59,47 @@ const PlayButton = styled.button`
   }
 `;
 
-
-
 export const Header: React.FC = () => {
-  
-  const playPlasma = preparePlasma();
   const playZap = prepareZap();
-
+  const playPlasma = preparePlasma();
   const { isSoundEnabled } = useSound();
   
   useEffect(() => {
     console.log('playZap', playZap);
   }, [playZap]);
 
-  const handleATagClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
+  const handleZap = (e: React.MouseEvent<HTMLAnchorElement>) => {
     e.preventDefault();
-    if (isSoundEnabled) {
-      playZap.play().catch(err => console.error('Error playing zap:', err));
-    }
     const href = (e.target as HTMLAnchorElement).getAttribute('href');
-    if (href) {
+    if (isSoundEnabled) {
+      playZap.play()
+        .catch((err: any) => console.error('Error playing zap:', err))
+        .finally(() => {
+          if (href) {
+            setTimeout(() => {
+              window.location.href = href;
+            }, 100); // Duration of zap sound effect
+          }
+        });
+    } else if (href) {
+      window.location.href = href;
+    }
+  }
+
+  const handlePlasma = (e: React.MouseEvent<HTMLAnchorElement>) => {
+    e.preventDefault();
+    const href = (e.target as HTMLAnchorElement).getAttribute('href');
+    if (isSoundEnabled) {
+      playZap.play()
+        .catch((err: any) => console.error('Error playing plasma:', err))
+        .finally(() => {
+          if (href) {
+            setTimeout(() => {
+              window.location.href = href;
+            }, 300); // Duration of plasma sound effect
+          }
+        });
+    } else if (href) {
       window.location.href = href;
     }
   }
@@ -91,15 +112,15 @@ export const Header: React.FC = () => {
     <>
       <HeaderContainer>
         <Logo>
-          <a href="/">Tri<span>gg</span>er</a>
+          <a href="/" >Tri<span>gg</span>er</a>
         </Logo>
         <Nav>
-          <a href="/notifications" onClick={handleATagClick}>
+          <a href="/notifications" onClick={handleZap}>
             공지사항
           </a>
-          <a href="#" onClick={handleATagClick}>랭킹</a>
-          <a href="/live" onClick={handleATagClick}>라이브</a>
-          <a href="/guide" onClick={handleATagClick}>가이드</a>
+          <a href="#" onClick={handleZap}>랭킹</a>
+          <a href="/live" onClick={handleZap}>라이브</a>
+          <a href="/guide" onClick={handleZap}>가이드</a>
         </Nav>
         <PlayButton onClick={handleOpenModal}>지금 플레이하기</PlayButton>
       </HeaderContainer>

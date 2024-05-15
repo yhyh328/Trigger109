@@ -10,7 +10,8 @@ const Title = styled.h2`
   font-size: 40px;
   font-family: 'Black Han Sans', sans-serif;
   color: #00FCCE;
-  margin: 0;
+  margin-top: 70px;
+  text-align: center; /* 제목을 가운데 정렬 */
 `;
 
 const Section = styled.section`
@@ -18,6 +19,7 @@ const Section = styled.section`
   min-height: 100vh;
   width: 100vw; /* 화면의 전체 너비를 차지 */
   display: flex;
+  flex-direction: column; /* 추가: 목록으로 링크를 아래에 배치 */
   align-items: center;
   justify-content: center;
 `;
@@ -32,7 +34,24 @@ const PostContainer = styled.div`
   border-radius: 10px;
   background-color: #1a1a1d;
   max-width: 800px; /* 콘텐츠의 최대 너비 설정 */
+  width: 90%; /* 부모 컨테이너의 너비 */
+  box-sizing: border-box; /* 패딩과 테두리 크기를 포함 */
+`;
+
+const Image = styled.img`
+  max-width: 100%;
+  height: auto;
+`;
+
+const Content = styled.p`
+  word-wrap: break-word; /* 긴 단어나 문자열이 다음 줄로 넘어가도록 함 */
+  white-space: pre-wrap; /* 공백과 줄바꿈을 유지하여 줄바꿈을 허용 */
+  overflow-wrap: break-word; /* 긴 단어가 줄바꿈되도록 함 */
+  text-align: center; /* 내용 가운데 정렬 */
+  max-width: 800px; /* 콘텐츠의 최대 너비 설정 */
+  margin-top: 50px;
   width: 100%;
+  box-sizing: border-box; /* 패딩과 테두리 크기를 포함 */
 `;
 
 const ToList = styled.div`
@@ -41,9 +60,9 @@ const ToList = styled.div`
   justify-content: center;
   background-color: #1a1a1d;
   font-weight: bold;
-  margin-left: auto;
-  padding-top: 3%;
+  margin-top: 20px; /* 링크와 콘텐츠 사이의 간격 조정 */
   cursor: pointer;
+  width: 100%; /* 부모 컨테이너의 너비 */
 
   a {
     text-decoration: none;
@@ -93,11 +112,8 @@ function NotificationDetail() {
     content = (
       <PostContainer>
         <Title>{post.title}</Title>
-        <br />
-        {post.image && <img src={post.image} alt={post.title} />}
-        <br />
-        <br />
-        <p>{post.content}</p>
+        {post.image && <Image src={post.image} alt={post.title} />}
+        <Content>{post.content}</Content>
       </PostContainer>
     );
   } else {
@@ -108,10 +124,10 @@ function NotificationDetail() {
     <>
       <Section>
         {content}
+        <ToList>
+          <a href="/notifications">목록으로</a>
+        </ToList>
       </Section>
-      <ToList>
-        <a href="/notifications">목록으로</a>
-      </ToList>
     </>
   );
 }

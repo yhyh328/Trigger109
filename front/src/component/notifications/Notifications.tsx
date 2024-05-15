@@ -98,8 +98,9 @@ const truncateText = (text: string, maxLength: number) => {
 const NewsItem: React.FC<NewsItemProps> = ({ id, title, date, image, summary }) => (
   <NewsCard>
     <ImageContainer>
-      <Link to={`/notifications/${id}`}>
-      <NewsImage src={image} alt="news image" />
+      <Link to={`/notifications/${id}`} 
+            onClick={() => window.scrollTo(0, 0)}>
+        <NewsImage src={image} alt="news image" />
       </Link>
     </ImageContainer>
     <NewsContent>
