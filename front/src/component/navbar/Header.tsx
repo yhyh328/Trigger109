@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import { useSound } from '../../soundEffects/soundContext';
 import Modal from '../../component/member/MemberModal'; // 모달 컴포넌트를 임포트
+import { preparePlasma, prepareZap } from '../../soundEffects/soundEffects';
 
 const HeaderContainer = styled.header`
   background-color: #1a1a1a;
@@ -83,9 +84,25 @@ const Checkbox = styled.input`
 `;
 
 export const Header: React.FC = () => {
+  
+  const playPlasma = preparePlasma();
+  const playZap = prepareZap();
+  
   const { isSoundEnabled, toggleSound } = useSound();
-  const [showModal, setShowModal] = useState(false); // 모달의 표시 상태를 관리하는 state
 
+  const handleATagEnter = () => {
+    if (isSoundEnabled) {
+      playPlasma.play().catch(err => console.error('Error playing plasma:', err));
+    }
+  }
+
+  const handleATagClick = () => {
+    if (isSoundEnabled) {
+      playZap.play().catch(err => console.error('Error playing zap:', err));
+    }
+  }
+
+  const [showModal, setShowModal] = useState(false); // 모달의 표시 상태를 관리하는 state
   const handleOpenModal = () => setShowModal(true);
   const handleCloseModal = () => setShowModal(false);
 
@@ -96,7 +113,12 @@ export const Header: React.FC = () => {
           <a href="/">Tri<span>gg</span>er</a>
         </Logo>
         <Nav>
-          <a href="/notifications">공지사항</a>
+          <a href="/notifications"
+            onMouseEnter={handleATagEnter}
+            onClick={handleATagClick}
+          >
+            공지사항
+          </a>
           <a href="#">랭킹</a>
           <a href="/live">라이브</a>
           <a href="/guide">가이드</a>

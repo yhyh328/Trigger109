@@ -4,7 +4,6 @@ import { ReactNode, useEffect, useState } from "react";
 import { useParams } from 'react-router-dom';
 import { Post } from "./Posts";
 import { Notice, getNotificationDetail } from '../../api/notifications';
-import ErrorMessage from "./ErrorMessage";
 import './Notifications.css';
 
 const Title = styled.h2`
@@ -41,8 +40,9 @@ function NotificationDetail() {
           const post: Post = {
             id: data.noticeId,
             title: data.noticeTitle,
-            text: data.noticeContent,
-            image: data.noticeImg
+            content: data.noticeContent,
+            image: data.noticeImg,
+            date: '',
           };
           setPost(post);
         } else {
@@ -58,22 +58,6 @@ function NotificationDetail() {
   }, [noticeId]);
 
   let content: ReactNode;
-
-  if (error) {
-    content = <ErrorMessage text={error} />;
-  } else if (isFetching) {
-    content = <p>Loading...</p>;
-  } else if (post) {
-    content = (
-      <PostContainer>
-        <Title>{post.title}</Title>
-        {post.image ? <img src={post.image} alt={post.title} /> : <p></p>}
-        <p>{post.text}</p>
-      </PostContainer>
-    );
-  } else {
-    content = <p>No details available.</p>;
-  }
 
   return (
     <main>
