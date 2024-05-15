@@ -140,7 +140,7 @@ const MainSection2 = () => {
           image: notice.noticeImg,
           date: new Date(notice.createdAt).toLocaleDateString(), // Convert Date to string
         }));
-        const threeNews = posts.slice(-3);
+        const threeNews = posts.slice(-3).reverse(); // Get the last 3 items and reverse the order
         setFetchedThree(threeNews);
       } catch (error) {
         if (error instanceof Error) {
