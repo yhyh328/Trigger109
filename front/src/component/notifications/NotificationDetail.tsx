@@ -1,4 +1,3 @@
-// Assuming getNotificationDetail now correctly returns Promise<Notice[]>
 import styled from 'styled-components';
 import { ReactNode, useEffect, useState } from "react";
 import { useParams } from 'react-router-dom';
@@ -18,6 +17,7 @@ const PostContainer = styled.div`
   margin: 20px;
   padding: 20px;
   border-radius: 10px;
+  background-color: #1a1a1d;
 `;
 
 function NotificationDetail() {
@@ -42,7 +42,7 @@ function NotificationDetail() {
             title: data.noticeTitle,
             content: data.noticeContent,
             image: data.noticeImg,
-            date: '',
+            date: new Date(response.createdAt).toLocaleDateString(), // 적절한 날짜 형식으로 변경
           };
           setPost(post);
         } else {
@@ -58,6 +58,22 @@ function NotificationDetail() {
   }, [noticeId]);
 
   let content: ReactNode;
+
+  if (isFetching) {
+    content = <p>Loading...</p>;
+  } else if (error) {
+    content = <p>Error: {error}</p>;
+  } else if (post) {
+    content = (
+      <PostContainer>
+        <Title>{post.title}</Title>
+        <p>{post.content}</p>
+        {post.image && <img src={post.image} alt={post.title} />}
+      </PostContainer>
+    );
+  } else {
+    content = <p>No post found.</p>;
+  }
 
   return (
     <main>
