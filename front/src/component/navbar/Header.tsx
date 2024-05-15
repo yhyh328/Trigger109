@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { useSound } from '../../soundEffects/soundContext';
 import Modal from '../../component/member/MemberModal'; // 모달 컴포넌트를 임포트
@@ -85,20 +85,23 @@ const Checkbox = styled.input`
 
 export const Header: React.FC = () => {
   
+  const { isSoundEnabled, toggleSound } = useSound();
+
   const playPlasma = preparePlasma();
   const playZap = prepareZap();
   
-  const { isSoundEnabled, toggleSound } = useSound();
+  useEffect(() => {
+    console.log('playZap', playZap);
+  }, [playZap]);
 
-  const handleATagEnter = () => {
-    if (isSoundEnabled) {
-      playPlasma.play().catch(err => console.error('Error playing plasma:', err));
-    }
-  }
-
-  const handleATagClick = () => {
+  const handleATagClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
+    e.preventDefault();
     if (isSoundEnabled) {
       playZap.play().catch(err => console.error('Error playing zap:', err));
+    }
+    const href = (e.target as HTMLAnchorElement).getAttribute('href');
+    if (href) {
+      window.location.href = href;
     }
   }
 
@@ -113,15 +116,12 @@ export const Header: React.FC = () => {
           <a href="/">Tri<span>gg</span>er</a>
         </Logo>
         <Nav>
-          <a href="/notifications"
-            onMouseEnter={handleATagEnter}
-            onClick={handleATagClick}
-          >
+          <a href="/notifications" onClick={handleATagClick}>
             공지사항
           </a>
-          <a href="#">랭킹</a>
-          <a href="/live">라이브</a>
-          <a href="/guide">가이드</a>
+          <a href="#" onClick={handleATagClick}>랭킹</a>
+          <a href="/live" onClick={handleATagClick}>라이브</a>
+          <a href="/guide" onClick={handleATagClick}>가이드</a>
         </Nav>
         <CheckboxContainer>
           <CheckboxLabel>
@@ -143,7 +143,7 @@ export const Header: React.FC = () => {
         </CheckboxContainer>
         <PlayButton onClick={handleOpenModal}>지금 플레이하기</PlayButton>
       </HeaderContainer>
-      {showModal && <Modal onClose={handleCloseModal} />} // 모달 컴포넌트를 조건부 렌더링
+      {showModal && <Modal onClose={handleCloseModal} />} {/* 모달 컴포넌트를 조건부 렌더링 */}
     </>
   );
 }
