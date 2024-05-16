@@ -17,12 +17,30 @@ import SignUp from './component/member/SignUp'
 import './App.css';
 import { useEffect } from 'react';
 import { generateToken } from './component/notifications/firebase';
+import Login from './component/member/Login'
+import { AxiosError } from "axios";
 
 const App = () => {
 
   useEffect(() => {
     generateToken();
   }, []);
+
+  const handleLoginSuccess = () => {
+    console.log("로그인 성공!");
+    alert("로그인 성공!");
+};
+
+// 로그인 실패 시 실행될 함수
+const handleLoginFail = (error: unknown) => {
+  if (error instanceof AxiosError) {
+      console.error("로그인 실패:", error.message);
+      alert("로그인 실패: " + error.message);
+  } else {
+      console.error("Unexpected error:", error);
+      alert("Unexpected error occurred");
+  }
+};
 
   return (
     <Router>
@@ -53,6 +71,13 @@ const App = () => {
           <Admin />
         } />
         <Route path="/signup" element={<SignUp/>} />
+        <Route path="/login" element={
+                    <Login 
+                        // onLoginSuccess={handleLoginSuccess} 
+                        // onLoginFail={handleLoginFail} 
+                        // onLogin={(username, password) => console.log(username, password)}
+                    />
+                } />
       </Routes>
       </SoundProvider>
       <Footer />
