@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import ValorantButton from './Valorant';
+import { useSound } from '../../soundEffects/soundContext';
 
 
 const handlePlayClick = () => {
@@ -30,12 +31,59 @@ const Logo = styled.h1`
   }
 `;
 
+const CheckboxContainer = styled.div`
+  margin-left: auto;
+  display: flex;
+  flex-direction: column; 
+  align-items: flex-end;
+  color: white;
+  cursor: pointer;
+  margin-right: 20px;
+  font-size: 10px;
+`;
+
+const CheckboxLabel = styled.div`
+  margin-top: 0; 
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  margin-bottom: 10px; // 각 체크박스 사이의 간격 조정
+`;
+
+const Checkbox = styled.input`
+  accent-color: #00FCCE; /* This changes the color of the checkbox */
+  margin-right: 8px;
+`;
+
 export const MainSection: React.FC = () => {
+  
+  const { isSoundEnabled, toggleSound } = useSound();
+  
   return (
     <Section>
+      <CheckboxContainer>
+          <CheckboxLabel>
+            Allow Sound Effects
+            <Checkbox 
+              type="checkbox" 
+              checked={isSoundEnabled} 
+              onChange={toggleSound} 
+            />
+          </CheckboxLabel>
+          <CheckboxLabel>
+            Allow Push Notifications
+            <Checkbox 
+              type="checkbox" 
+              checked={false} // 따로 관련 함수 만들어야 함
+              onChange={() => {}} // 따로 관련 함수 만들어야 함
+            />
+          </CheckboxLabel>
+        </CheckboxContainer>
       <Logo>
         Tri<span>gg</span>er
       </Logo>
+      
       <ValorantButton label="무료로 플레이하기" onClick={handlePlayClick} />
     </Section>
   );

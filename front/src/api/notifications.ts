@@ -10,10 +10,10 @@ export type Notice = {
   noticeId: number;
   noticeTitle: string;
   noticeContent: string;
-  noticeImg?: string | null | undefined;
+  noticeImg?: string | null; // Change to string | null
   noticeEmergency: number;
   noticeViewCnt: number;
-  createdAt: Date;
+  noticeCreatedAt: string;
 };
 
 export type Notices = [];
@@ -32,7 +32,7 @@ function b64toBlob(b64Data: string, contentType: string, sliceSize = 512): Blob 
     byteArrays.push(byteArray);
   }
 
-  const blob = new Blob(byteArrays, {type: contentType});
+  const blob = new Blob(byteArrays, { type: contentType });
   return blob;
 }
 
@@ -45,18 +45,17 @@ async function postNotification(notice: Notice): Promise<void> {
   formData.append('noticeContent', notice.noticeContent);
   formData.append('noticeEmergency', notice.noticeEmergency.toString());
   formData.append('noticeViewCnt', notice.noticeViewCnt.toString());
-  formData.append('createdAt', notice.createdAt.toISOString());
+  formData.append('noticeCreatedAt', notice.noticeCreatedAt.toString());
 
   if (notice.noticeImg) {
     // Assuming noticeImg is a base64 string of the image, we need to convert it to a File/Blob object
     const blob = b64toBlob(notice.noticeImg.split(',')[1], notice.noticeImg.split(',')[0].split(':')[1].split(';')[0]);
     formData.append('noticeImg', new File([blob], "filename.png"));
-    // formData.append('noticeImg', notice.noticeImg)
   }
 
-  const token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJBY2Nlc3NUb2tlbiIsImV4cCI6MTcxNTY1OTIzOCwiZW1haWwiOiJ1c2VyQHVzZXIuY29tIn0.6tnWm4jLwQOS-FhYx9gLtTnZwsb9jDjaKHyN86Tdsp-1CGMIvi171tXmQgd3B2M47uOXSQAhdZ5wBMDw7Hy3Gw";
+  const token = "your-jwt-token";
   local.defaults.headers.Authorization = "Bearer " + token;
-    
+
   try {
     await local.post(`${url}/register`, formData, {
       headers: {
@@ -65,19 +64,16 @@ async function postNotification(notice: Notice): Promise<void> {
     });
 
     const fcmToken = await generateToken();
-    // const fcmToken = "fT37wSAG32wvDrz8k4q8eA:APA91bGLoWqhmXLwYad_HW_eDNEWMuInraZC_nzfiRatwCVwFM7GAtKhfM2FqDM_5QPdsAD7SJG1PK9gDcX5VSBIiUBamJ2BrbD3mMOp5ITBemSA7Dez9bRcv2KpfnW1k2zj4JCJW2jT"
     const fcmUrl = "https://fcm.googleapis.com/fcm/send";
     const fcmHeaders = {
       'Content-Type': 'application/json',
-      'Authorization': 'key=AAAAaTWX5Gs:APA91bHzgQp6joaC4Kv2aTDyX-baS5DmmVvj4StsgV7FYIYLMhaCMXeCImEF6hUJDfEUbvTar9zVt2sw3xTbN70i6rL0IwtrrxJSLXo-aYA5NKuJyhU0EpUyD45mP_LktxYECLBxHw4X'
+      'Authorization': 'key=your-fcm-server-key'
     };
 
     const notificationPayload = JSON.stringify({
-      // to: fcmToken,
       registration_ids: [
         fcmToken,
-        "fT37wSAG32wvDrz8k4q8eA:APA91bGLoWqhmXLwYad_HW_eDNEWMuInraZC_nzfiRatwCVwFM7GAtKhfM2FqDM_5QPdsAD7SJG1PK9gDcX5VSBIiUBamJ2BrbD3mMOp5ITBemSA7Dez9bRcv2KpfnW1k2zj4JCJW2jT",
-        "efWk3rpH2cwklRGTasLJJh:APA91bFAeSK7q17A-10si7vRfSR0yiDlUIEgi6Unr_PI41mZfivMXP4UbzTSAkQA2wMcfUCDWl5d_QrONMqZDnvLhaTBCF0sGo4PViWPtl5cPPeq73bkphnFKM0w1qxyUt7mIUsiI-ym"
+        "additional-token-if-needed"
       ],
       notification: {
         title: notice.noticeTitle,

@@ -1,8 +1,8 @@
+import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { Notice, Notices, getNotificationList } from '../../api/notifications';
 import { Post } from '../notifications/Posts';
-import defaultIMG from './DefaultNotificationIMG.webp';
 
 const NewsSectionContainer = styled.section`
   background-color: #1a1a1d;
@@ -13,6 +13,7 @@ const NewsCard = styled.div`
   flex: 0 0 auto;
   width: 300px;
   margin-right: 20px;
+  margin-bottom: 70px;
   color: white;
   border-radius: 10px;
   box-shadow: 0 4px 8px rgba(0,0,0,0.1);
@@ -74,13 +75,16 @@ const NewsTitleContainer = styled.div`
 `;
 
 const NewsItemsContainer = styled.div`
-  display: grid;
-  grid-template-columns: repeat(3, 1fr); /* Three columns */
-  gap: 20px;
-  padding: 20px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center; /* 가로축 가운데 정렬 */
+  gap: 50px;
+  padding: 50px;
 `;
 
+
 interface NewsItemProps {
+  id: number;
   title: string;
   date: string;
   image: string;
@@ -94,15 +98,18 @@ const truncateText = (text: string, maxLength: number) => {
   return text;
 };
 
-const NewsItem: React.FC<NewsItemProps> = ({ title, date, image, summary }) => (
+const NewsItem: React.FC<NewsItemProps> = ({ id, title, date, image, summary }) => (
   <NewsCard>
     <ImageContainer>
-      <NewsImage src={image} alt="news image" />
+      <Link to={`/notifications/${id}`} 
+            onClick={() => window.scrollTo(0, 0)}>
+        <NewsImage src={image} alt="news image" />
+      </Link>
     </ImageContainer>
     <NewsContent>
       <NewsTitle>{truncateText(title, 15)}</NewsTitle>
       <NewsDate>{date}</NewsDate>
-      <NewsSummary>{summary}</NewsSummary>
+      <NewsSummary>{truncateText(summary, 15)}</NewsSummary>
     </NewsContent>
   </NewsCard>
 );
@@ -122,9 +129,10 @@ const Notifications = () => {
           title: notice.noticeTitle,
           content: notice.noticeContent,
           image: notice.noticeImg,
-          date: new Date(notice.createdAt).toLocaleDateString(), // Convert Date to string
+          date: new Date(notice.noticeCreatedAt).toLocaleDateString(), // Convert Date to string
         }));
-        setFetchedNotifications(posts);
+        const wholeNews = posts.reverse();
+        setFetchedNotifications(wholeNews);
       } catch (error) {
         if (error instanceof Error) {
           setError(error.message);
@@ -148,10 +156,11 @@ const Notifications = () => {
           {!isFetching && !error && fetchedNotifications.map((news) => (
             <NewsItem
               key={news.id}
+              id={news.id} 
               title={news.title}
               date={news.date}
               summary={news.content}
-              image={news.image ?? defaultIMG} // Correct usage of defaultIMG
+              image={news.image ?? 'defaultIMG'} // Correct usage of defaultIMG
             />
           ))}
         </NewsItemsContainer>
