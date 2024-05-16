@@ -68,6 +68,7 @@ public class SecurityConfig {
                         .requestMatchers("/login").permitAll()
                         .requestMatchers("/api/v1/notice/**").permitAll()
                         .requestMatchers("/api/v1/ranking/**").permitAll()
+                        .requestMatchers("/api/v1/live/**").permitAll()
 //                        .requestMatchers("/login/oauth2/code/google").permitAll()
                         .anyRequest().authenticated() // 그 외의 모든 요청은 인증된 사용자에게만 허용
                 )
