@@ -4,7 +4,8 @@ export type Post = {
   id: number;
   title: string;
   image: string | null | undefined;
-  text: string;
+  content: string;
+  date: string;
 };
 
 type PostsProps = {
@@ -18,8 +19,8 @@ export default function Posts({ posts }: PostsProps) {
         {posts.map((post) => (
           <li key={post.id}>
             <h2>{post.title}</h2>
-            <img src={post.image || defaultIMG} alt={post.title} />
-            <p>{post.text}</p>
+            {post.image ? <img src={post.image} alt={post.title} /> : <img src={defaultIMG} alt={post.title} />}
+            <p>{post.content}</p>
           </li>
         ))}
       </ul>

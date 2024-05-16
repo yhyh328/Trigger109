@@ -19,6 +19,7 @@ import { useEffect } from 'react';
 import { generateToken } from './component/notifications/firebase';
 import Login from './component/member/Login'
 import { AxiosError } from "axios";
+import NotificationDetail from './component/notifications/NotificationDetail';
 
 const App = () => {
 
@@ -60,12 +61,17 @@ const handleLoginFail = (error: unknown) => {
         <Route path="/live" element={
           <Live />
         }  />
-        <Route path="/live/:userId" element={<LiveDetail />} /> // 사용자 상세 페이지 경로
+        <Route path="/live/:userId" element={
+          <LiveDetail /> // 사용자 상세 페이지 경로
+        } /> 
         <Route path="/guide" element={
           <Guide />
         } />
         <Route path="/notifications" element={
           <Notifications />
+        } />
+        <Route path="/notifications/:noticeId" element={
+          <NotificationDetail />
         } />
         <Route path="/admin" element={
           <Admin />

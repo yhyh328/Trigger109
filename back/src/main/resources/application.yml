@@ -2,7 +2,7 @@ spring:
   #db
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://k10c109.p.ssafy.io:10912/trigger
+    url: jdbc:mysql://k10c109.p.ssafy.io:10912/trigger?serverTimezone=Asia/Seoul
     username: root
     password: trigger109!
   #jpa
@@ -62,8 +62,6 @@ jwt:
   refresh:
     expiration: 1209600000 #  (1000L(ms -> s) * 60L(s -> m) * 60L(m -> h) * 24L(h -> 하루) * 14(2주))
     header: Authorization-refresh
-
-
 
 
 #AWS S3

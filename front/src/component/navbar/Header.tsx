@@ -1,7 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { useSound } from '../../soundEffects/soundContext';
 import Modal from '../../component/member/MemberModal'; // 모달 컴포넌트를 임포트
+import { preparePlasma, prepareZap } from '../../soundEffects/soundEffects';
 
 const HeaderContainer = styled.header`
   background-color: #1a1a1a;
@@ -58,34 +59,52 @@ const PlayButton = styled.button`
   }
 `;
 
-const CheckboxContainer = styled.div`
-  margin-left: auto;
-  display: flex;
-  flex-direction: column; 
-  align-items: flex-end;
-  color: white;
-  cursor: pointer;
-  margin-right: 20px;
-  font-size: 10px;
-`;
-
-const CheckboxLabel = styled.div`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  width: 100%;
-  margin-bottom: 5px; // 각 체크박스 사이의 간격 조정
-`;
-
-const Checkbox = styled.input`
-  accent-color: #00FCCE; /* This changes the color of the checkbox */
-  margin-right: 8px;
-`;
-
 export const Header: React.FC = () => {
-  const { isSoundEnabled, toggleSound } = useSound();
-  const [showModal, setShowModal] = useState(false); // 모달의 표시 상태를 관리하는 state
+  const playZap = prepareZap();
+  const playPlasma = preparePlasma();
+  const { isSoundEnabled } = useSound();
+  
+  useEffect(() => {
+    console.log('playZap', playZap);
+  }, [playZap]);
 
+  const handleZap = (e: React.MouseEvent<HTMLAnchorElement>) => {
+    e.preventDefault();
+    const href = (e.target as HTMLAnchorElement).getAttribute('href');
+    if (isSoundEnabled) {
+      playZap.play()
+        .catch((err: any) => console.error('Error playing zap:', err))
+        .finally(() => {
+          if (href) {
+            setTimeout(() => {
+              window.location.href = href;
+            }, 100); // Duration of zap sound effect
+          }
+        });
+    } else if (href) {
+      window.location.href = href;
+    }
+  }
+
+  const handlePlasma = (e: React.MouseEvent<HTMLAnchorElement>) => {
+    e.preventDefault();
+    const href = (e.target as HTMLAnchorElement).getAttribute('href');
+    if (isSoundEnabled) {
+      playZap.play()
+        .catch((err: any) => console.error('Error playing plasma:', err))
+        .finally(() => {
+          if (href) {
+            setTimeout(() => {
+              window.location.href = href;
+            }, 300); // Duration of plasma sound effect
+          }
+        });
+    } else if (href) {
+      window.location.href = href;
+    }
+  }
+
+  const [showModal, setShowModal] = useState(false); // 모달의 표시 상태를 관리하는 state
   const handleOpenModal = () => setShowModal(true);
   const handleCloseModal = () => setShowModal(false);
 
@@ -93,35 +112,19 @@ export const Header: React.FC = () => {
     <>
       <HeaderContainer>
         <Logo>
-          <a href="/">Tri<span>gg</span>er</a>
+          <a href="/" >Tri<span>gg</span>er</a>
         </Logo>
         <Nav>
-          <a href="/notifications">공지사항</a>
-          <a href="#">랭킹</a>
-          <a href="/live">라이브</a>
-          <a href="/guide">가이드</a>
+          <a href="/notifications" onClick={handleZap}>
+            공지사항
+          </a>
+          <a href="#" onClick={handleZap}>랭킹</a>
+          <a href="/live" onClick={handleZap}>라이브</a>
+          <a href="/guide" onClick={handleZap}>가이드</a>
         </Nav>
-        <CheckboxContainer>
-          <CheckboxLabel>
-            Allow Sound Effects
-            <Checkbox 
-              type="checkbox" 
-              checked={isSoundEnabled} 
-              onChange={toggleSound} 
-            />
-          </CheckboxLabel>
-          <CheckboxLabel>
-            Allow Push Notifications
-            <Checkbox 
-              type="checkbox" 
-              checked={false} // 따로 관련 함수 만들어야 함
-              onChange={() => {}} // 따로 관련 함수 만들어야 함
-            />
-          </CheckboxLabel>
-        </CheckboxContainer>
         <PlayButton onClick={handleOpenModal}>지금 플레이하기</PlayButton>
       </HeaderContainer>
-      {showModal && <Modal onClose={handleCloseModal} />} // 모달 컴포넌트를 조건부 렌더링
+      {showModal && <Modal onClose={handleCloseModal} />} {/* 모달 컴포넌트를 조건부 렌더링 */}
     </>
   );
 }
