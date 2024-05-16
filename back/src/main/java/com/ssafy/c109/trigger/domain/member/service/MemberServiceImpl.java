@@ -13,6 +13,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -53,6 +54,16 @@ public class MemberServiceImpl implements MemberService {
                 .build();
 
         memberRepository.save(member);
+    }
+
+    @Override
+    public Member getAllMemberInfo(String email) {
+        Optional<Member> optionalMember = memberRepository.findByEmail(email);
+        if (optionalMember.isPresent()) {
+            return optionalMember.get();
+        } else {
+            throw new RuntimeException("해당 이메일로 등록된 회원이 없습니다: " + email);
+        }
     }
 }
 
