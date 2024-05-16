@@ -13,6 +13,7 @@ const NewsCard = styled.div`
   flex: 0 0 auto;
   width: 300px;
   margin-right: 20px;
+  margin-bottom: 70px;
   color: white;
   border-radius: 10px;
   box-shadow: 0 4px 8px rgba(0,0,0,0.1);
@@ -74,11 +75,13 @@ const NewsTitleContainer = styled.div`
 `;
 
 const NewsItemsContainer = styled.div`
-  display: grid;
-  grid-template-columns: repeat(3, 1fr); /* Three columns */
-  gap: 20px;
-  padding: 20px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center; /* 가로축 가운데 정렬 */
+  gap: 50px;
+  padding: 50px;
 `;
+
 
 interface NewsItemProps {
   id: number;
