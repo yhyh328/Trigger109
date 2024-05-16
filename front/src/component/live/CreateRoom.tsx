@@ -9,7 +9,7 @@ interface ModalProps {
 }
 
 const CreateRoom: React.FC<ModalProps> = ({ isOpen, onClose, onCreate, memberId }) => {
-  const [title, setTitle] = useState<string>('');
+  const [roomTitle, setTitle] = useState<string>('');
 
   if (!isOpen) {
     return null;
@@ -21,9 +21,10 @@ const CreateRoom: React.FC<ModalProps> = ({ isOpen, onClose, onCreate, memberId 
 
   const handleCreateClick = async (event: MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
+    console.log("Attempting to create room with:", { memberId, roomTitle });
     try {
       // API 호출
-      const roomData = { memberId, title };
+      const roomData = { memberId, roomTitle };
       const roomInfo = await createRoom(memberId, roomData);
       console.log('Room created successfully:', roomInfo);
       setTitle('');
@@ -61,7 +62,7 @@ const CreateRoom: React.FC<ModalProps> = ({ isOpen, onClose, onCreate, memberId 
       }}>
         <input
           type="text"
-          value={title}
+          value={roomTitle}
           onChange={handleTitleChange}
           placeholder="Enter stream title"
         />

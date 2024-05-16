@@ -3,7 +3,7 @@ import { localAxios } from "../util/http-commons";
 
 export interface RoomCreateRequestDto {
     memberId: string;  // 방을 생성하는 멤버의 ID
-    title: string;     // 스트리밍 방의 제목
+    roomTitle: string;     // 스트리밍 방의 제목
     // 추가 필요한 필드는 여기에 선언
   }
 
@@ -13,8 +13,7 @@ const createRoomUrl = "http://localhost:8080/api/v1/live";
 export const createRoom = async (memberId: string, roomData: RoomCreateRequestDto): Promise<any> => {
     const local: AxiosInstance = localAxios();
     const token = localStorage.getItem('token');
-    const url = `${createRoomUrl}/${memberId}`;  // URL에 memberId 포함
-
+    console.log("token", token)
     try {
         const response = await local.post(createRoomUrl, JSON.stringify(roomData), {
             headers: {
