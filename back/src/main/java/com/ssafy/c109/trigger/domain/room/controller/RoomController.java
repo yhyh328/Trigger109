@@ -23,7 +23,7 @@ public class RoomController {
         this.roomService = roomService;
     }
 
-    @PostMapping("/{memberId}")
+    @PostMapping()
     public ResponseEntity<RoomResponseDto> createRoom(@RequestBody RoomCreateRequestDto roomCreateRequestDto) {
         Room room = roomService.createRoom(roomCreateRequestDto);
         RoomResponseDto roomResponseDto = RoomMapper.MAPPER.toRoomResponseDto(room);
