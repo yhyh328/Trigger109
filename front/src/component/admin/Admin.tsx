@@ -2,7 +2,8 @@ import React, { useState, useEffect, useRef } from "react";
 import { Notice, postNotification } from "../../api/notifications";
 import { generateToken, messaging } from '../notifications/firebase';
 import { onMessage } from 'firebase/messaging';
-import S3 from 'react-aws-s3-typescript';
+import AWS from "aws-sdk";
+import { v4 as uuidv4 } from 'uuid';
 import './Admin.css';
 
 export function UploadNotification() {
@@ -10,6 +11,7 @@ export function UploadNotification() {
   const [content, setContent] = useState("");
   const [selectedImage, setSelectedImage] = useState<File | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [myBucket, setMyBucket] = useState<AWS.S3 | null>(null);
   const [fcmTokenGenerated, setFcmTokenGenerated] = useState(false);
   const fileUpload = useRef<HTMLInputElement>(null);
 
@@ -21,6 +23,20 @@ export function UploadNotification() {
       });
     }
   }, [fcmTokenGenerated]);
+
+  useEffect(() => {
+    AWS.config.update({
+      accessKeyId: "AKIAQ3EGSCUZF6M3J4HW",
+      secretAccessKey: "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",
+    });
+
+    const myBucket = new AWS.S3({
+      params: { Bucket: "trigger109-bucket" },
+      region: "ap-northeast-2"
+    });
+
+    setMyBucket(myBucket);
+  }, []);
 
   const handleImageUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0] ?? null;
@@ -37,24 +53,6 @@ export function UploadNotification() {
 
     setIsSubmitting(true);
 
-    const bucketName = "trigger109-bucket";
-    const region = "ap-northeast-2";
-    const accessKeyId = "AKIAQ3EGSCUZF6M3J4HW";
-    const secretAccessKey = "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";
-
-    if (!bucketName || !region || !accessKeyId || !secretAccessKey) {
-      alert("Missing AWS S3 configuration. Please check your environment variables.");
-      setIsSubmitting(false);
-      return;
-    }
-
-    const config = {
-      bucketName,
-      region,
-      accessKeyId,
-      secretAccessKey,
-    };
-
     const newNotice: Partial<Notice> = {
       noticeTitle: title,
       noticeContent: content,
@@ -63,38 +61,64 @@ export function UploadNotification() {
       noticeViewCnt: 0,
     };
 
-    if (selectedImage) {
+    if (selectedImage && myBucket) {
       try {
-        const ReactS3Client = new S3(config);
-        const newFileName = selectedImage.name;
-        const data = await ReactS3Client.uploadFile(selectedImage, newFileName);
+        const uniqueFileName = `upload/${uuidv4()}-${selectedImage.name}`;
+        const param = {
+          ACL: "public-read",
+          ContentType: selectedImage.type,
+          Body: selectedImage,
+          Bucket: "trigger109-bucket",
+          Key: uniqueFileName
+        };
 
-        if (data.status === 204) {
-          newNotice.noticeImg = data.location;
-        } else {
-          throw new Error('Image upload failed.');
-        }
+        myBucket
+          .putObject(param)
+          .send((err) => {
+            if (err) {
+              console.log(err);
+            } else {
+              const url = myBucket.getSignedUrl("getObject", { Key: param.Key });
+              console.log("url: ", url);
+              newNotice.noticeImg += url;
+
+              postNotification(newNotice as Notice)
+                .then(() => {
+                  alert("Upload successful!");
+                  setFcmTokenGenerated(true);
+                  setTitle("");
+                  setContent("");
+                  setSelectedImage(null);
+                })
+                .catch((error) => {
+                  console.error("Upload failed:", error);
+                  alert("Upload failed.");
+                })
+                .finally(() => {
+                  setIsSubmitting(false);
+                });
+            }
+          });
       } catch (error) {
         console.error("Failed to upload image:", error);
         alert("Image processing failed.");
         setIsSubmitting(false);
         return;
       }
-    }
-
-    try {
-      await postNotification(newNotice as Notice);
-      alert("Upload successful!");
-      setFcmTokenGenerated(true);
-      // Clear form fields after successful upload
-      setTitle("");
-      setContent("");
-      setSelectedImage(null);
-    } catch (error) {
-      console.error("Upload failed:", error);
-      alert("Upload failed.");
-    } finally {
-      setIsSubmitting(false);
+    } else {
+      try {
+        await postNotification(newNotice as Notice);
+        alert("Upload successful!");
+        setFcmTokenGenerated(true);
+        setTitle("");
+        setContent("");
+        setSelectedImage(null);
+      } catch (error) {
+        console.error("Upload failed:", error);
+        alert("Upload failed.");
+      } finally {
+        setIsSubmitting(false);
+      }
     }
   };
 
