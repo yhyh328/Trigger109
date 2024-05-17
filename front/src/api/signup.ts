@@ -40,8 +40,8 @@ export const signUpRequest = async (data: SignUpData): Promise<void> => {
     }
 };
 
-// const url = "https://trigger109.com/api/v1/users/signup";
-const url = "http://localhost:8080/api/v1/users/signup";
+const url = "https://trigger109.com/api/v1/users/signup";
+// const url = "http://localhost:8080/api/v1/users/signup";
 
 // SignUp 함수 내부에서 SignUpData 객체 생성 및 signUpRequest 함수 호출
 const signUp = async (email: string, password: string, nickName: string, gender: Gender, profileImg: File | null): Promise<void> => {
