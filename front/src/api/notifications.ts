@@ -10,7 +10,7 @@ export type Notice = {
   noticeId: number;
   noticeTitle: string;
   noticeContent: string;
-  noticeImg: string; 
+  noticeImg: string;
   noticeEmergency: number;
   noticeViewCnt: number;
   noticeCreatedAt: string;
@@ -32,56 +32,59 @@ function b64toBlob(b64Data: string, contentType: string, sliceSize = 512): Blob 
     byteArrays.push(byteArray);
   }
 
-  const blob = new Blob(byteArrays, { type: contentType });
-  return blob;
+  return new Blob(byteArrays, { type: contentType });
 }
 
 async function postNotification(notice: Notice): Promise<void> {
   if (!local) {
     throw new Error("Unable to create Axios instance.");
   }
+
   const formData = new FormData();
   formData.append('noticeTitle', notice.noticeTitle);
   formData.append('noticeContent', notice.noticeContent);
 
   if (notice.noticeImg) {
-    // Assuming noticeImg is a base64 string of the image, we need to convert it to a File/Blob object
     const blob = b64toBlob(notice.noticeImg.split(',')[1], notice.noticeImg.split(',')[0].split(':')[1].split(';')[0]);
     formData.append('noticeImg', new File([blob], "filename.png"));
   }
 
   const token: string | null = localStorage.getItem('token');
-  local.defaults.headers.Authorization = "Bearer " + token;
+  if (token) {
+    local.defaults.headers.Authorization = `Bearer ${token}`;
+  }
 
   try {
     await local.post(`${url}/register`, formData, {
       headers: {
-        'Authorization': `Bearer ${token}`,
-        'Content-Type': 'application/json' // This might be redundant as axios sets it automatically for JSON payloads
+        'Content-Type': 'multipart/form-data',
       }
     });
-
 
     const fcmTokens = await getFCMs();
-    console.log(fcmTokens)
-    const fcmUrl = "https://fcm.googleapis.com/fcm/send";
-    const fcmHeaders = {
-      'Content-Type': 'application/json',
-      'Authorization': 'key=AAAAaTWX5Gs:APA91bHzgQp6joaC4Kv2aTDyX-baS5DmmVvj4StsgV7FYIYLMhaCMXeCImEF6hUJDfEUbvTar9zVt2sw3xTbN70i6rL0IwtrrxJSLXo-aYA5NKuJyhU0EpUyD45mP_LktxYECLBxHw4X'
-    };
+    const validFcmTokens = fcmTokens.filter((fcm) => fcm.fcmToken !== 'undefined').map((fcm) => fcm.fcmToken);
 
-    const notificationPayload = JSON.stringify({
-      registration_ids: fcmTokens,
-      notification: {
-        title: notice.noticeTitle,
-        body: notice.noticeContent
-      }
-    });
+    if (validFcmTokens.length > 0) {
+      const fcmUrl = "https://fcm.googleapis.com/fcm/send";
+      const fcmHeaders = {
+        'Content-Type': 'application/json',
+        'Authorization': 'key=AAAAaTWX5Gs:APA91bHzgQp6joaC4Kv2aTDyX-baS5DmmVvj4StsgV7FYIYLMhaCMXeCImEF6hUJDfEUbvTar9zVt2sw3xTbN70i6rL0IwtrrxJSLXo-aYA5NKuJyhU0EpUyD45mP_LktxYECLBxHw4X'
+      };
 
-    console.log("Sending notification with payload:", notificationPayload);
-    await axios.post(fcmUrl, notificationPayload, { headers: fcmHeaders })
-      .then(response => console.log("Notification sent successfully:", response))
-      .catch(error => console.error("Failed to send notification:", error));
+      const notificationPayload = {
+        registration_ids: validFcmTokens,
+        notification: {
+          title: notice.noticeTitle,
+          body: notice.noticeContent
+        }
+      };
+
+      await axios.post(fcmUrl, notificationPayload, { headers: fcmHeaders })
+        .then(response => console.log("Notification sent successfully:", response))
+        .catch(error => console.error("Failed to send notification:", error));
+    } else {
+      console.log("No valid FCM tokens available to send notifications.");
+    }
 
   } catch (error) {
     console.error("Error posting notification:", error);
