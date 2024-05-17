@@ -6,7 +6,7 @@ export type LoginData = {
   password: string;
 };
 
-const loginUrl = "http://localhost:8080/api/v1/users/login";
+const loginUrl = "https://trigger109.com/api/v1/users/login";
 
 // 로그인 함수
 export const login = async (loginData: LoginData): Promise<string | null> => {

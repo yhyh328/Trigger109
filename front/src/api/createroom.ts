@@ -7,7 +7,7 @@ export interface RoomCreateRequestDto {
     // 추가 필요한 필드는 여기에 선언
   }
 
-const createRoomUrl = "http://localhost:8080/api/v1/live";
+const createRoomUrl = "https://trigger109.com/api/v1/live";
 
 // 방 생성 함수
 export const createRoom = async (memberId: string, roomData: RoomCreateRequestDto): Promise<any> => {

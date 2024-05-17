@@ -15,7 +15,7 @@ export const fetchUserInfo = async (): Promise<Member> => {
   const token = localStorage.getItem('token'); // 로컬 스토리지에서 토큰 가져오기
 
   try {
-    const response = await local.get<Member>('http://localhost:8080/api/v1/users/info', {
+    const response = await local.get<Member>('https://trigger109.com/api/v1/users/info', {
       headers: {
         'Authorization': `Bearer ${token}` // 요청 헤더에 인증 토큰 추가
       },
