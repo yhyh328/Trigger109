@@ -27,22 +27,12 @@ public class OauthController {
     }
     @GetMapping("/google")
     public String googleTest(){
+        log.info("google");
         return "google 로그인 성공!!!";
     }
     @GetMapping("/naver")
     public String naverTest(){
         return "naver 로그인 성공!!!";
-    }
-    @PostMapping("/signup")
-    public ResponseEntity<?> signUp(@RequestBody SignUpRequest signUpRequest, MultipartFile profileImg) {
-        log.info("signUpRequest : " + signUpRequest);
-        try {
-            memberService.singUp(signUpRequest,profileImg);
-            return ResponseEntity.ok("사용자 등록이 성공했습니다.");
-        } catch (Exception e) {
-            log.error("사용자 등록 중 오류가 발생했습니다: {}", e.getMessage());
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("사용자 등록에 실패했습니다.");
-        }
     }
 
 }
