@@ -23,6 +23,7 @@ public class OauthController {
     }
     @GetMapping("/kakao")
     public String kakaoTest(){
+        log.info("kakao");
         return "kakao 로그인 성공!!!";
     }
     @GetMapping("/google")
@@ -32,6 +33,7 @@ public class OauthController {
     }
     @GetMapping("/naver")
     public String naverTest(){
+        log.info("kakao");
         return "naver 로그인 성공!!!";
     }
 

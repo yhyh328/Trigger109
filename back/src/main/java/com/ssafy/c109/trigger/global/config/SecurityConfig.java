@@ -64,8 +64,7 @@ public class SecurityConfig {
                 .authorizeHttpRequests((authorizeRequests) ->
                     authorizeRequests
                         .requestMatchers("/login/**").permitAll()
-//                        .requestMatchers("/oauth2/**").permitAll()
-//                        .requestMatchers("/api/v1/users/oauth2/code/google").permitAll()
+                        .requestMatchers("/code/**").permitAll()
                         .requestMatchers("/api/v1/users/signup").permitAll() // 회원가입 엔드포인트 허용
                         .requestMatchers("/api/v1/notice/**").permitAll()
                         .requestMatchers("/api/v1/ranking/**").permitAll()
