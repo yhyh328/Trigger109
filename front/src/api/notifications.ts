@@ -70,7 +70,7 @@ async function postNotification(notice: Notice): Promise<void> {
     const fcmUrl = "https://fcm.googleapis.com/fcm/send";
     const fcmHeaders = {
       'Content-Type': 'application/json',
-      'Authorization': 'key=AIzaSyB-GOUMKDJ5yMkrBlR9uU0aBRoXRuR7p1E'
+      'Authorization': 'key=AAAAaTWX5Gs:APA91bHzgQp6joaC4Kv2aTDyX-baS5DmmVvj4StsgV7FYIYLMhaCMXeCImEF6hUJDfEUbvTar9zVt2sw3xTbN70i6rL0IwtrrxJSLXo-aYA5NKuJyhU0EpUyD45mP_LktxYECLBxHw4X'
     };
 
     const notificationPayload = JSON.stringify({

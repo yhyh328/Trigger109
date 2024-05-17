@@ -27,6 +27,9 @@ COPY . .
 # For development:
 # CMD ["npm", "start"]
 
+# Install serve to serve static files in production
+RUN npm install -g serve
+
 # For production:
 RUN npm run build
 # Serve static files using a simple HTTP server if you are not using an external server like nginx
