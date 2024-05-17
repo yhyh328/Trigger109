@@ -43,9 +43,6 @@ async function postNotification(notice: Notice): Promise<void> {
   const formData = new FormData();
   formData.append('noticeTitle', notice.noticeTitle);
   formData.append('noticeContent', notice.noticeContent);
-  formData.append('noticeEmergency', '0');
-  formData.append('noticeViewCnt', '0');
-  formData.append('noticeCreatedAt', notice.noticeCreatedAt);
 
   if (notice.noticeImg) {
     // Assuming noticeImg is a base64 string of the image, we need to convert it to a File/Blob object
