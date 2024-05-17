@@ -78,7 +78,7 @@ async function postNotification(notice: Notice): Promise<void> {
       //   fcmToken,
       //   "additional-token-if-needed"
       // ],
-      to: "cICDxDsmxTR9T5gT7MKtOr:APA91bHiBh87NAoK39Z4Pam5so4i6hnVcr7yjB0bNOFrEw1NH6Fcx4VVm_6C3bMnz4-EEqy5wP5IhIXjmbsG7t6h_Opz3bXBoUQ_ZKQHFEYgnn6F0wIhu_vtl-Ozl5_v_ZnuBdU_cmhF",
+      to: "cICDxDsmxTR9T5gT7MKtOr:APA91bGs08slBsWXomsTsx4a0mmI1db_YPWTURhYtttG16e2DZOAxu2qM0dYMQhPg1TBDMndVazcwH8_kVqjO5Ln59K3voJEnz42FZGgwZwZPJULJJi3fz8wBgLdbkWdEuizUuw652QU",
       notification: {
         title: notice.noticeTitle,
         body: notice.noticeContent
