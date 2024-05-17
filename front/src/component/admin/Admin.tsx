@@ -66,12 +66,16 @@ export function UploadNotification() {
       await postNotification(newNotice as Notice);
       alert("Upload successful!");
       setFcmTokenGenerated(true);
+      // Clear form fields after successful upload
+      setTitle("");
+      setContent("");
+      setSelectedImage(null);
     } catch (error) {
       console.error("Upload failed:", error);
       alert("Upload failed.");
     } finally {
       setIsSubmitting(false);
-      setFcmTokenGenerated(false);
+      // Ensure FCM token generation is not reset unnecessarily
     }
   };
 
