@@ -49,6 +49,8 @@ async function postNotification(notice: Notice): Promise<void> {
     formData.append('noticeImg', new File([blob], "filename.png"));
   }
 
+  console.log(formData)
+
   const token: string | null = localStorage.getItem('token');
   if (token) {
     local.defaults.headers.Authorization = `Bearer ${token}`;
