@@ -40,26 +40,26 @@ async function postNotification(notice: Notice): Promise<void> {
     throw new Error("Unable to create Axios instance.");
   }
 
-  const formData = new FormData();
-  formData.append('noticeTitle', notice.noticeTitle);
-  formData.append('noticeContent', notice.noticeContent);
-
-  if (notice.noticeImg) {
-    const blob = b64toBlob(notice.noticeImg.split(',')[1], notice.noticeImg.split(',')[0].split(':')[1].split(';')[0]);
-    formData.append('noticeImg', new File([blob], "filename.png"));
-  }
-
-  console.log(formData)
-
   const token: string | null = localStorage.getItem('token');
   if (token) {
     local.defaults.headers.Authorization = `Bearer ${token}`;
   }
 
   try {
-    await local.post(`${url}/register`, formData, {
+    const noticePayload = {
+      noticeTitle: notice.noticeTitle,
+      noticeContent: notice.noticeContent,
+      noticeImg: notice.noticeImg,
+      noticeEmergency: notice.noticeEmergency,
+      noticeViewCnt: notice.noticeViewCnt,
+      noticeCreatedAt: notice.noticeCreatedAt,
+    };
+
+    console.log('Notice Payload:', noticePayload);
+
+    await local.post(`${url}/register`, noticePayload, {
       headers: {
-        'Content-Type': 'multipart/form-data',
+        'Content-Type': 'application/json',
       }
     });
 
@@ -68,7 +68,7 @@ async function postNotification(notice: Notice): Promise<void> {
       .filter((fcm) => fcm.fcmToken && fcm.fcmToken !== 'undefined')
       .map((fcm) => fcm.fcmToken);
 
-    console.log(validFcmTokens)
+    console.log('Valid FCM Tokens:', validFcmTokens);
 
     if (validFcmTokens.length > 0) {
       const fcmUrl = "https://fcm.googleapis.com/fcm/send";
