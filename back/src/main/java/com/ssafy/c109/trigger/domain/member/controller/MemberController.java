@@ -29,7 +29,7 @@ public class MemberController {
     }
     @PostMapping(value = "/signup")
     public ResponseEntity<?> signUp(@ModelAttribute SignUpRequest signUpRequest,
-                                    @RequestParam("profileImg") MultipartFile profileImg) {
+                                    @RequestParam(value = "profileImg", required = false) MultipartFile profileImg) {
         log.info("signUpRequest : " + signUpRequest);
         log.info("profileImg : " + profileImg);
         try {
