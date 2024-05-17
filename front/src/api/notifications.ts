@@ -10,7 +10,7 @@ export type Notice = {
   noticeId: number;
   noticeTitle: string;
   noticeContent: string;
-  noticeImg?: string | null; // Change to string | null
+  noticeImg: string; 
   noticeEmergency: number;
   noticeViewCnt: number;
   noticeCreatedAt: string;
@@ -98,6 +98,7 @@ async function getNotificationList(): Promise<Notices[]> {
   }
   try {
     const response = await local.get(`${url}`);
+    console.log("API Response:", response.data);  // Add this to log the raw API response
     return response.data;
   } catch (error) {
     console.error("Error getting notifications:", error);
