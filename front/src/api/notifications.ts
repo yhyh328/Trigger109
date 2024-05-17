@@ -75,7 +75,7 @@ async function postNotification(notice: Notice): Promise<void> {
         registration_ids: validFcmTokens,
         notification: {
           title: notice.noticeTitle,
-          body: notice.noticeContent
+          body: "새로운 공지 사항을 확인하세요!"
         }
       };
 
