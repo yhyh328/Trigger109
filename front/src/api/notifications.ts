@@ -54,10 +54,6 @@ async function postNotification(notice: Notice): Promise<void> {
   local.defaults.headers.Authorization = "Bearer " + token;
 
   try {
-    console.log('Full URL:', `${local?.defaults.baseURL}${url}/register`);
-    console.log('Headers:', JSON.stringify(local?.defaults.headers, null, 2));
-    console.log('Form Data:', formData);
-
     await local.post(`${url}/register`, formData, {
       headers: {
         'Authorization': `Bearer ${token}`,
@@ -101,7 +97,6 @@ async function getNotificationList(): Promise<Notices[]> {
   }
   try {
     const response = await local.get(`${url}`);
-    console.log("API Response:", response.data);  // Add this to log the raw API response
     return response.data;
   } catch (error) {
     console.error("Error getting notifications:", error);
