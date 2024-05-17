@@ -31,7 +31,7 @@ COPY . .
 RUN npm run build
 # Serve static files using a simple HTTP server if you are not using an external server like nginx
 # e.g., `npm install -g serve`
-# CMD ["serve", "-s", "build", "-l", "3000"]
+CMD ["serve", "-s", "build", "-l", "3000"]
 
 # Expose the port the app runs on
 EXPOSE 3000
