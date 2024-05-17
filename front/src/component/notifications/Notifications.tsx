@@ -82,7 +82,6 @@ const NewsItemsContainer = styled.div`
   padding: 50px;
 `;
 
-
 interface NewsItemProps {
   id: number;
   title: string;
@@ -124,14 +123,18 @@ const Notifications = () => {
       setIsFetching(true);
       try {
         const newsData = await getNotificationList() as Notices;
+        console.log('Fetched data:', newsData); // Check the raw fetched data
         const posts: Post[] = newsData.map((notice: Notice) => ({
           id: notice.noticeId,
           title: notice.noticeTitle,
           content: notice.noticeContent,
           image: notice.noticeImg,
-          date: new Date(notice.createdAt).toLocaleDateString(), // Convert Date to string
+          date: notice.noticeCreatedAt,
         }));
         const wholeNews = posts.reverse();
+        wholeNews.forEach(element => {
+          console.log(element.id, '-', element.image)
+        });
         setFetchedNotifications(wholeNews);
       } catch (error) {
         if (error instanceof Error) {

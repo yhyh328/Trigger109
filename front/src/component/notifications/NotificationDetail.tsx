@@ -89,8 +89,8 @@ function NotificationDetail() {
           id: response.noticeId,
           title: response.noticeTitle,
           content: response.noticeContent,
-          image: response.noticeImg ?? DefaultIMG,
-          date: new Date(response.createdAt).toLocaleDateString(), // 적절한 날짜 형식으로 변경
+          image: response.noticeImg ?? 'DefaultIMG',
+          date: response.noticeCreatedAt, // 적절한 날짜 형식으로 변경
         };
         setPost(post);
       } catch (error) {

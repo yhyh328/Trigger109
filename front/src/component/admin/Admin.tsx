@@ -46,7 +46,7 @@ export function UploadNotification() {
     const newNotice: Partial<Notice> = {
       noticeTitle: title,
       noticeContent: content,
-      noticeImg: null,
+      noticeImg: '',
       noticeEmergency: 0,
       noticeViewCnt: 0,
     };

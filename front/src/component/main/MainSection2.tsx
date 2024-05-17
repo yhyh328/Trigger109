@@ -143,7 +143,7 @@ const MainSection2 = () => {
           title: notice.noticeTitle,
           content: notice.noticeContent,
           image: notice.noticeImg,
-          date: new Date(notice.createdAt).toLocaleDateString(), // Convert Date to string
+          date: notice.noticeCreatedAt, // Convert Date to string
         }));
         const threeNews = posts.slice(-3).reverse(); // Get the last 3 items and reverse the order
         setFetchedThree(threeNews);
