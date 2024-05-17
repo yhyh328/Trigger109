@@ -12,7 +12,7 @@ const handlePlayClick = () => {
 // Section 컴포넌트에 스타일을 적용합니다.
 const Section = styled.section`
   height: 90vh;
-  background-image: url('/valorant6.png');
+  background-image: url('/game_map_imgs/main.png');
   background-size: cover;
   display: flex;
   flex-direction: column;

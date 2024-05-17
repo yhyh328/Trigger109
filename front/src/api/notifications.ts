@@ -63,34 +63,34 @@ async function postNotification(notice: Notice): Promise<void> {
       }
     });
 
-    const fcmTokens = await getFCMs() as FCMList;
-    const validFcmTokens = fcmTokens
-      .filter((fcm) => fcm.fcmToken && fcm.fcmToken !== 'undefined')
-      .map((fcm) => fcm.fcmToken);
+    // const fcmTokens = await getFCMs() as FCMList;
+    // const validFcmTokens = fcmTokens
+    //   .filter((fcm) => fcm.fcmToken && fcm.fcmToken !== 'undefined')
+    //   .map((fcm) => fcm.fcmToken);
 
-    console.log('Valid FCM Tokens:', validFcmTokens);
+    // console.log('Valid FCM Tokens:', validFcmTokens);
 
-    if (validFcmTokens.length > 0) {
-      const fcmUrl = "https://fcm.googleapis.com/fcm/send";
-      const fcmHeaders = {
-        'Content-Type': 'application/json',
-        'Authorization': 'key=AAAAaTWX5Gs:APA91bHzgQp6joaC4Kv2aTDyX-baS5DmmVvj4StsgV7FYIYLMhaCMXeCImEF6hUJDfEUbvTar9zVt2sw3xTbN70i6rL0IwtrrxJSLXo-aYA5NKuJyhU0EpUyD45mP_LktxYECLBxHw4X'
-      };
+    // if (validFcmTokens.length > 0) {
+    //   const fcmUrl = "https://fcm.googleapis.com/fcm/send";
+    //   const fcmHeaders = {
+    //     'Content-Type': 'application/json',
+    //     'Authorization': 'key=AAAAaTWX5Gs:APA91bHzgQp6joaC4Kv2aTDyX-baS5DmmVvj4StsgV7FYIYLMhaCMXeCImEF6hUJDfEUbvTar9zVt2sw3xTbN70i6rL0IwtrrxJSLXo-aYA5NKuJyhU0EpUyD45mP_LktxYECLBxHw4X'
+    //   };
 
-      const notificationPayload = {
-        registration_ids: validFcmTokens,
-        notification: {
-          title: notice.noticeTitle,
-          body: "새로운 공지 사항을 확인하세요!"
-        }
-      };
+    //   const notificationPayload = {
+    //     registration_ids: validFcmTokens,
+    //     notification: {
+    //       title: notice.noticeTitle,
+    //       body: "새로운 공지 사항을 확인하세요!"
+    //     }
+    //   };
 
-      await axios.post(fcmUrl, notificationPayload, { headers: fcmHeaders })
-        .then(response => console.log("Notification sent successfully:", response))
-        .catch(error => console.error("Failed to send notification:", error));
-    } else {
-      console.log("No valid FCM tokens available to send notifications.");
-    }
+    //   await axios.post(fcmUrl, notificationPayload, { headers: fcmHeaders })
+    //     .then(response => console.log("Notification sent successfully:", response))
+    //     .catch(error => console.error("Failed to send notification:", error));
+    // } else {
+    //   console.log("No valid FCM tokens available to send notifications.");
+    // }
 
   } catch (error) {
     console.error("Error posting notification:", error);

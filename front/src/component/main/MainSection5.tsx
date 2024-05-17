@@ -6,7 +6,7 @@ import styled from 'styled-components';
 // Section 컴포넌트에 스타일을 적용합니다.
 const Section = styled.section`
   height: 90vh;
-  background-image: url('/TriggerSection5.png');
+  background-image: url('/game_map_imgs/도쿄배경1.png');
   background-size: cover;
   display: flex;
   flex-direction: column;

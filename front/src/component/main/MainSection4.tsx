@@ -113,7 +113,7 @@ const MainSection4 = () => {
       </GuidItemContainer>
       <ImageContainer>
         {/* 이미지 경로를 정확하게 지정해야 합니다. */}
-        <StyledImage src='./valorant3.png' alt='Valorant' />
+        <StyledImage src='./game_map_imgs/Capture.png' alt='Valorant' />
       </ImageContainer>
     </GuidContainer>
   );
