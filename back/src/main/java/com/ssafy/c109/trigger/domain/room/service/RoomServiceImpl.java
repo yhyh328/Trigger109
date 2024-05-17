@@ -34,14 +34,31 @@ public class RoomServiceImpl implements RoomService {
         // Member 객체 조회
         Optional<Member> optionalMember = memberRepository.findById((long) roomCreateDto.getMemberId());
         if (optionalMember.isPresent()) {
+            log.info("test44");
             room.setMember(optionalMember.get()); // 조회된 Member 설정
         } else {
+            log.info("test55");
             log.warn("Member not found with ID: {}", roomCreateDto.getMemberId());
             throw new IllegalArgumentException("Member not found with ID: " + roomCreateDto.getMemberId());
         }
 
         // 방을 데이터베이스에 저장
         return roomRepository.save(room);
+    }
+
+    @Override
+    public Room getAllRoomInfo(String email) {
+        try {
+            Room room = roomRepository.findByMember_Email(email);
+            if (room == null) {
+                log.warn("이메일에 대한 방을 찾을 수 없습니다: {}", email);
+                throw new IllegalArgumentException("이메일에 대한 방을 찾을 수 없습니다: " + email);
+            }
+            return room;
+        } catch (Exception e) {
+            log.error("이메일에 대한 방 정보를 가져오는 중 오류 발생: {}", email, e);
+            throw new RuntimeException("방 정보를 가져오는 중 오류가 발생했습니다", e);
+        }
     }
 
     @Override

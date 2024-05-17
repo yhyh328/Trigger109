@@ -8,5 +8,6 @@ public record GetNoticeListResponse(
     String noticeContent,
     LocalDate noticeCreatedAt,
     int noticeEmergency,
-    int noticeViewCnt
+    int noticeViewCnt,
+    String noticeImg
 ) {}

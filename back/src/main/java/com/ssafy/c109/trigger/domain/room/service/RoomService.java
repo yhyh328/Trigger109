@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 @Service
 public interface RoomService {
     Room createRoom(RoomCreateRequestDto roomCreateDto);
-
+    Room getAllRoomInfo(String email);
     void deleteRoom(Long roomId);
 
 }
