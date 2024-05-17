@@ -6,7 +6,7 @@ import java.util.List;
 
 public interface FcmService {
 
-    void registerFcmToken(String fcmToken);
+    void registerFcmToken(FCM fcm);
 
     List<FCM> getAllFcmToken();
 

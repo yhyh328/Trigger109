@@ -18,7 +18,9 @@ public class FCM {
     private Long fcmId;
 
     private String fcmToken;
+
     public FCM() {
 
     }
 }
+
