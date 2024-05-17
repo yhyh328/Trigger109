@@ -1,13 +1,15 @@
 import React, { useState, ChangeEvent, MouseEvent } from 'react';
+import { createRoom } from '../../api/createroom';
 
 interface ModalProps {
   isOpen: boolean;
   onClose: () => void;
   onCreate: (title: string) => void;
+  memberId: string;
 }
 
-const CreateRoom: React.FC<ModalProps> = ({ isOpen, onClose, onCreate }) => {
-  const [title, setTitle] = useState<string>('');
+const CreateRoom: React.FC<ModalProps> = ({ isOpen, onClose, onCreate, memberId }) => {
+  const [roomTitle, setTitle] = useState<string>('');
 
   if (!isOpen) {
     return null;
@@ -17,15 +19,27 @@ const CreateRoom: React.FC<ModalProps> = ({ isOpen, onClose, onCreate }) => {
     setTitle(event.target.value);
   };
 
-  const handleCreateClick = (event: MouseEvent<HTMLButtonElement>) => {
-    onCreate(title);
-    setTitle('');
-    onClose();
+  const handleCreateClick = async (event: MouseEvent<HTMLButtonElement>) => {
+    event.preventDefault();
+    console.log("Attempting to create room with:", { memberId, roomTitle });
+    try {
+      // API 호출
+      const roomData = { memberId, roomTitle };
+      const roomInfo = await createRoom(memberId, roomData);
+      console.log('Room created successfully:', roomInfo);
+      setTitle('');
+      onClose(); // 방 생성 후 모달 닫기
+    } catch (error) {
+      console.error('Failed to create room:', error);
+      console.log("memberId", memberId)
+      alert('Failed to create room. Please try again.');
+    }
   };
 
   const handleCancelClick = (event: MouseEvent<HTMLButtonElement>) => {
     onClose();
   };
+
 
   return (
     <div style={{
@@ -48,7 +62,7 @@ const CreateRoom: React.FC<ModalProps> = ({ isOpen, onClose, onCreate }) => {
       }}>
         <input
           type="text"
-          value={title}
+          value={roomTitle}
           onChange={handleTitleChange}
           placeholder="Enter stream title"
         />
