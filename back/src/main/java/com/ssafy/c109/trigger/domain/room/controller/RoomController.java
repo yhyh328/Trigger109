@@ -14,6 +14,8 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @Log4j2
 @ToString
@@ -25,12 +27,12 @@ public class RoomController {
         this.roomService = roomService;
     }
 
-    @GetMapping("/allInfo")
-    public ResponseEntity<?> getAllRoomInfo(Authentication authentication) {
+    @GetMapping("/userRoomInfo")
+    public ResponseEntity<?> getAllUserRoomInfo(Authentication authentication) {
         try {
             UserDetails userDetails = (UserDetails) authentication.getPrincipal();
             String email = userDetails.getUsername();
-            Room room = roomService.getAllRoomInfo(email);
+            Room room = roomService.getAllUserRoomInfo(email);
 
             if (room == null) {
                 return ResponseEntity.status(HttpStatus.NOT_FOUND).body("방을 찾을 수 없습니다");
@@ -44,6 +46,24 @@ public class RoomController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("방 정보를 가져오는 중 오류가 발생했습니다");
         }
     }
+    @GetMapping("/roomAllInfo")
+    public ResponseEntity<List<Room>> getAllRoomInfo() {
+        try {
+            List<Room> roomList = roomService.getAllRoomInfo();
+
+            if (roomList == null || roomList.isEmpty()) {
+                log.warn("데이터베이스에 저장된 방이 없습니다.");
+                return ResponseEntity.notFound().build();
+            }
+
+            return ResponseEntity.ok(roomList);
+
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null); // List<Room> 형식에 맞게 null 반환
+        }
+    }
+
+
 
     @PostMapping()
     public ResponseEntity<RoomResponseDto> createRoom(@RequestBody RoomCreateRequestDto roomCreateRequestDto) {

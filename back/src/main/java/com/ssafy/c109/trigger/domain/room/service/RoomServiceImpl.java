@@ -11,6 +11,7 @@ import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -47,9 +48,27 @@ public class RoomServiceImpl implements RoomService {
     }
 
     @Override
-    public Room getAllRoomInfo(String email) {
+    public List<Room> getAllRoomInfo() {
         try {
-            Room room = roomRepository.findByMember_Email(email);
+            List<Room> roomList = roomRepository.findAll();
+            if (roomList.isEmpty()) {
+                log.warn("데이터베이스에 저장된 방이 없습니다.");
+                throw new IllegalStateException("데이터베이스에 저장된 방이 없습니다.");
+            }
+            return roomList;
+        } catch (Exception e) {
+            log.error("모든 방 정보를 가져오는 중 오류 발생", e);
+            throw new RuntimeException("모든 방 정보를 가져오는 중 오류 발생", e);
+        }
+    }
+
+
+
+    @Override
+    public Room getAllUserRoomInfo(String email) {
+        try {
+            Optional<Member> member = memberRepository.findByEmail(email);
+            Room room = (Room) roomRepository.findByMember_MemberId(member.get().getMemberId());
             if (room == null) {
                 log.warn("이메일에 대한 방을 찾을 수 없습니다: {}", email);
                 throw new IllegalArgumentException("이메일에 대한 방을 찾을 수 없습니다: " + email);
