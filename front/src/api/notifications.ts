@@ -52,7 +52,6 @@ async function postNotification(notice: Notice): Promise<void> {
 
   const token: string | null = localStorage.getItem('token');
   local.defaults.headers.Authorization = "Bearer " + token;
-
   try {
     console.log('Full URL:', `${local?.defaults.baseURL}${url}/register`);
     console.log('Headers:', JSON.stringify(local?.defaults.headers, null, 2));

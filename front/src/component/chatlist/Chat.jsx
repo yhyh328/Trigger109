@@ -1,39 +1,43 @@
 import React, { useEffect, useState } from "react";
+import axios from 'axios';
 import socket from "../../server"; 
 import InputField from "./InputField/InputField";
 import MessageContainer from "./MessageContainer/MessageContainer"; 
+import { fetchUserInfo, Member } from '../../api/getuser';
 
 const Chat = () => {
-  console.log("inChat 컴포넌트");
   const [user, setUser] = useState(null);
   const [message, setMessage] = useState('');
   const [messageList, setMessageList] = useState([]);
 
   useEffect(() => {
-    console.log("useEffect");
     socket.on('message', (message) => {
       setMessageList(prevState => [...prevState, message]);
     });
 
-    const userName = prompt("당신의 이름을 입력하세요");
-    socket.emit("login", userName, (res) => {
-      console.log("emit");
-      if (res?.ok) {
-        console.log("res?");
-        setUser(res.data);
+    // 사용자 정보를 불러오고 로그인 처리
+    const loadAndLoginUser = async () => {
+      const userInfo = await fetchUserInfo();
+      console.log("chatLoginUserInfo", userInfo)
+      if (userInfo) {
+        socket.emit("login", userInfo.id, (res) => {
+          if (res?.ok) {
+            setUser(userInfo);
+            console.log("Logged in with user ID:", userInfo.id);
+          }
+        });
       }
-    });
+    };
+
+    loadAndLoginUser();
 
     return () => socket.off('message'); 
   }, []);
 
   const sendMessage = (event) => {
-    console.log("chat/sendMessage")
     event.preventDefault();
     if (message) {
-      console.log("chat/sendMessage2")
       socket.emit("sendMessage", message, (res) => {
-        console.log("sendMessage res", res);
         setMessage('');
       });
     }
