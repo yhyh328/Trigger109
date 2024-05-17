@@ -30,9 +30,9 @@ export const generateToken = async () => {
             vapidKey: 
                 "BOfsVc6-5m98UdU9cd79oZC3Z5amKIdTNlH2EaVM7Pb8CKWHct0-ubSOx1XooLUSJkI9SrGaeDTvfQPdoSguXew"
         });
-        console.log('get fcm token for push notifications')
         if (FCMToken) {
             postFCM({ FCM: FCMToken });
+            console.log('get fcm token for push notifications')
         } else {
             console.error('Failed to get FCM token.');
         }
