@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { Notice, Notices, getNotificationList } from '../../api/notifications';
 import { Post } from '../notifications/Posts';
+import { getFCMs } from '../../api/fcm';
 
 const NewsSectionContainer = styled.section`
   background-color: #1a1a1d;

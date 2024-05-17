@@ -65,7 +65,7 @@ export const Header: React.FC = () => {
   const { isSoundEnabled } = useSound();
   
   useEffect(() => {
-    console.log('playZap', playZap);
+    // console.log('playZap', playZap);
   }, [playZap]);
 
   const handleZap = (e: React.MouseEvent<HTMLAnchorElement>) => {

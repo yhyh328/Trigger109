@@ -1,7 +1,7 @@
 import { AxiosInstance } from "axios";
 import { localAxios } from "../util/http-commons";
 import axios from "axios";
-import { generateToken } from "../component/notifications/firebase";
+import { getFCMs } from "./fcm";
 
 const local: AxiosInstance | undefined = localAxios();
 const url = "api/v1/notice";
@@ -62,7 +62,8 @@ async function postNotification(notice: Notice): Promise<void> {
     });
 
 
-    const fcmToken = await generateToken();
+    const fcmTokens = await getFCMs();
+    console.log(fcmTokens)
     const fcmUrl = "https://fcm.googleapis.com/fcm/send";
     const fcmHeaders = {
       'Content-Type': 'application/json',
@@ -70,10 +71,7 @@ async function postNotification(notice: Notice): Promise<void> {
     };
 
     const notificationPayload = JSON.stringify({
-      registration_ids: [
-        fcmToken,
-        "esv0bQxXWluM2gLATYnVv2:APA91bEvTcgDdcwvNSego-1miJhAkBtzf8WOOk9BQ8dGLLKeWlFsPhr3atOyb0Y7mLxcLc5a3_1yarVRDEvBK64g5trI-Tpv-hD78Gwi0roIrDBbOTTrgu8To7Tt5AI4fgIWpi_XpOxT",
-        "cICDxDsmxTR9T5gT7MKtOr:APA91bGs08slBsWXomsTsx4a0mmI1db_YPWTURhYtttG16e2DZOAxu2qM0dYMQhPg1TBDMndVazcwH8_kVqjO5Ln59K3voJEnz42FZGgwZwZPJULJJi3fz8wBgLdbkWdEuizUuw652QU"],
+      registration_ids: fcmTokens,
       notification: {
         title: notice.noticeTitle,
         body: notice.noticeContent
