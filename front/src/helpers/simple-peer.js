@@ -15,7 +15,7 @@ export default class VideoCall {
                     {
                         urls: process.env.REACT_APP_TURN_SERVERS.split(','),
                         username: process.env.REACT_APP_TURN_USERNAME,
-                        credential: process.env.REACT_APP_TURN_CREDENCIAL
+                        credential: process.env.REACT_APP_TURN_CREDENTIAL
                     },
                 ]
             }

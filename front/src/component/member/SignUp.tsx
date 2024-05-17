@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import { signUp } from "../../api/signup"
+import { signUpRequest } from "../../api/signup"
 
 const FormContainer = styled.div`
   background-color: #0f1923;
@@ -93,7 +93,7 @@ const SignUp = (): JSX.Element => {
   
     try {
       // signUp 함수를 호출하여 서버로 formData를 전송
-      await signUp(formData);
+      await signUpRequest(formData);
       formData.forEach((value, key) => {
         console.log("formData123", key, value);
       });
