@@ -9,7 +9,7 @@ export type FCM = {
   fcmToken: string;
 }
 
-export type FCMList = [];
+export type FCMList = FCM[];
 
 async function getFCMs(): Promise<FCM[]> {
   if (!local) {

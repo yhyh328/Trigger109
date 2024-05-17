@@ -1,7 +1,7 @@
 import { AxiosInstance } from "axios";
 import { localAxios } from "../util/http-commons";
 import axios from "axios";
-import { getFCMs } from "./fcm";
+import { FCMList, getFCMs } from "./fcm";
 
 const local: AxiosInstance | undefined = localAxios();
 const url = "api/v1/notice";
@@ -61,8 +61,12 @@ async function postNotification(notice: Notice): Promise<void> {
       }
     });
 
-    const fcmTokens = await getFCMs();
-    const validFcmTokens = fcmTokens.filter((fcm) => fcm.fcmToken !== 'undefined').map((fcm) => fcm.fcmToken);
+    const fcmTokens = await getFCMs() as FCMList;
+    const validFcmTokens = fcmTokens
+      .filter((fcm) => fcm.fcmToken && fcm.fcmToken !== 'undefined')
+      .map((fcm) => fcm.fcmToken);
+
+    console.log(validFcmTokens)
 
     if (validFcmTokens.length > 0) {
       const fcmUrl = "https://fcm.googleapis.com/fcm/send";
