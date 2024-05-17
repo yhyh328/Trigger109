@@ -8,5 +8,8 @@ import java.util.List;
 
 @Repository
 public interface RoomRepository extends JpaRepository<Room, Long> {
-    List<Room> findByMember_MemberId(Long memberId);
+    Room findByMember_Email(String email);
+    Room findByMember_MemberId(Long memberId);
+    List<Room> findAll();
+
 }

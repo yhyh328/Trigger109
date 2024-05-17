@@ -6,7 +6,8 @@ public record GetNoticeDetailResponse(
         Long noticeId,
         String noticeTitle,
         String noticeContent,
-        LocalDate createdAt,
-        int noticeViewCnt
+        LocalDate noticeCreatedAt,
+        int noticeViewCnt,
+        String noticeImg
 )
 {}

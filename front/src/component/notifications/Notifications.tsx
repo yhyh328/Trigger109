@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { Notice, Notices, getNotificationList } from '../../api/notifications';
 import { Post } from '../notifications/Posts';
+import { getFCMs } from '../../api/fcm';
 
 const NewsSectionContainer = styled.section`
   background-color: #1a1a1d;
@@ -123,7 +124,6 @@ const Notifications = () => {
       setIsFetching(true);
       try {
         const newsData = await getNotificationList() as Notices;
-        console.log('Fetched data:', newsData); // Check the raw fetched data
         const posts: Post[] = newsData.map((notice: Notice) => ({
           id: notice.noticeId,
           title: notice.noticeTitle,
@@ -132,9 +132,6 @@ const Notifications = () => {
           date: notice.noticeCreatedAt,
         }));
         const wholeNews = posts.reverse();
-        wholeNews.forEach(element => {
-          console.log(element.id, '-', element.image)
-        });
         setFetchedNotifications(wholeNews);
       } catch (error) {
         if (error instanceof Error) {

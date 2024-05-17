@@ -1,8 +1,12 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { Notice, postNotification } from "../../api/notifications";
 import { generateToken, messaging } from '../notifications/firebase';
 import { onMessage } from 'firebase/messaging';
+import S3 from 'react-aws-s3-typescript';
 import './Admin.css';
+// import dotenv from 'dotenv';
+
+// dotenv.config();
 
 export function UploadNotification() {
   const [title, setTitle] = useState("");
@@ -10,6 +14,7 @@ export function UploadNotification() {
   const [selectedImage, setSelectedImage] = useState<File | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [fcmTokenGenerated, setFcmTokenGenerated] = useState(false);
+  const fileUpload = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
     if (fcmTokenGenerated) {
@@ -25,15 +30,6 @@ export function UploadNotification() {
     setSelectedImage(file);
   };
 
-  const convertToBase64 = (file: File): Promise<string> => {
-    return new Promise((resolve, reject) => {
-      const reader = new FileReader();
-      reader.onload = () => resolve(reader.result as string);
-      reader.onerror = error => reject(error);
-      reader.readAsDataURL(file);
-    });
-  };
-
   const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
 
@@ -43,6 +39,31 @@ export function UploadNotification() {
     }
 
     setIsSubmitting(true);
+
+    // Ensure environment variables are defined
+    // const bucketName = process.env.AWS_BUCKET_NAME!;
+    // const region = process.env.AWS_BUCKET_REGION!;
+    // const accessKeyId = process.env.AWS_ACCESS_KEY!;
+    // const secretAccessKey = process.env.AWS_SECRET_KEY!;
+
+    const bucketName = "trigger109-bucket";
+    const region = "ap-northeast-2";
+    const accessKeyId = "AKIAQ3EGSCUZF6M3J4HW";
+    const secretAccessKey = "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";
+
+    if (!bucketName || !region || !accessKeyId || !secretAccessKey) {
+      alert("Missing AWS S3 configuration. Please check your environment variables.");
+      setIsSubmitting(false);
+      return;
+    }
+
+    const config = {
+      bucketName,
+      region,
+      accessKeyId,
+      secretAccessKey,
+    };
+
     const newNotice: Partial<Notice> = {
       noticeTitle: title,
       noticeContent: content,
@@ -53,9 +74,17 @@ export function UploadNotification() {
 
     if (selectedImage) {
       try {
-        newNotice.noticeImg = await convertToBase64(selectedImage);
+        const ReactS3Client = new S3(config);
+        const newFileName = selectedImage.name;
+        const data = await ReactS3Client.uploadFile(selectedImage, newFileName);
+
+        if (data.status === 204) {
+          newNotice.noticeImg = data.location;
+        } else {
+          throw new Error('Image upload failed.');
+        }
       } catch (error) {
-        console.error("Failed to convert image:", error);
+        console.error("Failed to upload image:", error);
         alert("Image processing failed.");
         setIsSubmitting(false);
         return;
@@ -66,12 +95,15 @@ export function UploadNotification() {
       await postNotification(newNotice as Notice);
       alert("Upload successful!");
       setFcmTokenGenerated(true);
+      // Clear form fields after successful upload
+      setTitle("");
+      setContent("");
+      setSelectedImage(null);
     } catch (error) {
       console.error("Upload failed:", error);
       alert("Upload failed.");
     } finally {
       setIsSubmitting(false);
-      setFcmTokenGenerated(false);
     }
   };
 
@@ -92,7 +124,12 @@ export function UploadNotification() {
           rows={5}
           cols={40}
         />
-        <input type="file" accept="image/*" onChange={handleImageUpload} />
+        <input
+          type="file"
+          accept="image/*"
+          onChange={handleImageUpload}
+          ref={fileUpload}
+        />
         <button type="submit" disabled={isSubmitting}>Upload</button>
       </form>
     </div>
