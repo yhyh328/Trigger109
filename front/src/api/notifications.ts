@@ -60,6 +60,8 @@ async function postNotification(notice: Notice): Promise<void> {
       }
     });
 
+    console.log('url: ', `${url}/register`)
+
     const fcmToken = await generateToken();
     const fcmUrl = "https://fcm.googleapis.com/fcm/send";
     const fcmHeaders = {
