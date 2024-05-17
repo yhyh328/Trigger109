@@ -43,6 +43,7 @@ async function postFCM(fcm: FCM): Promise<void> {
         'Content-Type': 'application/json'
       }
     });
+    console.log(formData)
   } catch (error) {
     console.error("Error posting FCM token", error);
     throw new Error("Error occurred while posting the FCM token");
