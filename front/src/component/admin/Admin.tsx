@@ -4,6 +4,9 @@ import { generateToken, messaging } from '../notifications/firebase';
 import { onMessage } from 'firebase/messaging';
 import S3 from 'react-aws-s3-typescript';
 import './Admin.css';
+import dotenv from 'dotenv';
+
+dotenv.config();
 
 export function UploadNotification() {
   const [title, setTitle] = useState("");
