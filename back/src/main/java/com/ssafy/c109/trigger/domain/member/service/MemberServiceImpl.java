@@ -36,7 +36,6 @@ public class MemberServiceImpl implements MemberService {
         }
 
         String profileImgUrl;
-        log.info("profileImg : " + profileImg);
         if (profileImg == null) {
             // 기본 이미지의 URL을 사용하도록 설정
             profileImgUrl = "https://trigger109-bucket.s3.ap-northeast-2.amazonaws.com/%ED%8A%B8%EB%A6%AC%EA%B1%B0+%EB%A1%9C%EA%B3%A01.png"; // 예시로 기본 이미지의 URL을 넣어주세요

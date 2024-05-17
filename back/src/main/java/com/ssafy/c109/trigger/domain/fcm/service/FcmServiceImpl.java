@@ -18,9 +18,14 @@ public class FcmServiceImpl implements FcmService{
     @Override
     public void registerFcmToken(FCM rfcm) {
         try {
-            FCM fcm = new FCM();
-            fcm.setFcmToken(rfcm.getFcmToken());
-            fcmRepository.save(fcm);
+            // FCM 토큰이 이미 존재하는지 확인
+            if (fcmRepository.findByFcmToken(rfcm.getFcmToken()) == null) {
+                FCM fcm = new FCM();
+                fcm.setFcmToken(rfcm.getFcmToken());
+                fcmRepository.save(fcm);
+            } else {
+                log.info("이미 존재하는 FCM 토큰입니다: {}", rfcm.getFcmToken());
+            }
         } catch (Exception e) {
             // 예외 발생 시 로그를 남기고 예외 처리
             log.error("FCM 토큰 등록 중 에러 발생: {}", e.getMessage());
