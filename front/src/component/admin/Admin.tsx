@@ -37,11 +37,23 @@ export function UploadNotification() {
 
     setIsSubmitting(true);
 
+    // Ensure environment variables are defined
+    const bucketName = process.env.AWS_BUCKET_NAME!;
+    const region = process.env.AWS_BUCKET_REGION!;
+    const accessKeyId = process.env.AWS_ACCESS_KEY!;
+    const secretAccessKey = process.env.AWS_SECRET_KEY!;
+
+    if (!bucketName || !region || !accessKeyId || !secretAccessKey) {
+      alert("Missing AWS S3 configuration. Please check your environment variables.");
+      setIsSubmitting(false);
+      return;
+    }
+
     const config = {
-      bucketName: process.env.REACT_APP_BUCKET_NAME,
-      region: process.env.REACT_APP_REGION,
-      accessKeyId: process.env.REACT_APP_ACCESS_ID,
-      secretAccessKey: process.env.REACT_APP_ACCESS_KEY,
+      bucketName,
+      region,
+      accessKeyId,
+      secretAccessKey,
     };
 
     const newNotice: Partial<Notice> = {
