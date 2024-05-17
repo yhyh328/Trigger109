@@ -4,9 +4,6 @@ import { generateToken, messaging } from '../notifications/firebase';
 import { onMessage } from 'firebase/messaging';
 import S3 from 'react-aws-s3-typescript';
 import './Admin.css';
-// import dotenv from 'dotenv';
-
-// dotenv.config();
 
 export function UploadNotification() {
   const [title, setTitle] = useState("");
@@ -39,12 +36,6 @@ export function UploadNotification() {
     }
 
     setIsSubmitting(true);
-
-    // Ensure environment variables are defined
-    // const bucketName = process.env.AWS_BUCKET_NAME!;
-    // const region = process.env.AWS_BUCKET_REGION!;
-    // const accessKeyId = process.env.AWS_ACCESS_KEY!;
-    // const secretAccessKey = process.env.AWS_SECRET_KEY!;
 
     const bucketName = "trigger109-bucket";
     const region = "ap-northeast-2";
