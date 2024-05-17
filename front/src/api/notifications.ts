@@ -54,13 +54,16 @@ async function postNotification(notice: Notice): Promise<void> {
   local.defaults.headers.Authorization = "Bearer " + token;
 
   try {
+    console.log('Full URL:', `${local?.defaults.baseURL}${url}/register`);
+    console.log('Headers:', JSON.stringify(local?.defaults.headers, null, 2));
+    console.log('Form Data:', formData);
+
     await local.post(`${url}/register`, formData, {
       headers: {
         'Content-Type': 'multipart/form-data'
       }
     });
 
-    console.log('url: ', `${url}/register`)
 
     const fcmToken = await generateToken();
     const fcmUrl = "https://fcm.googleapis.com/fcm/send";
