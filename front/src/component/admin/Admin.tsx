@@ -1,7 +1,8 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { Notice, postNotification } from "../../api/notifications";
 import { generateToken, messaging } from '../notifications/firebase';
 import { onMessage } from 'firebase/messaging';
+import S3 from 'react-aws-s3-typescript';
 import './Admin.css';
 
 export function UploadNotification() {
@@ -10,6 +11,7 @@ export function UploadNotification() {
   const [selectedImage, setSelectedImage] = useState<File | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [fcmTokenGenerated, setFcmTokenGenerated] = useState(false);
+  const fileUpload = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
     if (fcmTokenGenerated) {
@@ -25,15 +27,6 @@ export function UploadNotification() {
     setSelectedImage(file);
   };
 
-  const convertToBase64 = (file: File): Promise<string> => {
-    return new Promise((resolve, reject) => {
-      const reader = new FileReader();
-      reader.onload = () => resolve(reader.result as string);
-      reader.onerror = error => reject(error);
-      reader.readAsDataURL(file);
-    });
-  };
-
   const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
 
@@ -43,6 +36,14 @@ export function UploadNotification() {
     }
 
     setIsSubmitting(true);
+
+    const config = {
+      bucketName: process.env.REACT_APP_BUCKET_NAME,
+      region: process.env.REACT_APP_REGION,
+      accessKeyId: process.env.REACT_APP_ACCESS_ID,
+      secretAccessKey: process.env.REACT_APP_ACCESS_KEY,
+    };
+
     const newNotice: Partial<Notice> = {
       noticeTitle: title,
       noticeContent: content,
@@ -53,9 +54,17 @@ export function UploadNotification() {
 
     if (selectedImage) {
       try {
-        newNotice.noticeImg = await convertToBase64(selectedImage);
+        const ReactS3Client = new S3(config);
+        const newFileName = selectedImage.name;
+        const data = await ReactS3Client.uploadFile(selectedImage, newFileName);
+
+        if (data.status === 204) {
+          newNotice.noticeImg = data.location;
+        } else {
+          throw new Error('Image upload failed.');
+        }
       } catch (error) {
-        console.error("Failed to convert image:", error);
+        console.error("Failed to upload image:", error);
         alert("Image processing failed.");
         setIsSubmitting(false);
         return;
@@ -75,7 +84,6 @@ export function UploadNotification() {
       alert("Upload failed.");
     } finally {
       setIsSubmitting(false);
-      // Ensure FCM token generation is not reset unnecessarily
     }
   };
 
@@ -96,7 +104,12 @@ export function UploadNotification() {
           rows={5}
           cols={40}
         />
-        <input type="file" accept="image/*" onChange={handleImageUpload} />
+        <input
+          type="file"
+          accept="image/*"
+          onChange={handleImageUpload}
+          ref={fileUpload}
+        />
         <button type="submit" disabled={isSubmitting}>Upload</button>
       </form>
     </div>

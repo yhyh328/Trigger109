@@ -1,7 +1,7 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
 import { getMessaging, getToken } from "firebase/messaging";
-import { postFCM, FCM } from "../../api/fcm";
+import { postFCM } from "../../api/fcm";
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
@@ -31,7 +31,7 @@ export const generateToken = async () => {
                 "BOfsVc6-5m98UdU9cd79oZC3Z5amKIdTNlH2EaVM7Pb8CKWHct0-ubSOx1XooLUSJkI9SrGaeDTvfQPdoSguXew"
         });
         if (FCMToken) {
-            postFCM({ FCM: FCMToken });
+            postFCM({ FCMToken });
             console.log('get fcm token for push notifications')
         } else {
             console.error('Failed to get FCM token.');
