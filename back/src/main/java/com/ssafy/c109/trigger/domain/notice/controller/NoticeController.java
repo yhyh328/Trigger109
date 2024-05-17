@@ -58,7 +58,8 @@ public class NoticeController {
     }
 
     @PostMapping("/register")
-    public ResponseEntity<Void> postNotice(Authentication authentication, @RequestBody PostNoticeRequest postNoticeRequest, @RequestParam(required = false) MultipartFile noticeImg){
+    public ResponseEntity<Void> postNotice(Authentication authentication, @RequestPart("postNoticeRequest") PostNoticeRequest postNoticeRequest, @RequestPart(required = false) MultipartFile noticeImg){
+        log.info("noticeImg : " + noticeImg);
         if (authentication == null || !authentication.isAuthenticated()) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
         }

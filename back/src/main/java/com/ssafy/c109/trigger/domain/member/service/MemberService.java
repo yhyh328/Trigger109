@@ -5,6 +5,6 @@ import com.ssafy.c109.trigger.domain.member.entity.Member;
 import org.springframework.web.multipart.MultipartFile;
 
 public interface MemberService {
-    void singUp(SignUpRequest signUpRequest, MultipartFile profileImg) throws Exception;
+    void singUp(SignUpRequest signUpRequest) throws Exception;
     Member getAllMemberInfo(String email);
 }
