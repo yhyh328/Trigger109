@@ -70,7 +70,7 @@ async function postNotification(notice: Notice): Promise<void> {
     const fcmUrl = "https://fcm.googleapis.com/fcm/send";
     const fcmHeaders = {
       'Content-Type': 'application/json',
-      'Authorization': 'key=your-fcm-server-key'
+      'Authorization': 'key=AIzaSyB-GOUMKDJ5yMkrBlR9uU0aBRoXRuR7p1E'
     };
 
     const notificationPayload = JSON.stringify({
