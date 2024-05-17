@@ -53,7 +53,7 @@ async function postNotification(notice: Notice): Promise<void> {
     formData.append('noticeImg', new File([blob], "filename.png"));
   }
 
-  const token = "your-jwt-token";
+  const token: string | null = localStorage.getItem('token');
   local.defaults.headers.Authorization = "Bearer " + token;
 
   try {
@@ -71,10 +71,11 @@ async function postNotification(notice: Notice): Promise<void> {
     };
 
     const notificationPayload = JSON.stringify({
-      registration_ids: [
-        fcmToken,
-        "additional-token-if-needed"
-      ],
+      // registration_ids: [
+      //   fcmToken,
+      //   "additional-token-if-needed"
+      // ],
+      to: "cICDxDsmxTR9T5gT7MKtOr:APA91bHiBh87NAoK39Z4Pam5so4i6hnVcr7yjB0bNOFrEw1NH6Fcx4VVm_6C3bMnz4-EEqy5wP5IhIXjmbsG7t6h_Opz3bXBoUQ_ZKQHFEYgnn6F0wIhu_vtl-Ozl5_v_ZnuBdU_cmhF",
       notification: {
         title: notice.noticeTitle,
         body: notice.noticeContent
