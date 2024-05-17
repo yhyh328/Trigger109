@@ -26,7 +26,7 @@ public class MemberServiceImpl implements MemberService {
     private final PasswordEncoder passwordEncoder;
 
     @Override
-    public void singUp(SignUpRequest signUpRequest) throws Exception {
+    public void singUp(SignUpRequest signUpRequest, MultipartFile profileImg) throws Exception {
         if (memberRepository.findByEmail(signUpRequest.email()).isPresent()) { // getEmail() 메서드 호출로 수정합니다.
             throw new Exception("이미 존재하는 이메일입니다.");
         }
@@ -36,12 +36,15 @@ public class MemberServiceImpl implements MemberService {
         }
 
         String profileImgUrl;
-        if (signUpRequest.profileImg() == null) {
+        log.info("profileImg : " + profileImg);
+        if (profileImg == null) {
+            log.info("profileImg : " + profileImg);
             // 기본 이미지의 URL을 사용하도록 설정
             profileImgUrl = "https://trigger109-bucket.s3.ap-northeast-2.amazonaws.com/%ED%8A%B8%EB%A6%AC%EA%B1%B0+%EB%A1%9C%EA%B3%A01.png"; // 예시로 기본 이미지의 URL을 넣어주세요
         } else {
+            log.info("profileImg : " + profileImg);
             // 프로필 이미지를 S3에 업로드하고 URL을 받아옴
-            profileImgUrl = awsS3Service.uploadFile(signUpRequest.profileImg());
+            profileImgUrl = awsS3Service.uploadFile(profileImg);
         }
 
         Member member = Member.builder()
