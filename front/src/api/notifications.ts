@@ -60,7 +60,8 @@ async function postNotification(notice: Notice): Promise<void> {
 
     await local.post(`${url}/register`, formData, {
       headers: {
-        'Content-Type': 'multipart/form-data'
+        'Authorization': `Bearer ${token}`,
+        'Content-Type': 'application/json' // This might be redundant as axios sets it automatically for JSON payloads
       }
     });
 
