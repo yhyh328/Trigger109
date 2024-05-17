@@ -70,7 +70,7 @@ public class NoticeServiceImpl implements NoticeService {
             String profileImgUrl;
             if (noticeImg == null) {
                 // 기본 이미지의 URL을 사용하도록 설정
-                profileImgUrl = "기본 이미지 URL"; // 예시로 기본 이미지의 URL을 넣어주세요
+                profileImgUrl = "https://trigger109-bucket.s3.ap-northeast-2.amazonaws.com/noticeImg.webp"; // 예시로 기본 이미지의 URL을 넣어주세요
             } else {
                 // 프로필 이미지를 S3에 업로드하고 URL을 받아옴
                 profileImgUrl = awsS3Service.uploadFile(noticeImg);
@@ -100,5 +100,22 @@ public class NoticeServiceImpl implements NoticeService {
             throw new RuntimeException("공지사항을 등록하는 데 에러가 발생했습니다.");
         }
     }
+
+    @Override
+    public void updateViewCnt(Long noticeId) {
+        try {
+            Notice notice = noticeRepository.findByNoticeId(noticeId);
+            if (notice == null) {
+                throw new RuntimeException("해당하는 공지사항을 찾을 수 없습니다. ID: " + noticeId);
+            }
+            notice.setNoticeViewCnt(notice.getNoticeViewCnt() + 1);
+            noticeRepository.save(notice);
+        } catch (Exception e) {
+            // 예외 발생 시 로그를 남기고 예외 처리
+            log.error("공지사항 조회수 업데이트 중 에러 발생: {}", e.getMessage());
+            throw new RuntimeException("공지사항 조회수를 업데이트하는 중 에러가 발생했습니다.");
+        }
+    }
+
 
 }

@@ -45,6 +45,18 @@ public class NoticeController {
         }
     }
 
+    @GetMapping("/cnt")
+    public ResponseEntity<Void> updateViewCnt(@RequestParam Long noticeId){
+        try {
+            noticeService.updateViewCnt(noticeId);
+            return ResponseEntity.ok().build();
+        } catch (Exception e) {
+            // 예외 발생 시 로그를 남기고 예외 처리
+            log.error("공지사항 조회수 업데이트 중 에러 발생: {}", e.getMessage());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
+    }
+
     @PostMapping("/register")
     public ResponseEntity<Void> postNotice(Authentication authentication, @RequestBody PostNoticeRequest postNoticeRequest, @RequestParam(required = false) MultipartFile noticeImg){
         if (authentication == null || !authentication.isAuthenticated()) {
