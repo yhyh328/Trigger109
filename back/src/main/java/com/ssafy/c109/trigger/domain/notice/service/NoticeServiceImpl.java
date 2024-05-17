@@ -13,6 +13,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -59,7 +60,7 @@ public class NoticeServiceImpl implements NoticeService {
         }
     }
     @Override
-    public void postNotice(String email, PostNoticeRequest postNoticeRequest) {
+    public void postNotice(String email, PostNoticeRequest postNoticeRequest, MultipartFile noticeImg) {
         try {
             Optional<Member> optionalMember = memberRepository.findByEmail(email);
             if (!optionalMember.isPresent()) {
@@ -67,12 +68,12 @@ public class NoticeServiceImpl implements NoticeService {
             }
 
             String profileImgUrl;
-            if (postNoticeRequest.noticeImg() == null) {
+            if (noticeImg == null) {
                 // 기본 이미지의 URL을 사용하도록 설정
-                profileImgUrl = "https://trigger109-bucket.s3.ap-northeast-2.amazonaws.com/DefaultNotificationIMG.webp"; // 예시로 기본 이미지의 URL을 넣어주세요
+                profileImgUrl = "https://trigger109-bucket.s3.ap-northeast-2.amazonaws.com/noticeImg.webp"; // 예시로 기본 이미지의 URL을 넣어주세요
             } else {
                 // 프로필 이미지를 S3에 업로드하고 URL을 받아옴
-                profileImgUrl = awsS3Service.uploadFile(postNoticeRequest.noticeImg());
+                profileImgUrl = awsS3Service.uploadFile(noticeImg);
             }
 
             Member member = optionalMember.get();
@@ -99,5 +100,22 @@ public class NoticeServiceImpl implements NoticeService {
             throw new RuntimeException("공지사항을 등록하는 데 에러가 발생했습니다.");
         }
     }
+
+    @Override
+    public void updateViewCnt(Long noticeId) {
+        try {
+            Notice notice = noticeRepository.findByNoticeId(noticeId);
+            if (notice == null) {
+                throw new RuntimeException("해당하는 공지사항을 찾을 수 없습니다. ID: " + noticeId);
+            }
+            notice.setNoticeViewCnt(notice.getNoticeViewCnt() + 1);
+            noticeRepository.save(notice);
+        } catch (Exception e) {
+            // 예외 발생 시 로그를 남기고 예외 처리
+            log.error("공지사항 조회수 업데이트 중 에러 발생: {}", e.getMessage());
+            throw new RuntimeException("공지사항 조회수를 업데이트하는 중 에러가 발생했습니다.");
+        }
+    }
+
 
 }

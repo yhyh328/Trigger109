@@ -25,8 +25,8 @@ public class AwsS3config {
 
     @Bean
     public AmazonS3Client amazonS3Client() {
-        log.info("accessKey : " + accessKey);
-        log.info("secretKey : " + secretKey);
+//        log.info("accessKey : " + accessKey);
+//        log.info("secretKey : " + secretKey);
         BasicAWSCredentials awsCreds = new BasicAWSCredentials(accessKey, secretKey);
         return (AmazonS3Client) AmazonS3ClientBuilder.standard()
                 .withRegion(region)
