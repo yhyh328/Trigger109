@@ -9,6 +9,5 @@ public record PostNoticeRequest(
         String noticeContent,
         int noticeEmergency, // default 0
         int noticeViewCnt, // default 0
-        String noticeImg
+        MultipartFile noticeImg
 ) {}
-

@@ -3,8 +3,7 @@ import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { Notice, Notices, getNotificationList } from '../../api/notifications';
 import { Post } from '../notifications/Posts';
-import { getFCMs } from '../../api/fcm';
-import NoticeForm from './NoticeForm'; // NoticeForm 컴포넌트를 임포트
+import NoticeForm from './NoticeForm';
 
 
 const NewsSectionContainer = styled.section`
@@ -89,7 +88,7 @@ interface NewsItemProps {
   id: number;
   title: string;
   date: string;
-  image: string;
+  image?: string;
   summary: string;
 }
 
@@ -100,12 +99,23 @@ const truncateText = (text: string, maxLength: number) => {
   return text;
 };
 
+const getImageUrl = (image: string | File | undefined): string => {
+  if (typeof image === 'string') {
+    return image;
+  } else if (image instanceof File) {
+    return URL.createObjectURL(image);
+  } else {
+    // Provide a default placeholder if there's no image
+    return '/path/to/default/image.png'; // Replace this with your actual default image path
+  }
+};
+
 const NewsItem: React.FC<NewsItemProps> = ({ id, title, date, image, summary }) => (
   <NewsCard>
     <ImageContainer>
       <Link to={`/notifications/${id}`} 
             onClick={() => window.scrollTo(0, 0)}>
-        <NewsImage src={image} alt="news image" />
+        {image ? <NewsImage src={image} alt="news image" /> : <div>No Image Available</div>}
       </Link>
     </ImageContainer>
     <NewsContent>
@@ -129,8 +139,8 @@ const Notifications = () => {
         const posts: Post[] = newsData.map((notice: Notice) => ({
           id: notice.noticeId,
           title: notice.noticeTitle,
-          content: notice.noticeContent,
-          image: notice.noticeImg,
+          text: notice.noticeContent,
+          image: notice.noticeImg instanceof File ? URL.createObjectURL(notice.noticeImg) : notice.noticeImg,
           date: notice.noticeCreatedAt,
         }));
         const wholeNews = posts.reverse();
@@ -161,13 +171,13 @@ const Notifications = () => {
               id={news.id} 
               title={news.title}
               date={news.date}
-              summary={news.content}
-              image={news.image ?? 'defaultIMG'} // Correct usage of defaultIMG
-            />
+              summary={news.text}
+              image={getImageUrl(news.image)}
+              />
           ))}
         </NewsItemsContainer>
       </NewsSectionContainer>
-      <NoticeForm /> {/* 공지사항 등록 폼 추가 */}
+      <NoticeForm />
     </>
   );
 };

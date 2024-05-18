@@ -5,8 +5,19 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="96d56439-5819-42ca-abeb-3a6298039633" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.gradle/8.7/executionHistory/executionHistory.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/8.7/executionHistory/executionHistory.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/8.7/fileHashes/fileHashes.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/8.7/fileHashes/fileHashes.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/ssafy/c109/trigger/domain/notice/controller/NoticeController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/ssafy/c109/trigger/domain/notice/controller/NoticeController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/ssafy/c109/trigger/domain/notice/dto/request/PostNoticeRequest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/ssafy/c109/trigger/domain/notice/dto/request/PostNoticeRequest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../front/src/api/notifications.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../front/src/api/notifications.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../front/src/component/admin/Admin.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/../front/src/component/admin/Admin.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../front/src/component/main/MainSection2.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/../front/src/component/main/MainSection2.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../front/src/component/notifications/NotificationDetail.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/../front/src/component/notifications/NotificationDetail.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../front/src/component/notifications/Notifications.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/../front/src/component/notifications/Notifications.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../front/src/component/notifications/Posts.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/../front/src/component/notifications/Posts.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../front/src/component/notifications/firebase.js" beforeDir="false" afterPath="$PROJECT_DIR$/../front/src/component/notifications/firebase.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -50,25 +61,25 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "Gradle.Build back.executor": "Run",
-    "RequestMappingsPanelOrder0": "0",
-    "RequestMappingsPanelOrder1": "1",
-    "RequestMappingsPanelWidth0": "75",
-    "RequestMappingsPanelWidth1": "75",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "Spring Boot.TriggerApplication.executor": "Run",
-    "git-widget-placeholder": "feat/PushNotifications",
-    "kotlin-language-version-configured": "true",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Gradle.Build back.executor&quot;: &quot;Run&quot;,
+    &quot;RequestMappingsPanelOrder0&quot;: &quot;0&quot;,
+    &quot;RequestMappingsPanelOrder1&quot;: &quot;1&quot;,
+    &quot;RequestMappingsPanelWidth0&quot;: &quot;75&quot;,
+    &quot;RequestMappingsPanelWidth1&quot;: &quot;75&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;Spring Boot.TriggerApplication.executor&quot;: &quot;Run&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;feat/PushNotifications&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RunManager">
     <configuration name="TriggerApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
       <option name="ALTERNATIVE_JRE_PATH" value="17" />
@@ -103,6 +114,7 @@
       <workItem from="1716012968455" duration="32000" />
       <workItem from="1716013667560" duration="228000" />
       <workItem from="1716013908977" duration="4075000" />
+      <workItem from="1716037936293" duration="615000" />
     </task>
     <servers />
   </component>

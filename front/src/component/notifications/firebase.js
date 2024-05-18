@@ -31,8 +31,12 @@ export const generateToken = async () => {
                 "BOfsVc6-5m98UdU9cd79oZC3Z5amKIdTNlH2EaVM7Pb8CKWHct0-ubSOx1XooLUSJkI9SrGaeDTvfQPdoSguXew"
         });
         if (FCMToken) {
-            postFCM({ FCMToken });
-            console.log('get fcm token for push notifications')
+            try {
+                await postFCM({ FCMToken });
+                console.log('FCM token posted successfully');
+            } catch (error) {
+                console.error('Error occurred while posting the FCM token:', error);
+            }
         } else {
             console.error('Failed to get FCM token.');
         }

@@ -3,7 +3,6 @@ import { ReactNode, useEffect, useState } from "react";
 import { useParams } from 'react-router-dom';
 import { Post } from "./Posts";
 import { Notice, getNotificationDetail } from '../../api/notifications';
-import DefaultIMG from './DefaultNotificationIMG.webp';
 import './Notifications.css';
 
 const Title = styled.h2`
@@ -70,11 +69,22 @@ const ToList = styled.div`
   }
 `;
 
+
 function NotificationDetail() {
   const { noticeId } = useParams<{ noticeId: string }>();
   const [post, setPost] = useState<Post | null>(null);
   const [isFetching, setIsFetching] = useState(false);
   const [error, setError] = useState<string | null>(null);
+
+  const getImageUrl = (image: string | File | undefined): string | undefined => {
+    if (typeof image === 'string') {
+      return image;
+    } else if (image instanceof File) {
+      return URL.createObjectURL(image);  // Convert File to URL string
+    }
+    // Optional: return undefined or a default image URL
+    return '/path/to/default/image.png';  // Provide your default image URL
+  };
 
   useEffect(() => {
     async function fetchOnePost() {
@@ -88,7 +98,7 @@ function NotificationDetail() {
         const post: Post = {
           id: response.noticeId,
           title: response.noticeTitle,
-          content: response.noticeContent,
+          text: response.noticeContent,
           image: response.noticeImg ?? 'DefaultIMG',
           date: response.noticeCreatedAt, // 적절한 날짜 형식으로 변경
         };
@@ -112,8 +122,8 @@ function NotificationDetail() {
     content = (
       <PostContainer>
         <Title>{post.title}</Title>
-        {post.image && <Image src={post.image} alt={post.title} />}
-        <Content>{post.content}</Content>
+        {post.image && <Image src={getImageUrl(post.image)} alt={post.title} />}
+        <Content>{post.text}</Content>
       </PostContainer>
     );
   } else {

@@ -10,7 +10,7 @@ export type Notice = {
   noticeId: number;
   noticeTitle: string;
   noticeContent: string;
-  noticeImg?: File;
+  noticeImg?: File | string;
   noticeEmergency: number;
   noticeViewCnt: number;
   noticeCreatedAt: string;
@@ -54,12 +54,10 @@ async function postNotification(notice: Notice): Promise<void> {
 
     console.log('Server response:', response.data);
 
-    const fcmTokens = await getFCMs() as FCMList;
-    const validFcmTokens = fcmTokens
-      .filter((fcm) => fcm.fcmToken && fcm.fcmToken !== 'undefined')
-      .map((fcm) => fcm.fcmToken);
-
-    // console.log('Valid FCM Tokens:', validFcmTokens);
+    // const fcmTokens = await getFCMs() as FCMList;
+    // const validFcmTokens = fcmTokens
+    //   .filter((fcm) => fcm.fcmToken && fcm.fcmToken !== 'undefined')
+    //   .map((fcm) => fcm.fcmToken);
 
     // if (validFcmTokens.length > 0) {
     //   const fcmUrl = "https://fcm.googleapis.com/fcm/send";
