@@ -16,7 +16,7 @@ export type Notice = {
   noticeCreatedAt: string;
 };
 
-export type Notices = [];
+export type Notices = Notice[];
 
 async function postNotification(notice: Notice): Promise<void> {
   if (!local) {
@@ -39,47 +39,38 @@ async function postNotification(notice: Notice): Promise<void> {
     formData.append("noticeViewCnt", String(notice.noticeViewCnt));
     formData.append("noticeCreatedAt", notice.noticeCreatedAt);
 
-    console.log('FormData - noticeTitle:', formData.get("noticeTitle"));
-    console.log('FormData - noticeContent:', formData.get("noticeContent"));
-    console.log('FormData - noticeEmergency:', formData.get("noticeEmergency"));
-    console.log('FormData - noticeViewCnt:', formData.get("noticeViewCnt"));
-    console.log('FormData - noticeCreatedAt:', formData.get("noticeCreatedAt"));
-    console.log('FormData - noticeImg:', formData.get("noticeImg"));
-
-    const response = await local.post(`${url}/register`, formData, {
+    await local.post(`${url}/register`, formData, {
       headers: {
         'Content-Type': 'multipart/form-data'
       }
     });
 
-    console.log('Server response:', response.data);
+    const fcmTokens = await getFCMs();
+    const validFcmTokens = fcmTokens
+      .filter((fcm) => fcm.fcmToken && fcm.fcmToken !== 'undefined')
+      .map((fcm) => fcm.fcmToken);
 
-    // const fcmTokens = await getFCMs() as FCMList;
-    // const validFcmTokens = fcmTokens
-    //   .filter((fcm) => fcm.fcmToken && fcm.fcmToken !== 'undefined')
-    //   .map((fcm) => fcm.fcmToken);
+    if (validFcmTokens.length > 0) {
+      const fcmUrl = "https://fcm.googleapis.com/fcm/send";
+      const fcmHeaders = {
+        'Content-Type': 'application/json',
+        'Authorization': 'key=AAAAaTWX5Gs:APA91bHzgQp6joaC4Kv2aTDyX-baS5DmmVvj4StsgV7FYIYLMhaCMXeCImEF6hUJDfEUbvTar9zVt2sw3xTbN70i6rL0IwtrrxJSLXo-aYA5NKuJyhU0EpUyD45mP_LktxYECLBxHw4X'
+      };
 
-    // if (validFcmTokens.length > 0) {
-    //   const fcmUrl = "https://fcm.googleapis.com/fcm/send";
-    //   const fcmHeaders = {
-    //     'Content-Type': 'application/json',
-    //     'Authorization': 'key=AAAAaTWX5Gs:APA91bHzgQp6joaC4Kv2aTDyX-baS5DmmVvj4StsgV7FYIYLMhaCMXeCImEF6hUJDfEUbvTar9zVt2sw3xTbN70i6rL0IwtrrxJSLXo-aYA5NKuJyhU0EpUyD45mP_LktxYECLBxHw4X'
-    //   };
+      const notificationPayload = {
+        registration_ids: validFcmTokens,
+        notification: {
+          title: notice.noticeTitle,
+          body: "새로운 공지 사항을 확인하세요!"
+        }
+      };
 
-    //   const notificationPayload = {
-    //     registration_ids: validFcmTokens,
-    //     notification: {
-    //       title: notice.noticeTitle,
-    //       body: "새로운 공지 사항을 확인하세요!"
-    //     }
-    //   };
-
-    //   await axios.post(fcmUrl, notificationPayload, { headers: fcmHeaders })
-    //     .then(response => console.log("Notification sent successfully:", response))
-    //     .catch(error => console.error("Failed to send notification:", error));
-    // } else {
-    //   console.log("No valid FCM tokens available to send notifications.");
-    // }
+      await axios.post(fcmUrl, notificationPayload, { headers: fcmHeaders })
+        .then(response => console.log("Notification sent successfully:", response))
+        .catch(error => console.error("Failed to send notification:", error));
+    } else {
+      console.log("No valid FCM tokens available to send notifications.");
+    }
 
   } catch (error) {
     console.error("Error posting notification:", error);
@@ -87,8 +78,7 @@ async function postNotification(notice: Notice): Promise<void> {
   }
 }
 
-
-async function getNotificationList(): Promise<Notices[]> {
+async function getNotificationList(): Promise<Notices> {
   if (!local) {
     throw new Error("Unable to create Axios instance.");
   }
