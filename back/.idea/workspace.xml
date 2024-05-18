@@ -5,18 +5,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="96d56439-5819-42ca-abeb-3a6298039633" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.gradle/8.7/executionHistory/executionHistory.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/8.7/executionHistory/executionHistory.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/8.7/fileHashes/fileHashes.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/8.7/fileHashes/fileHashes.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/ssafy/c109/trigger/domain/notice/controller/NoticeController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/ssafy/c109/trigger/domain/notice/controller/NoticeController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/ssafy/c109/trigger/domain/notice/dto/request/PostNoticeRequest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/ssafy/c109/trigger/domain/notice/dto/request/PostNoticeRequest.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../front/src/api/notifications.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../front/src/api/notifications.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../front/src/component/admin/Admin.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/../front/src/component/admin/Admin.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../front/src/component/main/MainSection2.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/../front/src/component/main/MainSection2.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../front/src/component/notifications/NotificationDetail.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/../front/src/component/notifications/NotificationDetail.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../front/src/component/notifications/Notifications.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/../front/src/component/notifications/Notifications.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../front/src/component/notifications/Posts.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/../front/src/component/notifications/Posts.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../front/src/component/notifications/firebase.js" beforeDir="false" afterPath="$PROJECT_DIR$/../front/src/component/notifications/firebase.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -114,7 +105,7 @@
       <workItem from="1716012968455" duration="32000" />
       <workItem from="1716013667560" duration="228000" />
       <workItem from="1716013908977" duration="4075000" />
-      <workItem from="1716037936293" duration="615000" />
+      <workItem from="1716037936293" duration="1754000" />
     </task>
     <servers />
   </component>
