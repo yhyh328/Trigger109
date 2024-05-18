@@ -145,7 +145,9 @@ export const Header: React.FC = () => {
           <a href="/notifications" onClick={handleZap}>
             공지사항
           </a>
-          <a href="#" onClick={handleZap}>랭킹</a>
+          <a href="/ranking" onClick={handleZap}>
+            랭킹
+          </a>
           <a href="/live" onClick={handleZap}>라이브</a>
           <a href="/guide" onClick={handleZap}>가이드</a>
         </Nav>
