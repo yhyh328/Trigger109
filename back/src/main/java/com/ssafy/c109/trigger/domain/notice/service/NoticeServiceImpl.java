@@ -60,7 +60,7 @@ public class NoticeServiceImpl implements NoticeService {
         }
     }
     @Override
-    public void postNotice(String email, PostNoticeRequest postNoticeRequest, MultipartFile noticeImg) {
+    public void postNotice(String email, PostNoticeRequest postNoticeRequest, String noticeImg) {
         try {
             Optional<Member> optionalMember = memberRepository.findByEmail(email);
             if (!optionalMember.isPresent()) {
@@ -73,7 +73,8 @@ public class NoticeServiceImpl implements NoticeService {
                 profileImgUrl = "https://trigger109-bucket.s3.ap-northeast-2.amazonaws.com/noticeImg.webp"; // 예시로 기본 이미지의 URL을 넣어주세요
             } else {
                 // 프로필 이미지를 S3에 업로드하고 URL을 받아옴
-                profileImgUrl = awsS3Service.uploadFile(noticeImg);
+                profileImgUrl = "https://trigger109-bucket.s3.ap-northeast-2.amazonaws.com/noticeImg.webp"; // 예시로 기본 이미지의 URL을 넣어주세요
+//                profileImgUrl = awsS3Service.uploadFile(noticeImg);
             }
 
             Member member = optionalMember.get();
@@ -85,6 +86,7 @@ public class NoticeServiceImpl implements NoticeService {
                     .noticeCreatedAt(LocalDate.now())
                     .noticeEmergency(0)
                     .noticeViewCnt(0)
+//                    .noticeImg(profileImgUrl)
                     .noticeImg(profileImgUrl)
                     .build();
 

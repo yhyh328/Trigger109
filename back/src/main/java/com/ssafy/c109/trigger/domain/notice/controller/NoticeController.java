@@ -4,6 +4,7 @@ import com.ssafy.c109.trigger.domain.notice.dto.request.PostNoticeRequest;
 import com.ssafy.c109.trigger.domain.notice.dto.response.GetNoticeDetailResponse;
 import com.ssafy.c109.trigger.domain.notice.dto.response.GetNoticeListResponse;
 import com.ssafy.c109.trigger.domain.notice.service.NoticeService;
+import jakarta.servlet.annotation.MultipartConfig;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -20,6 +21,9 @@ import java.util.List;
 @RequiredArgsConstructor
 @Slf4j
 @RequestMapping("/api/v1/notice")
+@MultipartConfig(fileSizeThreshold = 1024 * 1024 * 2, // 2MB
+        maxFileSize = 1024 * 1024 * 10,      // 10MB
+        maxRequestSize = 1024 * 1024 * 50)   // 50MB
 public class NoticeController {
 
     private final NoticeService noticeService;
@@ -59,10 +63,11 @@ public class NoticeController {
 
     @PostMapping("/register")
     public ResponseEntity<Void> postNotice(Authentication authentication,
-                                       @RequestBody PostNoticeRequest postNoticeRequest,
+                                       @ModelAttribute PostNoticeRequest postNoticeRequest,
                                        @RequestParam(value = "noticeImg",required = false)
-                                           MultipartFile noticeImg){
+                                           String noticeImg){
         log.info("noticeImg : " + noticeImg);
+        log.info("postNoticeRequest : " + postNoticeRequest);
         if (authentication == null || !authentication.isAuthenticated()) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
         }
