@@ -113,7 +113,7 @@ const MainSection4 = () => {
       </GuidItemContainer>
       <ImageContainer>
         {/* 이미지 경로를 정확하게 지정해야 합니다. */}
-        <StyledImage src='./game_map_imgs/Capture.png' alt='Valorant' />
+        <StyledImage src='https://trigger109-bucket.s3.ap-northeast-2.amazonaws.com/Capture.PNG' alt='Valorant' />
       </ImageContainer>
     </GuidContainer>
   );
