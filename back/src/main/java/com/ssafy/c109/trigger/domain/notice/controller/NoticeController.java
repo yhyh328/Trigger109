@@ -65,7 +65,7 @@ public class NoticeController {
     public ResponseEntity<Void> postNotice(Authentication authentication,
                                        @ModelAttribute PostNoticeRequest postNoticeRequest,
                                        @RequestParam(value = "noticeImg",required = false)
-                                           String noticeImg){
+                                           MultipartFile noticeImg){
         log.info("noticeImg : " + noticeImg);
         log.info("postNoticeRequest : " + postNoticeRequest);
         if (authentication == null || !authentication.isAuthenticated()) {

@@ -10,7 +10,7 @@ import java.util.List;
 public interface NoticeService {
     List<GetNoticeListResponse> getNoticeList();
     GetNoticeDetailResponse getNoticeDetail(Long noticeId);
-    void postNotice(String email, PostNoticeRequest postNoticeRequest, String noticeImg);
+    void postNotice(String email, PostNoticeRequest postNoticeRequest, MultipartFile noticeImg);
     void updateViewCnt(Long noticeId);
 
 }
