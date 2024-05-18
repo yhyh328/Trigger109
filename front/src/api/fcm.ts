@@ -1,15 +1,13 @@
-import { AxiosInstance } from "axios";
+import axios, { AxiosInstance } from "axios";
 import { localAxios } from "../util/http-commons";
 
 const local: AxiosInstance | undefined = localAxios();
-const url = "api/v1/fcm";
+const url = "http://localhost:8080/api/v1/fcm";
 
 export type FCM = {
-  fcmId: number;
+  fcmId?: number;
   fcmToken: string;
-}
-
-export type FCMList = FCM[];
+};
 
 async function getFCMs(): Promise<FCM[]> {
   if (!local) {
@@ -28,22 +26,13 @@ async function postFCM(fcm: FCM): Promise<void> {
   if (!local) {
     throw new Error("Unable to create Axios instance.");
   }
-  const formData = new FormData();
-  formData.append('fcmToken', fcm.fcmToken);
 
   const token: string | null = localStorage.getItem('token');
-  if (token) {
-    local.defaults.headers.Authorization = `Bearer ${token}`;
-  }
+  const headers = token ? { Authorization: `Bearer ${token}` } : {};
 
   try {
-    await local.post(`${url}/register`, formData, {
-      headers: {
-        'Authorization': `Bearer ${token}`,
-        'Content-Type': 'application/json'
-      }
-    });
-    console.log(formData)
+    await local.post(`${url}/register`, { fcmToken: fcm.fcmToken }, { headers });
+    console.log('FCM token posted successfully');
   } catch (error) {
     console.error("Error posting FCM token", error);
     throw new Error("Error occurred while posting the FCM token");

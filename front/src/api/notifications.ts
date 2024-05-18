@@ -1,7 +1,7 @@
 import { AxiosInstance } from "axios";
 import { localAxios } from "../util/http-commons";
 import axios from "axios";
-import { FCMList, getFCMs } from "./fcm";
+import { getFCMs } from "./fcm";
 
 const local: AxiosInstance | undefined = localAxios();
 const url = "api/v1/notice";
