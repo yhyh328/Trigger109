@@ -3,7 +3,6 @@ import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { Notice, Notices, getNotificationList } from '../../api/notifications';
 import { Post } from '../notifications/Posts';
-import NoticeForm from './NoticeForm';
 
 
 const NewsSectionContainer = styled.section`
@@ -177,7 +176,6 @@ const Notifications = () => {
           ))}
         </NewsItemsContainer>
       </NewsSectionContainer>
-      <NoticeForm />
     </>
   );
 };
