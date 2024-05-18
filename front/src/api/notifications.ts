@@ -18,24 +18,7 @@ export type Notice = {
 
 export type Notices = [];
 
-function b64toBlob(b64Data: string, contentType: string, sliceSize = 512): Blob {
-  const byteCharacters = atob(b64Data);
-  const byteArrays = [];
-
-  for (let offset = 0; offset < byteCharacters.length; offset += sliceSize) {
-    const slice = byteCharacters.slice(offset, offset + sliceSize);
-    const byteNumbers = new Array(slice.length);
-    for (let i = 0; i < slice.length; i++) {
-      byteNumbers[i] = slice.charCodeAt(i);
-    }
-    const byteArray = new Uint8Array(byteNumbers);
-    byteArrays.push(byteArray);
-  }
-
-  return new Blob(byteArrays, { type: contentType });
-}
-
-async function postNotification(notice: Notice): Promise<void> {
+async function postNotification(notice: Notice, noticeImgFile?: File): Promise<void> {
   if (!local) {
     throw new Error("Unable to create Axios instance.");
   }
@@ -59,7 +42,7 @@ async function postNotification(notice: Notice): Promise<void> {
 
     await local.post(`${url}/register`, noticePayload, {
       headers: {
-        'Content-Type': 'application/json',
+        'Content-Type': 'multipart/form-data'
       }
     });
 

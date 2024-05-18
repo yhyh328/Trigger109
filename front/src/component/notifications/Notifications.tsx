@@ -4,6 +4,8 @@ import styled from 'styled-components';
 import { Notice, Notices, getNotificationList } from '../../api/notifications';
 import { Post } from '../notifications/Posts';
 import { getFCMs } from '../../api/fcm';
+import NoticeForm from './NoticeForm'; // NoticeForm 컴포넌트를 임포트
+
 
 const NewsSectionContainer = styled.section`
   background-color: #1a1a1d;
@@ -165,6 +167,7 @@ const Notifications = () => {
           ))}
         </NewsItemsContainer>
       </NewsSectionContainer>
+      <NoticeForm /> {/* 공지사항 등록 폼 추가 */}
     </>
   );
 };
