@@ -2,7 +2,7 @@ import axios, { AxiosInstance } from "axios";
 import { localAxios } from "../util/http-commons";
 
 const local: AxiosInstance | undefined = localAxios();
-const url = "http://localhost:8080/api/v1/fcm";
+const url = "api/v1/fcm";
 
 export type FCM = {
   fcmId?: number;

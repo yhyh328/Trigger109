@@ -13,7 +13,7 @@ ENV DB=mongodb://k10c109.p.ssafy.io:27017/kakao-talk
 COPY . .
 
 # RUN npm install
-RUN npm install --legacy-peer-deps
+RUN npm install
 
 # RUN npm install typescript @types/node @types/react @types/react-dom @types/jest react-router-dom redux react-redux
 
