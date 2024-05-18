@@ -63,8 +63,8 @@ public class NoticeController {
 
     @PostMapping("/register")
     public ResponseEntity<Void> postNotice(Authentication authentication,
-                                       @ModelAttribute PostNoticeRequest postNoticeRequest,
-                                       @RequestParam(value = "noticeImg",required = false)
+                                           @ModelAttribute PostNoticeRequest postNoticeRequest,
+                                           @RequestParam(value = "noticeImg",required = false)
                                            String noticeImg){
         log.info("noticeImg : " + noticeImg);
         log.info("postNoticeRequest : " + postNoticeRequest);
@@ -82,3 +82,4 @@ public class NoticeController {
         }
     }
 }
+

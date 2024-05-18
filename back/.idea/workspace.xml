@@ -5,102 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="96d56439-5819-42ca-abeb-3a6298039633" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../chat/nouse" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../front/config-overrides.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../front/public/Trigger.ico" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../front/public/TriggerSection5.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../front/public/faviconExample.ico" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../front/public/firebase-messaging-sw.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../front/public/heat_gun_favicon.ico" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../front/public/pnghut_stock-photography-shooting-target-clip-art-reticle-vector.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../front/src/api/createroom.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../front/src/api/fcm.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../front/src/api/getroominfo.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../front/src/api/getuser.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../front/src/api/login.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../front/src/api/notifications.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../front/src/api/signup.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../front/src/component/admin/.env" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../front/src/component/admin/Admin.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../front/src/component/admin/Admin.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../front/src/component/live/Live.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../front/src/component/main/Button.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../front/src/component/main/DefaultNotificationIMG.webp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../front/src/component/main/pnghut_stock-photography-shooting-target-clip-art-reticle-vector.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../front/src/component/member/Login.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../front/src/component/member/Login.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../front/src/component/member/MemberModal.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../front/src/component/member/MemberModal.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../front/src/component/member/SignUp.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../front/src/component/notifications/.env" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../front/src/component/notifications/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../front/src/component/notifications/DefaultNotificationIMG.webp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../front/src/component/notifications/ErrorMessage.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../front/src/component/notifications/NoticeForm.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../front/src/component/notifications/NotificationDetail.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../front/src/component/notifications/Notifications.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../front/src/component/notifications/Notifications.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../front/src/component/notifications/Posts.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../front/src/component/notifications/firebase.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../front/src/soundEffects/GunLoad.wav" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../front/src/soundEffects/GunShot.wav" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../front/src/soundEffects/plasma-blast.wav" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../front/src/soundEffects/soundContext.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../front/src/soundEffects/soundEffects.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../front/src/soundEffects/zap.wav" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../front/src/util/http-commons.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../front/src/util/http-status.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/8.7/checksums/checksums.lock" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/8.7/checksums/md5-checksums.bin" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/8.7/checksums/sha1-checksums.bin" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/8.7/executionHistory/executionHistory.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/8.7/executionHistory/executionHistory.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/8.7/fileHashes/fileHashes.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/8.7/fileHashes/fileHashes.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.name" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/gradle.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/jarRepositories.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/HELP.md" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../chat/Dockerfile" beforeDir="false" afterPath="$PROJECT_DIR$/../chat/Dockerfile" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../chat/Jenkinsfile" beforeDir="false" afterPath="$PROJECT_DIR$/../chat/Jenkinsfile" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../chat/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/../chat/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../chat/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/../chat/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../chat/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/../chat/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../front/.env" beforeDir="false" afterPath="$PROJECT_DIR$/../front/.env" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../front/Dockerfile" beforeDir="false" afterPath="$PROJECT_DIR$/../front/Dockerfile" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../front/Jenkinsfile" beforeDir="false" afterPath="$PROJECT_DIR$/../front/Jenkinsfile" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../front/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/../front/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../front/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/../front/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../front/public/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/../front/public/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../front/public/manifest.json" beforeDir="false" afterPath="$PROJECT_DIR$/../front/public/manifest.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../front/src/App.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/../front/src/App.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../front/src/component/chatlist/Chat.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/../front/src/component/chatlist/Chat.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../front/src/component/guide/Guide.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/../front/src/component/guide/Guide.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../front/src/component/live/CreateRoom.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/../front/src/component/live/CreateRoom.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../front/src/component/live/Live.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/../front/src/component/live/Live.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../front/src/component/live/LiveDetail.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/../front/src/component/live/LiveDetail.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../front/src/component/live/video.js" beforeDir="false" afterPath="$PROJECT_DIR$/../front/src/component/live/video.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../front/src/component/main/GuideButton.css" beforeDir="false" afterPath="$PROJECT_DIR$/../front/src/component/main/Button.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../front/src/component/main/GuideButton.tsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../front/src/component/main/MainSection.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/../front/src/component/main/MainSection.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../front/src/component/main/MainSection2.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/../front/src/component/main/MainSection2.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../front/src/component/main/MainSection3 copy.tsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../front/src/component/main/MainSection4 copy.tsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../front/src/component/main/MainSection4.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/../front/src/component/main/MainSection4.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../front/src/component/main/MainSection5 copy.tsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../front/src/component/main/MainSection5.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/../front/src/component/main/MainSection5.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../front/src/component/main/ValorantButton.css" beforeDir="false" afterPath="$PROJECT_DIR$/../front/src/component/main/ValorantButton.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../front/src/component/navbar/Header.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/../front/src/component/navbar/Header.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../front/src/helpers/simple-peer.js" beforeDir="false" afterPath="$PROJECT_DIR$/../front/src/helpers/simple-peer.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../front/src/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/../front/src/index.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../front/src/react-app-env.d.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../front/src/react-app-env.d.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../front/src/registerServiceWorker.js" beforeDir="false" afterPath="$PROJECT_DIR$/../front/src/registerServiceWorker.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../front/src/server.js" beforeDir="false" afterPath="$PROJECT_DIR$/../front/src/server.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../front/tsconfig.json" beforeDir="false" afterPath="$PROJECT_DIR$/../front/tsconfig.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/ssafy/c109/trigger/domain/notice/controller/NoticeController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/ssafy/c109/trigger/domain/notice/controller/NoticeController.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -144,25 +50,25 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;Gradle.Build back.executor&quot;: &quot;Run&quot;,
-    &quot;RequestMappingsPanelOrder0&quot;: &quot;0&quot;,
-    &quot;RequestMappingsPanelOrder1&quot;: &quot;1&quot;,
-    &quot;RequestMappingsPanelWidth0&quot;: &quot;75&quot;,
-    &quot;RequestMappingsPanelWidth1&quot;: &quot;75&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;Spring Boot.TriggerApplication.executor&quot;: &quot;Run&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;Merging feat/PushNotifications&quot;,
-    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Gradle.Build back.executor": "Run",
+    "RequestMappingsPanelOrder0": "0",
+    "RequestMappingsPanelOrder1": "1",
+    "RequestMappingsPanelWidth0": "75",
+    "RequestMappingsPanelWidth1": "75",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "Spring Boot.TriggerApplication.executor": "Run",
+    "git-widget-placeholder": "feat/PushNotifications",
+    "kotlin-language-version-configured": "true",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
   <component name="RunManager">
     <configuration name="TriggerApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
       <option name="ALTERNATIVE_JRE_PATH" value="17" />
@@ -196,7 +102,7 @@
       <workItem from="1715955574091" duration="414000" />
       <workItem from="1716012968455" duration="32000" />
       <workItem from="1716013667560" duration="228000" />
-      <workItem from="1716013908977" duration="3331000" />
+      <workItem from="1716013908977" duration="4075000" />
     </task>
     <servers />
   </component>

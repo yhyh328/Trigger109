@@ -14,3 +14,4 @@ public interface NoticeService {
     void updateViewCnt(Long noticeId);
 
 }
+
