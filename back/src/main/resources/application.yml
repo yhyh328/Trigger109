@@ -3,8 +3,10 @@ spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://k10c109.p.ssafy.io:10912/trigger?serverTimezone=Asia/Seoul
+#    url: jdbc:mysql://localhost:3306/trigger?serverTimezone=Asia/Seoul
     username: root
     password: trigger109!
+#    password: 1234
   #jpa
   jpa:
     hibernate:
@@ -56,7 +58,7 @@ jwt:
   secretKey: dyAeHubOOc8KaOfYB6XEQoEj1QzRlVgtjNL8PYs1A1tymZvvqkcEU7L1imkKHeDa
 
   access:
-    expiration: 3600000 # 1시간(60분) (1000L(ms -> s) * 60L(s -> m) * 60L(m -> h))
+    expiration: 1209600000 # 1시간(60분) (1000L(ms -> s) * 60L(s -> m) * 60L(m -> h))
     header: Authorization
 
   refresh:
