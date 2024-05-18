@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { RankingRow, fetchRankingRows } from '../../api/ranking';
+import { fetchMembers } from '../../api/getuser';
 
+// Styled components
 const RankingTopImg = styled.section`
   height: 80vh;
   background-image: url('/game_map_imgs/8.JPG');
@@ -21,7 +23,7 @@ const RankingContainer = styled.div`
   background-size: cover;
   display: flex;
   flex-direction: column;
-  justify-content: flex-end;
+  justify-content: center;
   align-items: center;
   color: white;
 `;
@@ -32,7 +34,6 @@ const Title = styled.h2`
   color: #00FCCE;
   margin: 0;
 `;
-
 
 const TableStyled = styled.table`
   width: 100%;
@@ -59,59 +60,61 @@ const Loading = styled.div`
   text-align: center;
 `;
 
+// Type definitions
+interface Member {
+  id: number;
+  nickname: string;
+}
+
+// RankingList component
 const RankingList: React.FC = () => {
+    const [members, setMembers] = useState<Member[]>([]);
     const [ranking, setRanking] = useState<RankingRow[]>([]);
     const [loading, setLoading] = useState(true);
-    const [error, setError] = useState<string>('');
+    const [error, setError] = useState<string | null>(null);
 
     useEffect(() => {
         const fetchData = async () => {
-            setLoading(true);
             try {
-
+                const membersData = await fetchMembers(); // Adjusted for single user fetch
+                console.log('membersData: ', membersData)
+                setMembers(membersData); // Wrap single user data in an array if not empty
+                
                 const rankingData = await fetchRankingRows();
-                console.log('rankingData: ', rankingData)
-                if (Array.isArray(rankingData)) {
-                    setRanking(rankingData);
-                } else {
-                    console.error('Expected an array of ranking rows, received:', rankingData);
-                    setError('Received malformed data');
-                }
-
-            } catch (error) {
-                console.error('Failed to fetch data:', error);
-                setError('Failed to load data.');
+                setRanking(Array.isArray(rankingData) ? rankingData : []);
+            } catch (error: any) {
+                console.error('Error fetching data:', error.message);
+                setError(error.message || 'Failed to load data.');
+                setLoading(false);
             }
-            setLoading(false);
         };
 
         fetchData();
     }, []);
 
-    // if (error) {
-    //     return <ErrorMessage>{error}</ErrorMessage>;
-    // }
+    if (error) {
+        return <ErrorMessage>{error}</ErrorMessage>;
+    }
 
-    // if (loading) {
-    //     return <Loading>Loading...</Loading>;
-    // }
+    if (loading) {
+        return <Loading>Loading...</Loading>;
+    }
 
     return (
         <>
-        <RankingTopImg />
+            <RankingTopImg />
             <RankingContainer>
                 <Title>랭킹</Title>
-                <br></br>
                 <TableStyled>
                     <tbody>
                         {ranking.map((row, index) => (
                             <Row key={index}>
-                                <Cell>{row.member}</Cell>
-                                <Cell>{row.isWin ? 'Win' : 'Loss'}</Cell>
-                                <Cell>{row.killCnt}</Cell>
-                                <Cell>{row.death}</Cell>
-                                <Cell>{row.createdAt}</Cell>
-                                <Cell>{row.rating}</Cell>
+                                <Cell>{row.member?.toString() || 'N/A'}</Cell> // Check for undefined before calling toString()
+                                <Cell>{typeof row.isWin === 'boolean' ? (row.isWin ? 'Win' : 'Loss') : 'N/A'}</Cell>
+                                <Cell>{row.killCnt || '0'}</Cell>
+                                <Cell>{row.death || '0'}</Cell>
+                                <Cell>{row.createdAt || 'Unknown'}</Cell>
+                                <Cell>{row.rating || '0'}</Cell>
                             </Row>
                         ))}
                     </tbody>
