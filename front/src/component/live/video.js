@@ -24,6 +24,7 @@ const Video = () => {
   const { roomId } = useParams();
   const socket = useRef(null);
 
+
   useEffect(() => {
     socket.current = io(process.env.REACT_APP_SIGNALING_SERVER);
     console.log("REACT_APP_SIGNALING_SERVER", process.env.REACT_APP_SIGNALING_SERVER);
@@ -89,21 +90,26 @@ const Video = () => {
   const getDisplay = async () => {
     try {
         const stream = await getDisplayStream();
-        screenVideoRef.current.srcObject = stream;
-        setScreenStream(stream);
-        stream.getTracks().forEach(track => {
-            peer.addTrack(track, stream);
-        });
+        if (stream) {
+            screenVideoRef.current.srcObject = stream;
+            setScreenStream(stream);
+            stream.getTracks().forEach(track => {
+                peer.addTrack(track, stream);
+            });
   
-        stream.oninactive = () => {
-            screenVideoRef.current.srcObject = null;
-            setScreenStream({});
-        };
+            stream.oninactive = () => {
+                console.log("Stream has become inactive");
+                screenVideoRef.current.srcObject = null;
+                setScreenStream({});
+            };
+        } else {
+            console.error("Failed to obtain display stream");
+        }
     } catch (error) {
         console.error('Failed to get display stream:', error);
-        // 추가적인 에러 처리 로직
     }
-  };
+};
+
   
 
 
@@ -159,7 +165,7 @@ const Video = () => {
       )}
       <video autoPlay className={`${connecting || waiting ? 'hide' : ''}`} id='remoteVideo' ref={remoteVideoRef} />
       <div className='controls'>
-        <button className='control-btn' onClick={getDisplay}><ShareScreenIcon /></button>
+        <button className='control-btn' onClick={ console.log("Trying to get display"), getDisplay}><ShareScreenIcon /></button>
         <button className='control-btn' onClick={setAudioLocal}>{micState ? <MicOnIcon /> : <MicOffIcon />}</button>
         <button className='control-btn' onClick={setVideoLocal}>{camState ? <CamOnIcon /> : <CamOffIcon />}</button>
       </div>

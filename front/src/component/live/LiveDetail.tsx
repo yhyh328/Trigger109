@@ -33,6 +33,7 @@ const VideoPlayer = () => {
 
 // 라이브 스트리밍 메인 컴포넌트
 const Live = () => {
+    console.log("inLive 함수")
   return (
     <LiveContainer>
       <VideoPlayer />

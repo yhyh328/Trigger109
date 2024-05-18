@@ -1,17 +1,30 @@
-# 기반 이미지 설정
+# Use the official Node.js image from Docker Hub
 FROM node:latest
 
-# 작업 디렉토리 설정
-WORKDIR /usr/src/app
+# Set the working directory inside the container
+WORKDIR /chat
 
-# 소스 코드 복사
-COPY . .
+# Add the current directory contents into the container at /chat
+COPY . /chat
 
-# 의존성 설치
+# Install dependencies
 RUN npm install
 
-# 포트 설정
-EXPOSE 3000
+# Your app binds to port 5001, so you'll use EXPOSE to map that port
+EXPOSE 5001
 
-# 어플리케이션 실행
+# Define environment variables
+# ENV PORT 5001
+# ENV DB mongodb://13.209.82.252:27017/kakao-talk
+# ENV CORS_ORIGIN http://localhost:3000
+
+#####
+
+ENV PORT 5001
+# ENV DB mongodb://localhost:27017/kakao-talk
+ENV DB mongodb://user1:trigger109@k10c109.p.ssafy.io:27017/kakao-talk
+# ENV DB mongodb://13.209.82.252:27017/kakao-talk
+ENV CORS_ORIGIN "https://k10c109.p.ssafy.io"
+
+# Command to run your app
 CMD ["node", "index.js"]

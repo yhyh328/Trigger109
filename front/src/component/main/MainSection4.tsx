@@ -1,10 +1,25 @@
 import React from 'react';
 import styled from 'styled-components';
-import GuideButton from './GuideButton';
+import GuideButton from './Button';
 import { useNavigate } from 'react-router-dom';
+import { prepareGunShot, prepareGunLoad } from '../../soundEffects/soundEffects';
+import { useSound } from '../../soundEffects/soundContext';
 
 // 이미지 파일 경로를 import합니다. 경로는 실제 파일 위치에 따라 달라집니다.
 // import valorantImage from './path/to/valorant3.png'; 
+
+const sizes = {
+  mobile: '600px',
+  tablet: '768px',
+  desktop: '992px'
+};
+
+// Media queries 헬퍼 함수
+const media = {
+  mobile: `(max-width: ${sizes.mobile})`,
+  tablet: `(min-width: ${sizes.tablet})`,
+  desktop: `(min-width: ${sizes.desktop})`
+};
 
 const GuidContainer = styled.section`
   display: flex; // Flex 레이아웃 적용
@@ -29,14 +44,15 @@ const ImageContainer = styled.div`
 
 const GuideButtonContainer = styled.div`
   display: flex;
-  justify-content: center; // Corrected the typo here
+  justify-content: center; 
   align-items: center;
 `
 
 const Logo = styled.h1`
   font-size: 150px;
   color: #FFFFFF;
-  margin-top: 0; 
+  margin-top: 0;
+  margin-bottom: 0;
   span {
     color: #00FCCE;
   }
@@ -51,11 +67,26 @@ const StyledImage = styled.img`
 
 // 컴포넌트 정의...
 const MainSection4 = () => {
+
+  const playGunLoad = prepareGunLoad();
+  const playGunShot = prepareGunShot();
+
+  const { isSoundEnabled } = useSound();
+
+  const handleGuideButtonEnter = () => {
+    if (isSoundEnabled) {
+      playGunLoad.play().catch(err => console.error('Error playing gun load:', err));
+    }
+  }
+
   const navigate = useNavigate();
 
   const handleGuideButtonClick = () => {
-    console.log("Guide Button clicked!")
+    if (isSoundEnabled) {
+      playGunShot.play().catch(err => console.error('Error playing gunshot:', err));
+    }
     navigate('/guide');
+    window.scrollTo(0, 0);
   }
 
   return (
@@ -71,15 +102,23 @@ const MainSection4 = () => {
         </h3>
         {/* 기타 텍스트 내용 */}
         <GuideButtonContainer>
-          <GuideButton label="게임 배우기" onClick={handleGuideButtonClick} />
+          <GuideButton 
+            label="게임 배우기" 
+            onMouseEnter={handleGuideButtonEnter} 
+            onClick={handleGuideButtonClick} 
+          />
         </GuideButtonContainer>
+        <br />
+        <br />
       </GuidItemContainer>
       <ImageContainer>
         {/* 이미지 경로를 정확하게 지정해야 합니다. */}
-        <StyledImage src='./valorant3.png' alt='Valorant' />
+        <StyledImage src='./game_map_imgs/Capture.png' alt='Valorant' />
       </ImageContainer>
     </GuidContainer>
   );
 };
 
 export default MainSection4;
+
+
