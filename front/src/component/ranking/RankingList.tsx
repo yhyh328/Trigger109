@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { RankingRow, fetchRankingRows } from '../../api/ranking';
-import { fetchAllInfo } from '../../api/getuser';
 
 // Styled components
 const RankingTopImg = styled.section`
