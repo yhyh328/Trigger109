@@ -1,11 +1,10 @@
 import styled from 'styled-components';
-import { useNavigate } from 'react-router-dom';
 import GuideSection from './GuideSection';
 import { DUMMY_GUIDEIMG1, DUMMY_GUIDEIMG2 } from './dummy-guideImg';
 
 const GuideTopImg = styled.section`
   height: 80vh;
-  background-image: url('/guide/guideBackground.jpg');
+  background-image: url('https://trigger109-bucket.s3.ap-northeast-2.amazonaws.com/9.JPG');
   background-size: cover;
   display: flex;
   flex-direction: column;
@@ -27,7 +26,7 @@ const GuideItemContainer = styled.div`
   color: white;
 `;
 
-const BeginnerInstruction = styled.h2`
+const Title = styled.h2`
   font-size: 100px;
   font-family: 'Black Han Sans', sans-serif;
   color: #00FCCE;
@@ -55,12 +54,6 @@ const ImageSection2 = styled.div`
 
 // Define Guide component
 const Guide = () => {
-  const navigate = useNavigate();
-
-  const handleGuideButtonClick = () => {
-    console.log("Guide Button clicked!");
-    navigate('/guide');
-  };
 
   return (
     <>
@@ -68,7 +61,7 @@ const Guide = () => {
         {/* Additional content can be placed here */}
       </GuideTopImg>
       <GuideItemContainer>
-        <BeginnerInstruction>초보자 가이드</BeginnerInstruction>
+        <Title>초보자 가이드</Title>
         <ImageSection1>
           {DUMMY_GUIDEIMG1.map((image1) => (
             <GuideSection key={image1.id} {...image1} />
