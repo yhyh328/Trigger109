@@ -91,11 +91,31 @@ export const Header: React.FC = () => {
   const playPlasma = preparePlasma();
   const { isSoundEnabled, toggleSound } = useSound();
 
+  const [isLoggedIn, setIsLoggedIn] = useState(false); // 로그인 상태
+  const [showModal, setShowModal] = useState(false); // 모달 표시 상태
+
   
   useEffect(() => {
     // console.log('playZap', playZap);
+    checkLoginStatus();
   }, [playZap]);
 
+  const checkLoginStatus = () => {
+    // localStorage에서 토큰을 확인하여 로그인 상태 설정
+    const token = localStorage.getItem('token');
+    setIsLoggedIn(!!token); // 토큰이 있으면 true, 없으면 false
+  };
+
+  const handlePlayClick = () => {
+    if (isLoggedIn) {
+      // 로그인된 상태면 특정 URL로 이동
+      window.location.href = 'https://drive.google.com/drive/folders/1H3Vu7W23ncNROTAzaETTinRp07GbR9Eo?usp=sharing';
+    } else {
+      // 로그인되지 않았으면 모달 표시
+      setShowModal(true);
+    }
+  };
+  
   const handleZap = (e: React.MouseEvent<HTMLAnchorElement>) => {
     e.preventDefault();
     const href = (e.target as HTMLAnchorElement).getAttribute('href');
@@ -132,7 +152,6 @@ export const Header: React.FC = () => {
     }
   }
 
-  const [showModal, setShowModal] = useState(false); // 모달의 표시 상태를 관리하는 state
   const handleOpenModal = () => setShowModal(true);
   const handleCloseModal = () => setShowModal(false);
 
@@ -162,9 +181,9 @@ export const Header: React.FC = () => {
             />
           </CheckboxLabel>
         </CheckboxContainer>
-        <PlayButton onClick={handleOpenModal}>지금 플레이하기</PlayButton>
+        <PlayButton onClick={handlePlayClick}>지금 플레이하기</PlayButton>
       </HeaderContainer>
-      {showModal && <Modal onClose={handleCloseModal} />} {/* 모달 컴포넌트를 조건부 렌더링 */}
+      {showModal && <Modal onClose={() => setShowModal(false)} />}
     </>
   );
 }
