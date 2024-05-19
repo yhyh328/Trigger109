@@ -13,7 +13,7 @@ const Login = () => {
         const token = await login({ email: username, password });
         if (token) {
             console.log('Logged in successfully');
-            navigate('/');
+            window.location.href = '/';
             
         } else {
             alert('Login failed');
