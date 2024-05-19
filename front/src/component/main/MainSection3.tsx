@@ -1,7 +1,10 @@
 import React from 'react';
 import styled from 'styled-components';
-import ValorantButton from './Valorant';
+import LiveButton from './Button';
 import { useNavigate } from 'react-router-dom';
+import { useSound } from '../../soundEffects/soundContext';
+import { prepareGunShot, prepareGunLoad } from '../../soundEffects/soundEffects';
+
 
 // Section 컴포넌트에 스타일을 적용합니다.
 const Section = styled.section`
@@ -17,16 +20,33 @@ const Section = styled.section`
 `;
 
 const MainSection3 = () => {
+
+  const { isSoundEnabled } = useSound();
+  const playGunLoad = prepareGunLoad();
+  const playGunShot = prepareGunShot();
+
+
+  const handlePlayButtonEnter = () => {
+    if (isSoundEnabled) {
+      playGunLoad.play().catch(err => console.error('Error playing gun load:', err));
+    }
+  };
+
+
   const navigate = useNavigate();  // useNavigate 훅을 컴포넌트 내에서 호출합니다.
 
   const handlePlayClick = () => {
+    if (isSoundEnabled) {
+      playGunShot.play().catch(err => console.error('Error playing gun load:', err));
+    }
     console.log('지금 시청하기')
     navigate('/live');  // 이벤트 핸들러 내에서 navigate 함수를 호출합니다.
   };
 
   return (
     <Section>
-      <ValorantButton label="지금 시청하기" onClick={handlePlayClick} />
+      <LiveButton label="지금 시청하기" 
+      onMouseEnter={handlePlayButtonEnter}onClick={handlePlayClick} />
     </Section>
   );
 }

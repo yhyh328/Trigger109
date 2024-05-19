@@ -87,26 +87,26 @@ const Checkbox = styled.input`
 `;
 
 export const Header: React.FC = () => {
-  const playZap = prepareZap();
+  // const playZap = prepareZap();
   const playPlasma = preparePlasma();
   const { isSoundEnabled, toggleSound } = useSound();
 
   
   useEffect(() => {
     // console.log('playZap', playZap);
-  }, [playZap]);
+  }, [playPlasma]);
 
   const handleZap = (e: React.MouseEvent<HTMLAnchorElement>) => {
     e.preventDefault();
     const href = (e.target as HTMLAnchorElement).getAttribute('href');
     if (isSoundEnabled) {
-      playZap.play()
+      playPlasma.play()
         .catch((err: any) => console.error('Error playing zap:', err))
         .finally(() => {
           if (href) {
             setTimeout(() => {
               window.location.href = href;
-            }, 100); // Duration of zap sound effect
+            }, 400); // Duration of zap sound effect
           }
         });
     } else if (href) {
@@ -118,13 +118,13 @@ export const Header: React.FC = () => {
     e.preventDefault();
     const href = (e.target as HTMLAnchorElement).getAttribute('href');
     if (isSoundEnabled) {
-      playZap.play()
+      playPlasma.play()
         .catch((err: any) => console.error('Error playing plasma:', err))
         .finally(() => {
           if (href) {
             setTimeout(() => {
               window.location.href = href;
-            }, 300); // Duration of plasma sound effect
+            }, 400); // Duration of plasma sound effect
           }
         });
     } else if (href) {
