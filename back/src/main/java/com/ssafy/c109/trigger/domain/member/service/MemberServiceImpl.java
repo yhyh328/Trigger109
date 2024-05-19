@@ -3,6 +3,8 @@ package com.ssafy.c109.trigger.domain.member.service;
 import com.ssafy.c109.trigger.domain.member.dto.request.SignUpRequest;
 import com.ssafy.c109.trigger.domain.member.entity.Member;
 import com.ssafy.c109.trigger.domain.member.repository.MemberRepository;
+import com.ssafy.c109.trigger.domain.ranking.entity.Ranking;
+import com.ssafy.c109.trigger.domain.ranking.repository.RankingRepository;
 import com.ssafy.c109.trigger.global.jpaEnum.Role;
 import com.ssafy.c109.trigger.global.jpaEnum.Status;
 import com.ssafy.c109.trigger.global.s3.AwsS3Service;
@@ -13,9 +15,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
+import java.util.Random;
 
 @Service
 @RequiredArgsConstructor
@@ -25,6 +27,7 @@ public class MemberServiceImpl implements MemberService {
     private final AwsS3Service awsS3Service;
     private final MemberRepository memberRepository;
     private final PasswordEncoder passwordEncoder;
+    private final RankingRepository rankingRepository;
 
     @Override
     public void singUp(SignUpRequest signUpRequest, MultipartFile profileImg) throws Exception {
@@ -60,6 +63,24 @@ public class MemberServiceImpl implements MemberService {
                 .build();
 
         memberRepository.save(member);
+
+        // 무작위로 랭킹 값 설정
+        Random random = new Random();
+        long rating = 800 + random.nextInt(701); // 800 ~ 1500
+        int killCnt = (int) ((rating - 800) * 0.1 + random.nextInt(10));
+        int death = (int) (10 - (rating - 800) * 0.01 + random.nextInt(5));
+        int isWin = (rating > 1100) ? 1 : (rating > 950) ? random.nextInt(2) : 0;
+
+        Ranking ranking = Ranking.builder()
+                .member(member)
+                .rating(rating)
+                .killCnt(killCnt)
+                .death(death)
+                .isWin(isWin)
+                .createdAt(LocalDate.now())
+                .build();
+
+        rankingRepository.save(ranking);
     }
 
     @Override
