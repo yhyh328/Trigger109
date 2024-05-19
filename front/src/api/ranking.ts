@@ -1,32 +1,34 @@
 import { AxiosInstance } from "axios";
 import { localAxios } from "../util/http-commons";
 
-const local: AxiosInstance | undefined = localAxios();
+const local: AxiosInstance | undefined = localAxios();  // Good fallback, consider root cause analysis
 const url = "/api/v1/ranking";
 
 export type RankingRow = {
-    rankingId: number;
-    member: number;
-    isWin: boolean;  // Changed from number to boolean to match actual use case
+    rankingId: string;
+    member: string;
+    memberNickname: string;
+    memberImg?: string;  
     killCnt: number;
     death: number;
     createdAt: string;
     rating: number;
-}
+};
 
 async function fetchRankingRows(): Promise<RankingRow[]> {
     if (!local) {
-        throw new Error("Unable to fetch Axios instance.");
+        throw new Error("Unable to fetch Axios instance.");  // Consider fallback or recovery strategy
     }
     try {
         const response = await local.get(`${url}`);
-        return response.data.map((row: any) => ({ // Ensure data types match when receiving data
+        // Validate data or use a schema validation library here
+        return response.data.map((row: any) => ({
             ...row,
-            isWin: row.isWin === 1  // Convert from 1/0 to true/false if necessary
+            isWin: row.isWin === 1  // Convert to boolean if stored as numeric
         }));
     } catch (error) {
         console.error("Error getting rankings:", error);
-        throw new Error("Error occurred while getting the rankings.");
+        throw new Error("Error occurred while getting the rankings.");  // Consider adding more detail or a user-friendly message
     }
 }
 

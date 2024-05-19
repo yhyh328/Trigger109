@@ -66,6 +66,7 @@ public class SecurityConfig {
                         .requestMatchers("/login/**").permitAll()
                         .requestMatchers("/code/**").permitAll()
                         .requestMatchers("/api/v1/users/signup").permitAll() // 회원가입 엔드포인트 허용
+                        .requestMatchers("/api/v1/users/allInfo").permitAll() // 회원가입 엔드포인트 허용
                         .requestMatchers("/api/v1/notice/**").permitAll()
                         .requestMatchers("/api/v1/ranking/**").permitAll()
                         .requestMatchers("/api/v1/live/**").permitAll()

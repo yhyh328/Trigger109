@@ -13,6 +13,8 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.List;
+
 @RestController
 @Slf4j
 @RequiredArgsConstructor
@@ -41,14 +43,24 @@ public class MemberController {
         }
     }
     @GetMapping("/info")
-    public ResponseEntity<Member> getAllMemberInfo(Authentication authentication) {
+    public ResponseEntity<Member> getMemberInfo(Authentication authentication) {
         UserDetails userDetails = (UserDetails) authentication.getPrincipal();
         String email = userDetails.getUsername();
         try {
-            Member member = memberService.getAllMemberInfo(email);
+            Member member = memberService.getMemberInfo(email);
             return ResponseEntity.ok(member);
         } catch (Exception e) {
             log.error("사용자 정보 가져오는 중 오류가 발생했습니다: {}", e.getMessage());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+        }
+    }
+    @GetMapping("/allInfo")
+    public ResponseEntity<List<Member>> getAllMemberInfo() {
+        try {
+            List<Member> memberList = memberService.getAllMemberInfo();
+            return ResponseEntity.ok(memberList);
+        } catch (Exception e) {
+            log.error("사용자 정보 목록을 가져오는 중 오류가 발생했습니다: {}", e.getMessage());
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
         }
     }

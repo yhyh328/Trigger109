@@ -5,9 +5,10 @@ import org.springframework.web.multipart.MultipartFile;
 import java.time.LocalDate;
 
 public record PostNoticeRequest(
-        String noticeTitle,
-        String noticeContent,
-        int noticeEmergency, // default 0
-        int noticeViewCnt, // default 0
-        MultipartFile noticeImg
+    String noticeTitle,
+    String noticeContent,
+    int noticeEmergency, // default 0
+    int noticeViewCnt, // default 0
+    MultipartFile noticeImg
 ) {}
+

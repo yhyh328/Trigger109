@@ -32,30 +32,25 @@ export const fetchUserInfo = async (): Promise<Member> => {
 
 
 // 로그인 유무 관계 없이 모든 계정 가져오기 
-async function fetchMembers() {
+async function fetchAllInfo() {
   if (!local) {
     throw new Error("Unable to fetch Axios instance.");
   }
-
-  // 가져오기 -> memberId(number), nickname(string), profileImg(string? file?) 
-  // isDeleted가 false라면 안 가져옴
+    // 가져오기 -> memberId(number), nickname(string), profileImg(string? file?) 
+  // isDeleted가 true라면 안 가져옴
   try {
-    const response = await local.get(`${url}`);
-    console.log('url', `${url}/info`)
-    console.log('response', response.data)
+    const response = await local.get(`${url}/allInfo`);
     const membersData = Array.isArray(response.data) ? response.data : [];
-    console.log('membersData => ', membersData)
-    return membersData
-      // .filter((member: any) => member.isDeleted) 
-      .map((member: any) => ({
-        id: member.memberId, 
-        nickname: member.nickName, 
-        image: member.profileImg 
-      }));
+    return membersData.map((member: any) => ({
+      memberId: member.memberId,  // Use memberId consistently
+      nickname: member.nickName,
+      image: member.profileImg
+    }));
   } catch (error) {
     console.error("Error fetching members:", error);
     throw new Error("Error occurred while fetching members.");
   }
 }
 
-export { fetchMembers }
+
+export { fetchAllInfo }

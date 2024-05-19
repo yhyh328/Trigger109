@@ -14,6 +14,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -62,12 +63,22 @@ public class MemberServiceImpl implements MemberService {
     }
 
     @Override
-    public Member getAllMemberInfo(String email) {
+    public Member getMemberInfo(String email) {
         Optional<Member> optionalMember = memberRepository.findByEmail(email);
         if (optionalMember.isPresent()) {
             return optionalMember.get();
         } else {
             throw new RuntimeException("해당 이메일로 등록된 회원이 없습니다: " + email);
+        }
+    }
+
+    @Override
+    public List<Member> getAllMemberInfo() {
+        Optional<List<Member>> optionalMemberList = Optional.of(memberRepository.findAll());
+        if(optionalMemberList.isPresent()){
+            return optionalMemberList.get();
+        }else{
+            throw new RuntimeException("유저목록이 없습니다: ");
         }
     }
 }
