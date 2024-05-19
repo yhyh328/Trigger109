@@ -7,6 +7,8 @@ public record GetRankingListResponse(
    String nickName,
    int isWin,
    int rating,
+   int killCnt,
+   int death,
    Member member
 
 ) {}
