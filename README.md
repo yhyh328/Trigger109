@@ -88,31 +88,21 @@ SSAFY 10기 2학기 자율 프로젝트 - Trigger
 **외부 API**
 - FcmToken
 
-## ⚜ 시스템 아키텍쳐
-
-![시스템 아키텍쳐](/docs/img/아키텍처.png)
-
 ## ⚜ 팀원 역할 분배
 ---
-![역할 배분](docs/img/C106팀역할.png)
+**Front End** 
+김요한 천승현
 
-## ⚜ 프로젝트 산출물
----
-- [기능명세서](/docs/기능명세서.md)
-- [기획서](/docs/기획서.md)
-- [기획배경](/docs/기획배경.md)
-- [그라운드룰](/docs/그라운드룰.md)
-- [아키텍처](/docs/서비스_아키텍처.md)
-- [목업](/docs/목업.md)
-- [컨벤션](/docs/컨벤션.md)
-- [API 명세서](/docs/API.md)
-- [ERD](/docs/ERD.md)
-- [회의록 및 회고록](/docs/회의록.md)
-- [트러블슈팅](/docs/버그리포트.md)
+**Back End**
+김도현 김혜인
+
+**Back End**
+김우태 이정민
 
 ## ⚜ 프로젝트 결과물
 - [포팅메뉴얼](/exec/CI_CD_포팅메뉴얼.pdf)
 - [최종발표자료](/exec/FLOWERING_최종_발표.pptx)
+- [ERD] 
 
 ## 구현 화면
 * 회원가입 & 로그인
