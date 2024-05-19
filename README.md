@@ -111,7 +111,7 @@ SSAFY 10기 2학기 자율 프로젝트 - Trigger
 - [트러블슈팅](/docs/버그리포트.md)
 
 ## ⚜ 프로젝트 결과물
-- [포팅메뉴얼](/exec/Flowering_포팅_메뉴얼.docx)
+- [포팅메뉴얼](/exec/CI_CD_포팅메뉴얼.pdf)
 - [최종발표자료](/exec/FLOWERING_최종_발표.pptx)
 
 ## 구현 화면
