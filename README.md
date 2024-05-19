@@ -96,13 +96,13 @@ SSAFY 10기 2학기 자율 프로젝트 - Trigger
 **Back End**
 김도현 김혜인
 
-**Back End**
+**Game**
 김우태 이정민
 
 ## ⚜ 프로젝트 결과물
 - [포팅메뉴얼](/exec/CI_CD_포팅메뉴얼.pdf)
 - [최종발표자료](/exec/FLOWERING_최종_발표.pptx)
-- [ERD] 
+- [ERD] https://www.erdcloud.com/d/HGSLFYohhhGixbxqf
 
 ## 구현 화면
 * 회원가입 & 로그인
