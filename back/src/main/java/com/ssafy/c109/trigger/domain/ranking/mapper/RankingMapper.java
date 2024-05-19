@@ -16,5 +16,6 @@ public interface RankingMapper {
 
     List<GetRankingDetailListResponse> toGetRankingDetailListResponses(List<Ranking> rankingList);
 
+    GetRankingListResponse toGetRankingListResponse(Ranking ranking);
 
 }
