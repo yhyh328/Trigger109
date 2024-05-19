@@ -1,11 +1,8 @@
-import AWS from 'aws-sdk';
-import { useState, useEffect } from 'react';
-
 export type Post = {
   id: number;
   title: string;
-  image: string;
-  content: string;
+  image?: File | string;
+  text: string;
   date: string;
 };
 
@@ -14,36 +11,14 @@ type PostsProps = {
 };
 
 export default function Posts({ posts }: PostsProps) {
-  const [images, setImages] = useState<Map<number, string>>(new Map());
-
-  useEffect(() => {
-    fetchImages();
-  }, [posts]);
-
-  const fetchImages = () => {
-    const s3 = new AWS.S3({
-      accessKeyId: process.env.REACT_APP_AWS_ACCESS_KEY,
-      secretAccessKey: process.env.REACT_APP_AWS_SECRET_KEY,
-      region: process.env.REACT_APP_AWS_BUCKET_REGION
-    });
-
-    posts.forEach(post => {
-      if (post.image) {
-        const params = {
-          Bucket: process.env.REACT_APP_AWS_BUCKET_NAME,
-          Key: post.image,
-          Expires: 60 // Time in seconds before the signed URL expires
-        };
-
-        s3.getSignedUrl('getObject', params, (err, url) => {
-          if (err) {
-            console.error('Error fetching signed URL:', err);
-            return;
-          }
-          setImages(prev => new Map(prev.set(post.id, url)));
-        });
-      }
-    });
+  // Helper function to convert image to URL if it's a File
+  const getImageSrc = (image: string | File): string => {
+    if (typeof image === 'string') {
+      return image;
+    } else {
+      // Create a URL for the File object
+      return URL.createObjectURL(image);
+    }
   };
 
   return (
@@ -52,8 +27,10 @@ export default function Posts({ posts }: PostsProps) {
         {posts.map((post) => (
           <li key={post.id}>
             <h2>{post.title}</h2>
-            <img src={images.get(post.id) || 'path/to/placeholder.jpg'} alt={post.title} />
-            <p>{post.content}</p>
+            {post.image && (
+              <img src={getImageSrc(post.image)} alt={post.title} />
+            )}
+            <p>{post.text}</p>
           </li>
         ))}
       </ul>

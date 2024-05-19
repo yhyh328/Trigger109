@@ -2,9 +2,12 @@ import axios from "axios";
 
 // Local Vue API axios instance
 function localAxios() {
+  // Determine the correct baseURL; this can be based on any condition or configuration
+  const isDevelopment = window.location.hostname === 'localhost';
+  const baseURL = isDevelopment ? "http://localhost:8080/" : "https://k10c109.p.ssafy.io/";
+
   const instance = axios.create({
-    // baseURL: "http://localhost:8080/", // Local server
-    baseURL: "https://k10c109.p.ssafy.io/" // EC2 server
+    baseURL: baseURL
   });
 
   const token: string | null = localStorage.getItem('token');

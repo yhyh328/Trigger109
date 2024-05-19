@@ -1,7 +1,7 @@
 import { AxiosInstance } from "axios";
 import { localAxios } from "../util/http-commons";
 import axios from "axios";
-import { FCMList, getFCMs } from "./fcm";
+import { getFCMs } from "./fcm";
 
 const local: AxiosInstance | undefined = localAxios();
 const url = "api/v1/notice";
@@ -10,30 +10,13 @@ export type Notice = {
   noticeId: number;
   noticeTitle: string;
   noticeContent: string;
-  noticeImg: string;
+  noticeImg?: File | string;
   noticeEmergency: number;
   noticeViewCnt: number;
   noticeCreatedAt: string;
 };
 
-export type Notices = [];
-
-function b64toBlob(b64Data: string, contentType: string, sliceSize = 512): Blob {
-  const byteCharacters = atob(b64Data);
-  const byteArrays = [];
-
-  for (let offset = 0; offset < byteCharacters.length; offset += sliceSize) {
-    const slice = byteCharacters.slice(offset, offset + sliceSize);
-    const byteNumbers = new Array(slice.length);
-    for (let i = 0; i < slice.length; i++) {
-      byteNumbers[i] = slice.charCodeAt(i);
-    }
-    const byteArray = new Uint8Array(byteNumbers);
-    byteArrays.push(byteArray);
-  }
-
-  return new Blob(byteArrays, { type: contentType });
-}
+export type Notices = Notice[];
 
 async function postNotification(notice: Notice): Promise<void> {
   if (!local) {
@@ -46,29 +29,26 @@ async function postNotification(notice: Notice): Promise<void> {
   }
 
   try {
-    const noticePayload = {
-      noticeTitle: notice.noticeTitle,
-      noticeContent: notice.noticeContent,
-      noticeImg: notice.noticeImg,
-      noticeEmergency: notice.noticeEmergency,
-      noticeViewCnt: notice.noticeViewCnt,
-      noticeCreatedAt: notice.noticeCreatedAt,
-    };
+    const formData = new FormData();
+    formData.append("noticeTitle", notice.noticeTitle);
+    formData.append("noticeContent", notice.noticeContent);
+    if (notice.noticeImg) {
+      formData.append("noticeImg", notice.noticeImg);
+    }
+    formData.append("noticeEmergency", String(notice.noticeEmergency));
+    formData.append("noticeViewCnt", String(notice.noticeViewCnt));
+    formData.append("noticeCreatedAt", notice.noticeCreatedAt);
 
-    console.log('Notice Payload:', noticePayload);
-
-    await local.post(`${url}/register`, noticePayload, {
+    await local.post(`${url}/register`, formData, {
       headers: {
-        'Content-Type': 'application/json',
+        'Content-Type': 'multipart/form-data'
       }
     });
 
-    const fcmTokens = await getFCMs() as FCMList;
+    const fcmTokens = await getFCMs();
     const validFcmTokens = fcmTokens
       .filter((fcm) => fcm.fcmToken && fcm.fcmToken !== 'undefined')
       .map((fcm) => fcm.fcmToken);
-
-    console.log('Valid FCM Tokens:', validFcmTokens);
 
     if (validFcmTokens.length > 0) {
       const fcmUrl = "https://fcm.googleapis.com/fcm/send";
@@ -98,7 +78,7 @@ async function postNotification(notice: Notice): Promise<void> {
   }
 }
 
-async function getNotificationList(): Promise<Notices[]> {
+async function getNotificationList(): Promise<Notices> {
   if (!local) {
     throw new Error("Unable to create Axios instance.");
   }

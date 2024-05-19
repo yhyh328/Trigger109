@@ -3,7 +3,6 @@ import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { Notice, Notices, getNotificationList } from '../../api/notifications';
 import { Post } from '../notifications/Posts';
-// import defaultIMG from './DefaultNotificationIMG.webp';
 
 const NewsSectionContainer = styled.section`
   background-color: #1a1a1d;
@@ -97,6 +96,17 @@ const truncateText = (text: string, maxLength: number) => {
   return text;
 };
 
+const getImageUrl = (image: string | File | undefined): string => {
+  if (typeof image === 'string') {
+    return image;
+  } else if (image instanceof File) {
+    return URL.createObjectURL(image);
+  } else {
+    // Provide a default placeholder if there's no image
+    return '/path/to/default/image.png'; // Replace this with your actual default image path
+  }
+};
+
 const NewsItem: React.FC<NewsItemProps> = ({ id, title, date, image, summary }) => (
   <NewsCard>
     <ImageContainer>
@@ -141,7 +151,7 @@ const MainSection2 = () => {
         const posts: Post[] = newsData.map((notice: Notice) => ({
           id: notice.noticeId,
           title: notice.noticeTitle,
-          content: notice.noticeContent,
+          text: notice.noticeContent,
           image: notice.noticeImg,
           date: notice.noticeCreatedAt, // Convert Date to string
         }));
@@ -174,8 +184,8 @@ const MainSection2 = () => {
             id={news.id} 
             title={news.title}
             date={news.date}
-            summary={news.content}
-            image={news.image ?? 'defaultIMG'}
+            summary={news.text}
+            image={getImageUrl(news.image)}
           />
         ))}
       </NewsItemsContainer>

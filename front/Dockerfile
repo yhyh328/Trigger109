@@ -12,7 +12,9 @@ ENV DB=mongodb://k10c109.p.ssafy.io:27017/kakao-talk
 # COPY package.json /front-edu/package.json
 COPY . .
 
+# RUN npm install
 RUN npm install
+
 # RUN npm install typescript @types/node @types/react @types/react-dom @types/jest react-router-dom redux react-redux
 
 CMD ["npm", "start"]

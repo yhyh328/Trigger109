@@ -4,7 +4,7 @@ import { DUMMY_GUIDEIMG1, DUMMY_GUIDEIMG2 } from './dummy-guideImg';
 
 const GuideTopImg = styled.section`
   height: 80vh;
-  background-image: url('/guide/guideBackground.jpg');
+  background-image: url('/game_map_imgs/ww.png');
   background-size: cover;
   display: flex;
   flex-direction: column;

@@ -1,139 +1,114 @@
-import React, { useState, useEffect, useRef } from "react";
-import { Notice, postNotification } from "../../api/notifications";
-import { generateToken, messaging } from '../notifications/firebase';
-import { onMessage } from 'firebase/messaging';
-import S3 from 'react-aws-s3-typescript';
-import './Admin.css';
-// import dotenv from 'dotenv';
+import React, { useState } from 'react';
+import { postNotification } from '../../api/notifications';
+import styled from 'styled-components';
 
-// dotenv.config();
+const FormContainer = styled.div`
+  background-color: #0f1923;
+  padding: 20px;
+  border-radius: 8px;
+  width: 400px;
+  margin: 50px auto;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+`;
 
-export function UploadNotification() {
-  const [title, setTitle] = useState("");
-  const [content, setContent] = useState("");
-  const [selectedImage, setSelectedImage] = useState<File | null>(null);
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const [fcmTokenGenerated, setFcmTokenGenerated] = useState(false);
-  const fileUpload = useRef<HTMLInputElement>(null);
+const FormTitle = styled.h2`
+  color: #fff;
+  text-align: center;
+  margin-bottom: 20px;
+`;
 
-  useEffect(() => {
-    if (fcmTokenGenerated) {
-      generateToken();
-      onMessage(messaging, (payload) => {
-        console.log("FCM Message:", payload);
-      });
-    }
-  }, [fcmTokenGenerated]);
+const Form = styled.form`
+  display: flex;
+  flex-direction: column;
+`;
 
-  const handleImageUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const file = event.target.files?.[0] ?? null;
-    setSelectedImage(file);
-  };
+const Input = styled.input`
+  padding: 10px;
+  margin-bottom: 10px;
+  border-radius: 4px;
+  border: none;
+  outline: none;
+`;
+
+const TextArea = styled.textarea`
+  padding: 10px;
+  margin-bottom: 10px;
+  border-radius: 4px;
+  border: none;
+  outline: none;
+`;
+
+const Button = styled.button`
+  background-color: #00FCCE;
+  color: white;
+  border: none;
+  padding: 10px;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-top: 10px;
+`;
+
+const FileInput = styled.input`
+  margin-bottom: 10px;
+  border: none;
+  outline: none;
+`;
+
+const NoticeForm = () => {
+  const [noticeTitle, setNoticeTitle] = useState('');
+  const [noticeContent, setNoticeContent] = useState('');
+  const [noticeImg, setNoticeImg] = useState<File | undefined>(undefined);
 
   const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
 
-    if (!title.trim() || !content.trim()) {
-      alert("Please enter both title and content.");
-      return;
-    }
-
-    setIsSubmitting(true);
-
-    // Ensure environment variables are defined
-    // const bucketName = process.env.AWS_BUCKET_NAME!;
-    // const region = process.env.AWS_BUCKET_REGION!;
-    // const accessKeyId = process.env.AWS_ACCESS_KEY!;
-    // const secretAccessKey = process.env.AWS_SECRET_KEY!;
-
-    const bucketName = "trigger109-bucket";
-    const region = "ap-northeast-2";
-    const accessKeyId = "AKIAQ3EGSCUZF6M3J4HW";
-    const secretAccessKey = "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";
-
-    if (!bucketName || !region || !accessKeyId || !secretAccessKey) {
-      alert("Missing AWS S3 configuration. Please check your environment variables.");
-      setIsSubmitting(false);
-      return;
-    }
-
-    const config = {
-      bucketName,
-      region,
-      accessKeyId,
-      secretAccessKey,
-    };
-
-    const newNotice: Partial<Notice> = {
-      noticeTitle: title,
-      noticeContent: content,
-      noticeImg: '',
-      noticeEmergency: 0,
+    const notice = {
+      noticeId: 0,
+      noticeTitle,
+      noticeContent,
+      noticeImg,
+      noticeEmergency: 0,   
       noticeViewCnt: 0,
+      noticeCreatedAt: new Date().toISOString(),
     };
-
-    if (selectedImage) {
-      try {
-        const ReactS3Client = new S3(config);
-        const newFileName = selectedImage.name;
-        const data = await ReactS3Client.uploadFile(selectedImage, newFileName);
-
-        if (data.status === 204) {
-          newNotice.noticeImg = data.location;
-        } else {
-          throw new Error('Image upload failed.');
-        }
-      } catch (error) {
-        console.error("Failed to upload image:", error);
-        alert("Image processing failed.");
-        setIsSubmitting(false);
-        return;
-      }
-    }
 
     try {
-      await postNotification(newNotice as Notice);
-      alert("Upload successful!");
-      setFcmTokenGenerated(true);
-      // Clear form fields after successful upload
-      setTitle("");
-      setContent("");
-      setSelectedImage(null);
+      await postNotification(notice);
+      alert('공지사항이 성공적으로 등록되었습니다.');
     } catch (error) {
-      console.error("Upload failed:", error);
-      alert("Upload failed.");
-    } finally {
-      setIsSubmitting(false);
+      console.error('공지사항 등록 중 오류가 발생했습니다:', error);
+      alert('공지사항 등록에 실패했습니다.');
     }
   };
 
-  return (
-    <div className="form-container">
-      <form onSubmit={handleSubmit}>
-        <h2>Upload Notification</h2>
-        <input
-          type="text"
-          placeholder="Title"
-          value={title}
-          onChange={(e) => setTitle(e.target.value)}
-        />
-        <textarea
-          placeholder="Content"
-          value={content}
-          onChange={(e) => setContent(e.target.value)}
-          rows={5}
-          cols={40}
-        />
-        <input
-          type="file"
-          accept="image/*"
-          onChange={handleImageUpload}
-          ref={fileUpload}
-        />
-        <button type="submit" disabled={isSubmitting}>Upload</button>
-      </form>
-    </div>
-  );
-}
+  const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files ? event.target.files[0] : undefined;
+    setNoticeImg(file);
+  };
 
-export default UploadNotification;
+  return (
+    <FormContainer>
+      <FormTitle>공지사항 등록</FormTitle>
+      <Form onSubmit={handleSubmit}>
+        <Input
+          type="text"
+          placeholder="공지사항 제목"
+          value={noticeTitle}
+          onChange={(e) => setNoticeTitle(e.target.value)}
+        />
+        <TextArea
+          placeholder="공지사항 내용"
+          value={noticeContent}
+          onChange={(e) => setNoticeContent(e.target.value)}
+        />
+        <FileInput
+          type="file"
+          onChange={handleFileChange}
+        />
+        <Button type="submit">등록</Button>
+      </Form>
+    </FormContainer>
+  );
+};
+
+export default NoticeForm;

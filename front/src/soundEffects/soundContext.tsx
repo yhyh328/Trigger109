@@ -1,4 +1,6 @@
-import { createContext, useState, useContext, ReactNode, useEffect } from 'react';
+import React, { useState, useContext, createContext, ReactNode, useEffect } from 'react';
+import Modal from 'react-modal';
+import './soundContext.css';
 
 interface SoundContextProps {
   isSoundEnabled: boolean;
@@ -14,41 +16,68 @@ const SoundContext = createContext<SoundContextProps>(defaultSoundContext);
 
 export const useSound = () => useContext(SoundContext);
 
-export const SoundProvider = ({ children }: { children: ReactNode }) => {
-  const [isSoundEnabled, setIsSoundEnabled] = useState<boolean>(defaultSoundContext.isSoundEnabled);  // Specify boolean type for state
+Modal.setAppElement('#root');
+
+interface SoundProviderProps {
+  children: ReactNode;
+  onClose?: () => void; // Include the onClose function in the SoundProviderProps
+}
+
+export const SoundProvider: React.FC<SoundProviderProps> = ({ children, onClose }) => {
+  const [isSoundEnabled, setIsSoundEnabled] = useState(defaultSoundContext.isSoundEnabled);
+  const [modalIsOpen, setModalIsOpen] = useState(false);
 
   useEffect(() => {
     localStorage.setItem('isSoundEnabled', JSON.stringify(isSoundEnabled));
   }, [isSoundEnabled]);
 
   const toggleSound = () => {
-    const previousState = isSoundEnabled;
-    const newState = !previousState;
+    const newState = !isSoundEnabled;
     setIsSoundEnabled(newState);
-
-    // 조건 체크: 이전 상태가 false였고 새 상태가 true일 때
-    if (!previousState && newState) {
-      const userResponse = window.confirm("원활한 사운드 이펙트를 즐기기 위해선 웹 브라우저 설정 내 소리를 항상 허용해야 합니다! 설정 페이지로 가볼까요?!");
-      if (userResponse) {
-        const userAgent = navigator.userAgent;
-
-        if (userAgent.includes("Chrome") && !userAgent.includes("Edg")) {
-          // 크롬 사용자인 경우
-          window.location.href = 'chrome://settings/content/sound';
-        } else if (userAgent.includes("Edg")) {
-          // 엣지 사용자인 경우
-          window.location.href = 'edge://settings/';
-        } else {
-          // 크롬이나 엣지가 아닌 경우 기본 처리
-          alert("Sorry, your browser is not supported for direct settings access.");
-        }
-      }
+    if (!isSoundEnabled && newState) {
+      checkModalSuppression();
     }
+  };
+
+  const checkModalSuppression = () => {
+    const suppressPromptDate = localStorage.getItem('suppressPromptUntil');
+    const currentDate = new Date();
+    if (!suppressPromptDate || new Date(suppressPromptDate) < currentDate) {
+      setModalIsOpen(true);
+    }
+  };
+
+  const handleModalClose = (duration: number) => {
+    const date = new Date();
+    date.setDate(date.getDate() + duration);
+    localStorage.setItem('suppressPromptUntil', date.toISOString());
+    setModalIsOpen(false);
   };
 
   return (
     <SoundContext.Provider value={{ isSoundEnabled, toggleSound }}>
       {children}
+      <Modal
+        isOpen={modalIsOpen}
+        onRequestClose={() => setModalIsOpen(false)}
+        overlayClassName="modal"
+        className="modal-content"
+        contentLabel="Sound Settings Reminder"
+      >
+        <button className="close-button" onClick={() => setModalIsOpen(false)}>x</button>
+        <h2>Trigger 알림</h2>
+        <p>원활한 사운드 이펙트를 즐기기 위해서<br/>웹 브라우저 설정에서 '소리'를 '항상 허용'으로 바꿔주세요!</p>
+        <br />
+        <br />
+        <div className="checkbox-container">
+          <label className="checkbox-label">
+            <input type="checkbox" onChange={() => handleModalClose(7)} /> 1주일 동안 보지 않기
+          </label>
+          <label className="checkbox-label">
+            <input type="checkbox" onChange={() => handleModalClose(30)} /> 1개월 동안 보지 않기
+          </label>
+        </div>
+      </Modal>
     </SoundContext.Provider>
   );
 };

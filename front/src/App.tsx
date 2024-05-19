@@ -20,6 +20,7 @@ import { generateToken } from './component/notifications/firebase';
 import Login from './component/member/Login'
 import { AxiosError } from "axios";
 import NotificationDetail from './component/notifications/NotificationDetail';
+import RankingList from './component/ranking/RankingList';
 
 const App = () => {
 
@@ -75,6 +76,9 @@ const handleLoginFail = (error: unknown) => {
         } />
         <Route path="/admin" element={
           <Admin />
+        } />
+        <Route path="/ranking" element={
+          <RankingList />
         } />
         <Route path="/signup" element={<SignUp/>} />
         <Route path="/login" element={

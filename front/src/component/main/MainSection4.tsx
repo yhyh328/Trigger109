@@ -31,6 +31,7 @@ const GuidItemContainer = styled.div`
   flex: 1; // flex-grow를 1로 설정하여 가용 공간을 균등하게 채웁니다.
   color: #FFFFFF;
   padding-right: 30px; // 이미지와의 간격을 위한 오른쪽 패딩
+ 
 `;
 
 const ImageContainer = styled.div`
@@ -39,7 +40,7 @@ const ImageContainer = styled.div`
   justify-content: center; // 이미지를 중앙 정렬합니다.
   align-items: center; // 이미지를 수직 중앙 정렬합니다.
   margin-top: 200px;
-  margin-bottom: 100px;
+  margin-bottom: 200px;
 `;
 
 const GuideButtonContainer = styled.div`
@@ -62,6 +63,9 @@ const StyledImage = styled.img`
   max-width: 100%; // 이미지가 컨테이너를 벗어나지 않도록 합니다.
   height: auto; // 이미지의 비율을 유지합니다.
   margin-top: 0;
+   object-fit: cover; // 컨테이너를 가득 채우도록 비율을 조정합니다.
+  width: 100%; // 컨테이너의 너비에 맞게 설정합니다.
+  height: 145%; // 컨테이너의 높이에 맞게 설정합니다.
 `;
 
 
@@ -92,13 +96,16 @@ const MainSection4 = () => {
   return (
     <GuidContainer>
       <GuidItemContainer>
+        <br />
+        <br />
+        <br />
         <Logo>Tri<span>gg</span>er</Logo>
-        <h1>한계를 돌파하라</h1>
+        <h1>벚꽃의 전쟁 : 전투 생존 배틀로얄</h1>
         <h3>
-          전 세계의 경쟁 무대에서 여러분의 스타일과 실력을 보여주세요. 정밀한
-          사격과 전략 스킬을 사용해 13라운드 동안 공격과 방어를 번갈아 진행하게 됩니다. 
-          라운드당 목숨은 하나이며, 생존하려면 상대보다 더 빠르게 판단해야 합니다.
-          데스매치와 스파이크 돌격, 경쟁전과 일반전에서 적과 싸워 이기세요.
+        2024년, 도쿄. 고대와 현대가 공존하는 이 도시는 매년 봄, 수천 그루의 벚나무가 만개하여 아름다운 장관을 이룬다. 그러나 이 아름다움 뒤에는 어두운 비밀이 숨겨져 있다. 도쿄는 비밀조직의 중심지로, 이 조직은 벚꽃이 만개하는 시기에 맞춰 '벚꽃의 전쟁'이라는 잔혹한 대회를 개최한다.
+        <br/>
+        <br/>
+        주인공 싸이백구(Cyborg + 109)는 어느 날 갑자기 납치되어 도쿄의 낯선 거리에서 깨어난다. 그는 자신이 반은 인간, 반은 기계로 개조된 존재임을 깨닫고 벚꽃의 전쟁에 참여하게 된다. 이 대회는 비밀조직에 의해 주관되며, 참가자들은 생존을 위해 서로 싸워야 한다. 최후의 승자는 자유를 얻게 되지만, 패자는 죽음을 맞이하게 되는데..
         </h3>
         {/* 기타 텍스트 내용 */}
         <GuideButtonContainer>
@@ -113,7 +120,7 @@ const MainSection4 = () => {
       </GuidItemContainer>
       <ImageContainer>
         {/* 이미지 경로를 정확하게 지정해야 합니다. */}
-        <StyledImage src='./valorant3.png' alt='Valorant' />
+        <StyledImage src='/game_map_imgs/Capture.PNG' alt='Trigger' />
       </ImageContainer>
     </GuidContainer>
   );

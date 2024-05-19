@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import { signUpRequest } from "../../api/signup"
+import { signUpRequest, Gender, SignUpData } from "../../api/signup";
+import { SignUpRequest } from 'aws-sdk/clients/cognitoidentityserviceprovider';
 
 const FormContainer = styled.div`
   background-color: #0f1923;
@@ -82,27 +83,25 @@ const SignUp = (): JSX.Element => {
 
   const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
-    const formData = new FormData();
-    formData.append('email', email);
-    formData.append('password', password);
-    formData.append('nickName', nickName);
-    formData.append('gender', gender);
-    if (profileImg) {
-      formData.append('profileImg', profileImg);
-    }
-  
     try {
-      // signUp 함수를 호출하여 서버로 formData를 전송
-      await signUpRequest(formData);
-      formData.forEach((value, key) => {
-        console.log("formData123", key, value);
-      });
+      const signUpData: SignUpData = {
+        email: email,
+        password: password,
+        nickName: nickName,
+        gender: gender as Gender, // TypeScript 에러 방지를 위해 타입 캐스팅
+        profileImg: profileImg
+      };
+      
+      // signUp 함수를 호출하여 서버로 SignUpData를 전송
+      await signUpRequest(signUpData);
+      
       alert('사용자 등록이 성공했습니다.');
     } catch (error) {
       console.error('사용자 등록 중 오류가 발생했습니다:', error);
       alert('사용자 등록에 실패했습니다.');
     }
   };
+  
   
 
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
