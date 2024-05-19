@@ -29,23 +29,42 @@ public class OAuth2LoginSuccessHandler implements AuthenticationSuccessHandler {
         log.info("OAuth2 Login 성공!");
         try {
             CustomOAuth2User oAuth2User = (CustomOAuth2User) authentication.getPrincipal();
+            String email = oAuth2User.getEmail();
+
+            // 이메일 도메인에 따라 제공자를 구분
+            String provider;
+            if (email.endsWith("@gmail.com")) {
+                provider = "google";
+            } else if (email.endsWith("@kakao.com")) {
+                provider = "kakao";
+            } else if (email.endsWith("@naver.com")) {
+                provider = "naver";
+            } else {
+                provider = "unknown";
+            }
+
+            log.info("OAuth2 provider: " + provider);
+
             // User의 Role이 GUEST일 경우 처음 요청한 회원이므로 회원가입 페이지로 리다이렉트
-            if(oAuth2User.getRole() == Role.gamer || oAuth2User.getRole() == Role.GUEST) {
+            if (oAuth2User.getRole() == Role.gamer || oAuth2User.getRole() == Role.GUEST) {
                 String accessToken = jwtService.createAccessToken(oAuth2User.getEmail());
                 log.info("Bearer : " + jwtService.getAccessHeader());
-//                response.sendRedirect("/oauth2/sign-up"); // 프론트의 회원가입 추가 정보 입력 폼으로 리다이렉트
+                log.info("accessToken : " + accessToken);
+                log.info("oAuth2User : " + oAuth2User);
+
+                // provider에 따라 다른 리다이렉트 URL 설정
+                String redirectUrl = "/api/v1/users/oauth2/code/" + provider;
+                response.sendRedirect(redirectUrl); // 프론트의 회원가입 추가 정보 입력 폼으로 리다이렉트
                 jwtService.sendAccessAndRefreshToken(response, accessToken, null);
-//                Member findUser = userRepository.findByEmail(oAuth2User.getEmail())
-//                                .orElseThrow(() -> new IllegalArgumentException("이메일에 해당하는 유저가 없습니다."));
-//                findUser.authorizeUser();
             } else {
                 loginSuccess(response, oAuth2User); // 로그인에 성공한 경우 access, refresh 토큰 생성
             }
         } catch (Exception e) {
+            log.error("OAuth2 로그인 처리 중 에러 발생: ", e);
             throw e;
         }
-
     }
+
 
     // TODO : 소셜 로그인 시에도 무조건 토큰 생성하지 말고 JWT 인증 필터처럼 RefreshToken 유/무에 따라 다르게 처리해보기
     private void loginSuccess(HttpServletResponse response, CustomOAuth2User oAuth2User) throws IOException {

@@ -1,7 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
+<<<<<<< HEAD
 import { RankingRow, fetchRankingRows } from '../../api/ranking';
 import { fetchAllInfo } from '../../api/getuser';
+=======
+import { Member, RankingRow, fetchRankingRows } from '../../api/ranking';
+>>>>>>> b65a97152fb09e6370bd4d82de8cb1ce1e87a4b2
 
 // Styled components
 const RankingTopImg = styled.section`
@@ -20,7 +24,10 @@ const RankingContainer = styled.div`
   flex: 1;
   background-color: #0F1923;
   padding: 50px 30px;
+<<<<<<< HEAD
   background-size: cover;
+=======
+>>>>>>> b65a97152fb09e6370bd4d82de8cb1ce1e87a4b2
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -78,6 +85,10 @@ const Loading = styled.div`
   text-align: center;
 `;
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> b65a97152fb09e6370bd4d82de8cb1ce1e87a4b2
 // RankingList component
 const RankingList: React.FC = () => {
   const [ranking, setRanking] = useState<RankingRow[]>([]);
@@ -88,6 +99,7 @@ const RankingList: React.FC = () => {
     const fetchData = async () => {
       setLoading(true);
       try {
+<<<<<<< HEAD
           const [rankingData, membersData] = await Promise.all([
               fetchRankingRows(),
               fetchAllInfo()
@@ -151,10 +163,53 @@ const RankingList: React.FC = () => {
                 ))}
             </tbody>
         </TableStyled>
+=======
+        const rankingData = await fetchRankingRows();
+        setRanking(rankingData);
+      } catch (error: any) {
+        console.error('Error fetching data:', error.message);
+        setError(error.message || 'Failed to load data.');
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchData();
+  }, []);
+
+  const Content = () => {
+    if (loading) return <Loading>Loading...</Loading>;
+    if (error) return <ErrorMessage>{error}</ErrorMessage>;
+
+    return (
+      <TableStyled>
+        <thead>
+          <Row>
+            <HeaderCell>프로필</HeaderCell>
+            <HeaderCell>닉네임</HeaderCell>
+            <HeaderCell>킬</HeaderCell>
+            <HeaderCell>데스</HeaderCell>
+            <HeaderCell>레이팅</HeaderCell>
+          </Row>
+        </thead>
+        <tbody>
+          {ranking.map((row, index) => (
+            <Row key={index}>
+               <Cell><img src={row.member.profileImg || null || undefined} alt="Profile" style={{width: 50, height: 50}} /></Cell>
+              <NicknameCell>{row.member.nickName || 'N/A'}</NicknameCell>
+              <Cell>{row.killCnt}</Cell>
+              <Cell>{row.death}</Cell>
+              <RatingCell>{row.rating}</RatingCell>
+            </Row>
+          ))}
+        </tbody>
+      </TableStyled>
+>>>>>>> b65a97152fb09e6370bd4d82de8cb1ce1e87a4b2
     );
   };
 
   return (
+<<<<<<< HEAD
       <>
           <RankingTopImg />
           <RankingContainer>
@@ -167,3 +222,18 @@ const RankingList: React.FC = () => {
 }
 
 export default RankingList;
+=======
+    <>
+        <RankingTopImg />
+        <RankingContainer>
+            <Title>랭킹</Title>
+            <br />
+            <br />
+            <Content />
+        </RankingContainer>
+    </>
+  );
+}
+
+export default RankingList;
+>>>>>>> b65a97152fb09e6370bd4d82de8cb1ce1e87a4b2

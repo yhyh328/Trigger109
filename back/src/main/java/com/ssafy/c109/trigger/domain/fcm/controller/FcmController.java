@@ -36,15 +36,20 @@ public class FcmController {
     }
 
     @PostMapping("/register")
-    public ResponseEntity<Void> registerFcmToken(@RequestBody FCM fcm){
+    public ResponseEntity<String> registerFcmToken(@RequestBody FCM fcm) {
         try {
             fcmService.registerFcmToken(fcm);
             return ResponseEntity.status(HttpStatus.CREATED).build();
+        } catch (IllegalStateException e) {
+            // 이미 존재하는 FCM 토큰에 대한 예외 처리
+            log.warn("FCM 토큰 등록 경고: {}", e.getMessage());
+            return ResponseEntity.status(HttpStatus.CONFLICT).body(e.getMessage());
         } catch (Exception e) {
-            // 예외 발생 시 로그를 남기고 예외 처리
+            // 기타 예외 발생 시 로그를 남기고 예외 처리
             log.error("FCM 토큰 등록 중 에러 발생: {}", e.getMessage());
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
     }
+
 
 }

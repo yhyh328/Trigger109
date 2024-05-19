@@ -14,6 +14,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -38,9 +39,11 @@ public class MemberServiceImpl implements MemberService {
         String profileImgUrl;
         log.info("profileImg : " + profileImg);
         if (profileImg == null) {
+            log.info("profileImg : " + profileImg);
             // 기본 이미지의 URL을 사용하도록 설정
             profileImgUrl = "https://trigger109-bucket.s3.ap-northeast-2.amazonaws.com/%ED%8A%B8%EB%A6%AC%EA%B1%B0+%EB%A1%9C%EA%B3%A01.png"; // 예시로 기본 이미지의 URL을 넣어주세요
         } else {
+            log.info("profileImg : " + profileImg);
             // 프로필 이미지를 S3에 업로드하고 URL을 받아옴
             profileImgUrl = awsS3Service.uploadFile(profileImg);
         }
@@ -60,12 +63,22 @@ public class MemberServiceImpl implements MemberService {
     }
 
     @Override
-    public Member getAllMemberInfo(String email) {
+    public Member getMemberInfo(String email) {
         Optional<Member> optionalMember = memberRepository.findByEmail(email);
         if (optionalMember.isPresent()) {
             return optionalMember.get();
         } else {
             throw new RuntimeException("해당 이메일로 등록된 회원이 없습니다: " + email);
+        }
+    }
+
+    @Override
+    public List<Member> getAllMemberInfo() {
+        Optional<List<Member>> optionalMemberList = Optional.of(memberRepository.findAll());
+        if(optionalMemberList.isPresent()){
+            return optionalMemberList.get();
+        }else{
+            throw new RuntimeException("유저목록이 없습니다: ");
         }
     }
 }

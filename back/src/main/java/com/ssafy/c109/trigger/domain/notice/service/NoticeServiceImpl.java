@@ -70,7 +70,7 @@ public class NoticeServiceImpl implements NoticeService {
             String profileImgUrl;
             if (noticeImg == null) {
                 // 기본 이미지의 URL을 사용하도록 설정
-                profileImgUrl = "https://trigger109-bucket.s3.ap-northeast-2.amazonaws.com/noticeImg.webp"; // 예시로 기본 이미지의 URL을 넣어주세요
+                profileImgUrl = "https://trigger109-bucket.s3.ap-northeast-2.amazonaws.com/trigger_%EC%BA%90%EB%A6%AD%ED%84%B0.png"; // 예시로 기본 이미지의 URL을 넣어주세요
             } else {
                 // 프로필 이미지를 S3에 업로드하고 URL을 받아옴
                 profileImgUrl = awsS3Service.uploadFile(noticeImg);
