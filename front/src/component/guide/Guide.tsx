@@ -4,7 +4,7 @@ import { DUMMY_GUIDEIMG1, DUMMY_GUIDEIMG2 } from './dummy-guideImg';
 
 const GuideTopImg = styled.section`
   height: 80vh;
-  background-image: url('https://trigger109-bucket.s3.ap-northeast-2.amazonaws.com/9.JPG');
+  background-image: url('/game_map_imgs/ww.png');
   background-size: cover;
   display: flex;
   flex-direction: column;

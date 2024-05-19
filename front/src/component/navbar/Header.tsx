@@ -67,12 +67,13 @@ const CheckboxContainer = styled.div`
   align-items: flex-end;
   color: white;
   cursor: pointer;
-  margin-right: 20px;
+
+  margin-right: -560px;
   font-size: 10px;
 `;
 
 const CheckboxLabel = styled.div`
-  margin-top: 0; 
+  margin-top: 10px; 
   display: flex;
   justify-content: space-between;
   align-items: center;

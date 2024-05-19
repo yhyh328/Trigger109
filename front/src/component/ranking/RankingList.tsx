@@ -6,7 +6,7 @@ import { fetchAllInfo } from '../../api/getuser';
 // Styled components
 const RankingTopImg = styled.section`
   height: 80vh;
-  background-image: url('/game_map_imgs/8.JPG');
+  background-image: url('/game_map_imgs/aa.png');
   background-size: cover;
   display: flex;
   flex-direction: column;

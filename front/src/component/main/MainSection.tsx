@@ -12,7 +12,7 @@ const handlePlayClick = () => {
 // Section 컴포넌트에 스타일을 적용합니다.
 const Section = styled.section`
   height: 90vh;
-  background-image: url('/game_map_imgs/main.png');
+  background-image: url('/game_map_imgs/023.jpg');
   background-size: cover;
   display: flex;
   flex-direction: column;
@@ -34,14 +34,14 @@ const Logo = styled.h1`
 
 
 export const MainSection: React.FC = () => {
-  
-  
+
+
   return (
     <Section>
       <Logo>
         Tri<span>gg</span>er
       </Logo>
-      
+
       <ValorantButton label="무료로 플레이하기" onClick={handlePlayClick} />
     </Section>
   );
