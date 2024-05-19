@@ -6,7 +6,7 @@ import { useNavigate } from 'react-router-dom';
 // Section 컴포넌트에 스타일을 적용합니다.
 const Section = styled.section`
   height: 90vh;
-  background-image: url('/valorant5.png');
+  background-image: url('/game_map_imgs/도쿄전체.PNG');
   background-size: cover;
   display: flex;
   flex-direction: column;

@@ -4,14 +4,17 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import registerServiceWorker from './registerServiceWorker';
+import { SoundProvider } from './soundEffects/soundContext';
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
 );
 root.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>
+  // <React.StrictMode>
+    <SoundProvider>
+      <App />
+    </SoundProvider>
+  // </React.StrictMode>
 );
 
 // If you want to start measuring performance in your app, pass a function
