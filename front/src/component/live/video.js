@@ -165,7 +165,7 @@ const Video = () => {
       )}
       <video autoPlay className={`${connecting || waiting ? 'hide' : ''}`} id='remoteVideo' ref={remoteVideoRef} />
       <div className='controls'>
-        <button className='control-btn' onClick={ console.log("Trying to get display"), getDisplay}><ShareScreenIcon /></button>
+        <button className='control-btn' onClick={getDisplay}><ShareScreenIcon /></button>
         <button className='control-btn' onClick={setAudioLocal}>{micState ? <MicOnIcon /> : <MicOffIcon />}</button>
         <button className='control-btn' onClick={setVideoLocal}>{camState ? <CamOnIcon /> : <CamOffIcon />}</button>
       </div>
