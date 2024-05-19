@@ -1,35 +1,67 @@
 import { AxiosInstance } from "axios";
 import { localAxios } from "../util/http-commons";
+import * as Yup from "yup";
 
-const local: AxiosInstance | undefined = localAxios();  // Good fallback, consider root cause analysis
+// Establish the Axios instance
+const local: AxiosInstance | undefined = localAxios();
 const url = "/api/v1/ranking";
 
-export type RankingRow = {
-    rankingId: string;
-    member: string;
-    memberNickname: string;
-    memberImg?: string;  
-    killCnt: number;
-    death: number;
+// Define the interfaces for the API data
+interface Member {
+    memberId: number;
+    email: string;
+    nickName: string;
+    role: string;
+    level?: number;
     createdAt: string;
-    rating: number;
-};
+    profileImg?: string;  // Optional as per the data structure
+}
 
+interface RankingRow {
+    rankingId: number;
+    isWin: string;
+    killCnt: number;
+    death?: number;
+    createdAt: string;
+    rating?: number;
+    member: Member;
+}
+
+
+// Define the validation schema using Yup
+const rankingRowSchema = Yup.object().shape({
+    isWin: Yup.number().required(),
+    rating: Yup.number().required(),
+    member: Yup.object().shape({
+        memberId: Yup.number().required(),
+        email: Yup.string().required().email(),
+        nickName: Yup.string().required(),
+        role: Yup.string().required(),
+        level: Yup.number().nullable().notRequired(),
+        createdAt: Yup.string().required(),
+        profileImg: Yup.string().url().nullable().notRequired(),
+    }).required(),
+});
+
+// Async function to fetch and validate ranking data
 async function fetchRankingRows(): Promise<RankingRow[]> {
     if (!local) {
-        throw new Error("Unable to fetch Axios instance.");  // Consider fallback or recovery strategy
+        throw new Error("Unable to fetch Axios instance.");
     }
     try {
-        const response = await local.get(`${url}`);
-        // Validate data or use a schema validation library here
-        return response.data.map((row: any) => ({
-            ...row,
-            isWin: row.isWin === 1  // Convert to boolean if stored as numeric
-        }));
-    } catch (error) {
+        const response = await local.get(url);
+        console.log('response.data: ', response.data)
+        return response.data
+    } catch (error: unknown) {
         console.error("Error getting rankings:", error);
-        throw new Error("Error occurred while getting the rankings.");  // Consider adding more detail or a user-friendly message
+        if (error instanceof Error) {
+            throw new Error("Error occurred while getting the rankings. " + error.message);
+        } else {
+            throw new Error("Error occurred while getting the rankings. An unknown error occurred");
+        }
     }
 }
 
-export { fetchRankingRows }
+// Export types and functions
+export type { Member, RankingRow };
+export { fetchRankingRows };
