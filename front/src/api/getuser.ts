@@ -13,6 +13,7 @@ export interface Member {
 }
 
 
+
 // 로그인한 사용자의 정보를 가져오는 함수
 export const fetchUserInfo = async (): Promise<Member> => {
   const token = localStorage.getItem('token'); // 로컬 스토리지에서 토큰 가져오기
