@@ -49,13 +49,12 @@ SSAFY 10기 2학기 자율 프로젝트 - Trigger
 ## ⚜ 주요 기술
 
 **FRONT-END**
-- REACT `18.2.0`
-- VITE  `5.0.8`
-- Redux `5.0.1`
-- Firebase 
-- OpenVidu
-- ReactWebCam
-- Styled Component
+- React.js `18.3.1`
+- Typescript `4.9.5`
+- Video.js 
+- Socket.js `^4.7.5`
+- Firebase `10.12.0`
+- Node `16.18.96`
 
 **BACK-END**
 - Springboot `3.2.0`
@@ -73,6 +72,9 @@ SSAFY 10기 2학기 자율 프로젝트 - Trigger
 - SSL
 - GITLAB
 - DOCKER HUB
+- Firebase Cloud Messaging
+- PWA
+
 
 **협업 툴**
 - IntelliJ IDE
