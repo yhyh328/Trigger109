@@ -1,3 +1,31 @@
 .live-stream {
     padding-top: 70px; 
+    background-color: #2c2f33; /* 어두운 회색으로 설정 */
+  color: #ffffff; /* 글자 색상은 밝은 색으로 설정해 가독성 확보 */
+  border-radius: 8px; /* 경계선 둥글게 */
 }
+
+.live-stream a {
+    color: #ffffff; /* 링크의 글자색을 흰색으로 설정 */
+    text-decoration: none; /* 밑줄 제거 */
+  }
+  
+  .live-stream a:hover {
+    text-decoration: underline; /* 마우스 오버 시 밑줄 표시 */
+  }
+
+  .live-stream ul li {
+    margin-bottom: 15px; /* 각 항목 사이의 하단 마진을 15px로 설정 */
+    padding: 10px; /* 각 항목의 패딩을 10px로 설정 */
+    background-color: #333; /* 선택적: 각 항목의 배경색 설정 */
+    border-radius: 5px; /* 선택적: 각 항목의 모서리를 둥글게 */
+  }
+  
+
+body {
+    background-color: #2c2f33; /* 전체 배경을 어두운 회색으로 설정 */
+    color: #ffffff; /* 전체 글자 색상을 백색으로 설정 */
+    margin: 0; /* 기본 마진 제거 */
+    padding: 0; /* 기본 패딩 제거 */
+  }
+  
