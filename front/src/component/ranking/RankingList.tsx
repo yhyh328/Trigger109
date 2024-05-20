@@ -5,8 +5,8 @@ import { Member, RankingRow, fetchRankingRows } from '../../api/ranking';
 // Styled components
 const RankingTopImg = styled.section`
   height: 80vh;
-  background-image: url('/game_map_imgs/8.JPG');
   background-size: cover;
+  background-image: url('https://trigger109-bucket.s3.ap-northeast-2.amazonaws.com/trigger_%EB%B0%B0%EA%B2%BD1.png');
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
@@ -75,7 +75,6 @@ const ErrorMessage = styled.div`
 const Loading = styled.div`
   text-align: center;
 `;
-
 
 // RankingList component
 const RankingList: React.FC = () => {

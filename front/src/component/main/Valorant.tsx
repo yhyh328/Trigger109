@@ -4,6 +4,7 @@ import './ValorantButton.css';  // 스타일 파일 임포트
 interface ValorantButtonProps {
   label: string;
   onClick: () => void;  // 클릭 이벤트 핸들러 추가
+  onMouseEnter: () => void;
 }
 
 const ValorantButton: React.FC<ValorantButtonProps> = ({ label, onClick }) => {

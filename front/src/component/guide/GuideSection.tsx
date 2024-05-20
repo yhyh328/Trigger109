@@ -36,7 +36,7 @@ export default function GuideSection({
       <img src={image} alt="Guide Visual" />
       <div className="product-content">
         <p>{description}</p>
-      </div>
+  </div>
     </StyledArticle>
   );
 }

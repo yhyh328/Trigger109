@@ -46,7 +46,7 @@ const Content = styled.p`
   word-wrap: break-word; /* 긴 단어나 문자열이 다음 줄로 넘어가도록 함 */
   white-space: pre-wrap; /* 공백과 줄바꿈을 유지하여 줄바꿈을 허용 */
   overflow-wrap: break-word; /* 긴 단어가 줄바꿈되도록 함 */
-  text-align: center; /* 내용 가운데 정렬 */
+  text-align: left; /* 내용 가운데 정렬 */
   max-width: 800px; /* 콘텐츠의 최대 너비 설정 */
   margin-top: 50px;
   width: 100%;
