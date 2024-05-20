@@ -1,35 +1,54 @@
-import GuideImg1 from './WIV_1_Intro_WiV.png';
-import GuideImg2 from './WIV_2_Roles_updated_KR.png';
-import GuideImg3 from './WIV_TACSCHOOL_1.png';
-import GuideImg4 from './WIV_TACSCHOOL_2.png';
 
+import GuideImg1 from './016.jpg';
+import GuideImg2 from './012.jpg';
+import GuideImg3 from './013.jpg';
+import GuideImg4 from './014.jpg';
+import GuideImg5 from './015.jpg';
+
+
+
+import GuideImg6 from './010.jpg';
+import GuideImg7 from './011.jpg';
+
+  
 export const DUMMY_GUIDEIMG1 = [
   {
     id: 'p1',
     image: GuideImg1,
-    description:
-      '트리거란 무엇인가',
+
   },
   {
     id: 'p2',
     image: GuideImg2,
-    description:
-      '역할군 선택',
+
+  },
+  {
+    id: 'p3',
+    image: GuideImg3,
+
+  },
+  {
+    id: 'p4',
+    image: GuideImg4,
+
+  },
+  {
+    id: 'p5',
+    image: GuideImg5,
+
   },
 ];
 
 
 export const DUMMY_GUIDEIMG2 = [
   {
-    id: 'p3',
-    image: GuideImg3,
-    description:
-      '',
+    id: 'p6',
+    image: GuideImg6,
+
   },
   {
-    id: 'p4',
-    image: GuideImg4,
-    description:
-    '',
+    id: 'p7',
+    image: GuideImg7,
+
     },
 ];
