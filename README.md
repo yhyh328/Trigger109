@@ -100,20 +100,6 @@ SSAFY 10기 2학기 자율 프로젝트 - Trigger
 
 ## ⚜ 프로젝트 결과물
 - [포팅메뉴얼](/exec/CI_CD_포팅메뉴얼.pdf)
-- [최종발표자료](/exec/FLOWERING_최종_발표.pptx)
+- [최종발표자료](/exec/10기_자율PJT_발표자료_C109.pdf)
 - [ERD] https://www.erdcloud.com/d/HGSLFYohhhGixbxqf
 
-## 구현 화면
-* 회원가입 & 로그인
-  
-* 공지사항
-
-* 랭킹
-
-* 가이드
-
-* 알림
-
-* 실시간 스트리밍 & 채팅 서비스
-
-* 게임
