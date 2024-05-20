@@ -3,8 +3,7 @@
 - 여기에 프로젝트 전반적인 이미지 넣는다.
 
 ## Trigger 링크(웹) : [홈페이지](https://trigger109.com)
-## 소개 영상 보기 : [youtube](https://trigger109.com) // 이건 추후 수정 해야함
-
+## 소개 영상 보기 : [youtube](https://youtu.be/ICWGBu9Iyl4)
 
 ## ⚜ 프로젝트 진행기간
 2024.04.08(월) ~ 2024.05.24(금) (총 47일) <br>
