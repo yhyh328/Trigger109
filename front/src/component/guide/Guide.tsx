@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import GuideSection from './GuideSection';
-import { DUMMY_GUIDEIMG1, DUMMY_GUIDEIMG2 } from './dummy-guideImg';
+import { DUMMY_GUIDEIMG1 } from './dummy-guideImg';
 
 const GuideTopImg = styled.section`
   height: 80vh;
@@ -68,9 +68,9 @@ const Guide = () => {
           ))}
         </ImageSection1>
         <ImageSection2>
-          {DUMMY_GUIDEIMG2.map((image2) => (
+          {/* {DUMMY_GUIDEIMG2.map((image2) => (
             <GuideSection key={image2.id} {...image2} />
-          ))}
+          ))} */}
         </ImageSection2>
       </GuideItemContainer>
     </>

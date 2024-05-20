@@ -6,30 +6,78 @@ import GuideImg4 from './WIV_TACSCHOOL_2.png';
 export const DUMMY_GUIDEIMG1 = [
   {
     id: 'p1',
-    image: GuideImg1,
+    image: './010.jpg',
     description:
-      '트리거란 무엇인가',
+      '',
   },
   {
     id: 'p2',
-    image: GuideImg2,
+    image: './011.jpg',
     description:
-      '역할군 선택',
+      '',
   },
-];
-
-
-export const DUMMY_GUIDEIMG2 = [
   {
     id: 'p3',
-    image: GuideImg3,
+    image: './012.jpg',
     description:
       '',
   },
   {
     id: 'p4',
-    image: GuideImg4,
+    image: './013.jpg',
     description:
     '',
     },
+    {
+      id: 'p4',
+      image: './014.jpg',
+      description:
+      '',
+      },
+      {
+        id: 'p4',
+        image: './015.jpg',
+        description:
+        '',
+        },
+        {
+          id: 'p4',
+          image: './016.jpg',
+          description:
+          '',
+          },
 ];
+
+
+// export const DUMMY_GUIDEIMG2 = [
+//   {
+//     id: 'p3',
+//     image: './012.jpg',
+//     description:
+//       '',
+//   },
+//   {
+//     id: 'p4',
+//     image: './013.jpg',
+//     description:
+//     '',
+//     },
+//     {
+//       id: 'p4',
+//       image: './014.jpg',
+//       description:
+//       '',
+//       },
+//       {
+//         id: 'p4',
+//         image: './015.jpg',
+//         description:
+//         '',
+//         },
+//         {
+//           id: 'p4',
+//           image: './016.jpg',
+//           description:
+//           '',
+//           },
+// ];
