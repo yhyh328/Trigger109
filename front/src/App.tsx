@@ -90,7 +90,7 @@ const handleLoginFail = (error: unknown) => {
                 } />
       </Routes>
       </SoundProvider>
-      <Footer />
+      {/* <Footer /> */}
     </Router>
   );
 }
