@@ -1,6 +1,12 @@
 # ⚜ Trigger : 대규모 멀티플레이 전투 생존 배틀로얄 게임
 
-
+![프로젝트팜플렛](/exec/img/게임배경.jpg)
+![프로젝트팜플렛](/exec/img/캐릭터소개.jpg)
+![프로젝트팜플렛](/exec/img/무기소개1.jpg)
+![프로젝트팜플렛](/exec/img/무기소개2.jpg)
+![프로젝트팜플렛](/exec/img/무기소개3.jpg)
+![프로젝트팜플렛](/exec/img/무기소개4.jpg)
+![프로젝트팜플렛](/exec/img/조작방법.jpg)
 
 ## Trigger 링크(웹) : [홈페이지](https://trigger109.com)
 ## 소개 영상 보기 : [youtube](https://youtu.be/ICWGBu9Iyl4)
