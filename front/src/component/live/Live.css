@@ -21,7 +21,22 @@
     border-radius: 5px; /* 선택적: 각 항목의 모서리를 둥글게 */
   }
   
-
+  .live-stream button {
+    background-color: #00FCCE; /* 밝은 파란색 배경 */
+    color: white; /* 흰색 글자 */
+    border: none; /* 테두리 제거 */
+    padding: 10px 20px; /* 위아래 10px, 좌우 20px 패딩 */
+    font-size: 16px; /* 글자 크기 */
+    border-radius: 5px; /* 모서리 둥글게 */
+    cursor: pointer; /* 마우스 오버 시 커서 변경 */
+    transition: background-color 0.3s, color 0.3s; /* 색상 변경 애니메이션 효과 */
+  }
+  
+  .live-stream button:hover {
+    background-color: #00FCCE; /* 호버 시 더 어두운 파란색으로 변경 */
+    color: #ffffff; /* 호버 시 글자색 유지 */
+  }
+  
 body {
     background-color: #2c2f33; /* 전체 배경을 어두운 회색으로 설정 */
     color: #ffffff; /* 전체 글자 색상을 백색으로 설정 */
