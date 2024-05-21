@@ -2,18 +2,19 @@ import React from 'react';
 import './ValorantButton.css';  // 스타일 파일 임포트
 
 interface ValorantButtonProps {
-  label: string;
-  onClick: () => void;  // 클릭 이벤트 핸들러 추가
+    label: string;
+    onClick: () => void;  // 클릭 이벤트 핸들러 추가
+    onMouseEnter: () => void;
 }
 
 const ValorantButton: React.FC<ValorantButtonProps> = ({ label, onClick }) => {
-  return (
-    <div className="valorant-btn" onClick={onClick}>
+    return (
+        <div className="valorant-btn" onClick={onClick}>
       <span className="underlay">
         <span className="label">{label}</span>
       </span>
-    </div>
-  );
+        </div>
+    );
 };
 
 export default ValorantButton;

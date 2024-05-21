@@ -19,6 +19,22 @@ const isLocalhost = Boolean(
 );
 
 export default function register() {
+<<<<<<< HEAD
+=======
+
+  // if ('serviceWorker' in navigator) {
+  //   window.addEventListener('load', function() {
+  //     navigator.serviceWorker.register('/firebase-messaging-sw.js')
+  //       .then(function(registration) {
+  //         console.log('ServiceWorker registration successful with scope: ', registration.scope);
+  //       }, function(err) {
+  //         console.log('ServiceWorker registration failed: ', err);
+  //       });
+  //   });
+  // }
+
+
+>>>>>>> origin/develop_fe
   if (process.env.NODE_ENV === 'production' && 'serviceWorker' in navigator) {
     // The URL constructor is available in all browsers that support SW.
     const publicUrl = new URL(process.env.PUBLIC_URL, window.location);

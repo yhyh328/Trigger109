@@ -47,6 +47,7 @@ pipeline {
                         sh "docker stop front || true"
                         sh "docker rm front || true"
                         sh "docker run -d --name front -p 3001:3000 ${DOCKER_USER_ID}/front:latest"
+                        sh "docker run -d --name front -p 3000:3000 ${DOCKER_USER_ID}/front:latest"
                     }
                 }
             }

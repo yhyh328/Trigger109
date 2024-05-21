@@ -9,21 +9,21 @@ type GuideSectionProps ={
 }
 
 export default function Product({
-  id,
-  image,
-  description,
-}: GuideSectionProps) {
+                                  id,
+                                  image,
+                                  description,
+                                }: GuideSectionProps) {
 
   return (
-    <article className="product">
-      <img src={image} />
-      <div className="product-content">
-        <div>
-          <p>{description}</p>
+      <article className="product">
+        <img src={image} />
+        <div className="product-content">
+          <div>
+            <p>{description}</p>
+          </div>
+          <p className="product-actions">
+          </p>
         </div>
-        <p className="product-actions">
-        </p>
-      </div>
-    </article>
+      </article>
   );
 }

@@ -8,13 +8,13 @@ export const DUMMY_GUIDEIMG1 = [
     id: 'p1',
     image: GuideImg1,
     description:
-      '트리거란 무엇인가',
+        '트리거란 무엇인가',
   },
   {
     id: 'p2',
     image: GuideImg2,
     description:
-      '역할군 선택',
+        '역할군 선택',
   },
 ];
 
@@ -24,12 +24,12 @@ export const DUMMY_GUIDEIMG2 = [
     id: 'p3',
     image: GuideImg3,
     description:
-      '',
+        '',
   },
   {
     id: 'p4',
     image: GuideImg4,
     description:
-    '',
-    },
+        '',
+  },
 ];

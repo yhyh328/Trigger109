@@ -24,6 +24,7 @@ const Video = () => {
   const { roomId } = useParams();
   const socket = useRef(null);
 
+
   useEffect(() => {
     socket.current = io(process.env.REACT_APP_SIGNALING_SERVER);
     console.log("REACT_APP_SIGNALING_SERVER", process.env.REACT_APP_SIGNALING_SERVER);
@@ -88,23 +89,28 @@ const Video = () => {
 
   const getDisplay = async () => {
     try {
-        const stream = await getDisplayStream();
+      const stream = await getDisplayStream();
+      if (stream) {
         screenVideoRef.current.srcObject = stream;
         setScreenStream(stream);
         stream.getTracks().forEach(track => {
-            peer.addTrack(track, stream);
+          peer.addTrack(track, stream);
         });
-  
+
         stream.oninactive = () => {
-            screenVideoRef.current.srcObject = null;
-            setScreenStream({});
+          console.log("Stream has become inactive");
+          screenVideoRef.current.srcObject = null;
+          setScreenStream({});
         };
+      } else {
+        console.error("Failed to obtain display stream");
+      }
     } catch (error) {
-        console.error('Failed to get display stream:', error);
-        // 추가적인 에러 처리 로직
+      console.error('Failed to get display stream:', error);
     }
   };
-  
+
+
 
 
   const enter = (roomId) => {
@@ -142,29 +148,29 @@ const Video = () => {
   };
 
   return (
-    <div className='video-wrapper'>
-      <div className='local-video-wrapper'>
-        <video autoPlay id='webcamVideo' muted ref={webcamVideoRef} />
-      </div>
-      {connecting && (
-        <div className='status'>
-          <p>Establishing connection...</p>
+      <div className='video-wrapper'>
+        <div className='local-video-wrapper'>
+          <video autoPlay id='webcamVideo' muted ref={webcamVideoRef} />
         </div>
-      )}
-      {waiting && (
-        <div className='status'>
-          <p>Waiting for someone...</p>
-          <video autoPlay id='screenVideo' ref={screenVideoRef} style={{ width: '100%' }} />
+        {connecting && (
+            <div className='status'>
+              <p>Establishing connection...</p>
+            </div>
+        )}
+        {waiting && (
+            <div className='status'>
+              <p>Waiting for someone...</p>
+              <video autoPlay id='screenVideo' ref={screenVideoRef} style={{ width: '100%' }} />
+            </div>
+        )}
+        <video autoPlay className={`${connecting || waiting ? 'hide' : ''}`} id='remoteVideo' ref={remoteVideoRef} />
+        <div className='controls'>
+          <button className='control-btn' onClick={getDisplay}><ShareScreenIcon /></button>
+          <button className='control-btn' onClick={setAudioLocal}>{micState ? <MicOnIcon /> : <MicOffIcon />}</button>
+          <button className='control-btn' onClick={setVideoLocal}>{camState ? <CamOnIcon /> : <CamOffIcon />}</button>
         </div>
-      )}
-      <video autoPlay className={`${connecting || waiting ? 'hide' : ''}`} id='remoteVideo' ref={remoteVideoRef} />
-      <div className='controls'>
-        <button className='control-btn' onClick={getDisplay}><ShareScreenIcon /></button>
-        <button className='control-btn' onClick={setAudioLocal}>{micState ? <MicOnIcon /> : <MicOffIcon />}</button>
-        <button className='control-btn' onClick={setVideoLocal}>{camState ? <CamOnIcon /> : <CamOffIcon />}</button>
+        {renderFull()}
       </div>
-      {renderFull()}
-    </div>
   );
 };
 

@@ -1,51 +1,70 @@
-import React from 'react';
+import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
+import { Notice, Notices, getNotificationList } from '../../api/notifications';
+import { Post } from '../notifications/Posts';
 
 const NewsSectionContainer = styled.section`
   background-color: #1a1a1d;
-  padding: 20px 30px; /* 좌우 패딩을 30px로 조정 */
+  padding: 20px 30px;
 `;
 
 const NewsCard = styled.div`
-  flex: 0 0 auto; /* flex-grow, flex-shrink, flex-basis */
-  width: 300px; /* 카드의 너비 */
-  margin-right: 20px; /* 카드 간의 간격 */
-  color: white; /* 텍스트 색상 */
-  border-radius: 10px; /* 카드 모서리 둥글기 */
-  box-shadow: 0 4px 8px rgba(0,0,0,0.1); /* 그림자 효과 */
-  overflow: hidden; /* 내부 이미지가 모서리 둥글기에 영향받도록 */
+  flex: 0 0 auto;
+  width: 300px;
+  margin-right: 20px;
+  color: white;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+`;
+
+const ImageContainer = styled.div`
+  width: 100%;
+  padding-top: 75%; /* Aspect ratio of 4:3 */
+  position: relative;
 `;
 
 const NewsImage = styled.img`
+  position: absolute;
+  top: 0;
+  left: 0;
   width: 100%;
-  height: 200px; /* 이미지 높이 */
-  object-fit: cover; /* 이미지 비율 유지 */
+  height: 100%;
+  object-fit: contain;
 `;
 
 const NewsContent = styled.div`
   padding: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
 `;
 
 const NewsTitle = styled.h3`
   margin: 0;
-  font-size: 18px; /* 제목 크기 */
+  font-size: 18px;
 `;
 
 const NewsDate = styled.div`
-  font-size: 14px; /* 날짜 크기 */
+  font-size: 14px;
   opacity: 0.7;
 `;
 
 const NewsSummary = styled.p`
-  font-size: 15px; /* 요약 텍스트 크기 */
+  font-size: 15px;
 `;
 
 const NewsHeader = styled.div`
   font-weight: bold;
   font-size: 50px;
   color: #00FCCE;
-  text-align: left; /* 왼쪽 정렬로 변경 */
-  padding-bottom: 20px; /* 최신소식 아래에 패딩 추가 */
+  text-align: left;
+  padding-bottom: 20px;
   padding-top: 50px;
   padding-left: 40px;
 `;
@@ -54,81 +73,124 @@ const NewsItemsContainer = styled.div`
   display: flex;
   justify-content: center;
   overflow-x: auto;
-  gap: 20px; /* 카드 간 간격을 gap 속성으로 조정 */
-  padding: 20px; /* 상하 패딩만 적용 */
+  gap: 20px;
+  padding: 20px;
 `;
 
 const NewsTitleContainer = styled.div`
   display: flex;
-  `;
+`;
 
 interface NewsItemProps {
-    title: string;
-    date: string;
-    summary: string;
-    image: string;
-  }
+  id: number;
+  title: string;
+  date: string;
+  image: string;
+  summary: string;
+}
 
-// 데이터와 구조를 감안하여 컴포넌트를 만듭니다.
-const NewsItem: React.FC<NewsItemProps> = ({ title, date, summary, image }) => {
-  return (
+const truncateText = (text: string, maxLength: number) => {
+  if (text.length > maxLength) {
+    return text.slice(0, maxLength) + '...';
+  }
+  return text;
+};
+
+const getImageUrl = (image: string | File | undefined): string => {
+  if (typeof image === 'string') {
+    return image;
+  } else if (image instanceof File) {
+    return URL.createObjectURL(image);
+  } else {
+    // Provide a default placeholder if there's no image
+    return '/path/to/default/image.png'; // Replace this with your actual default image path
+  }
+};
+
+const NewsItem: React.FC<NewsItemProps> = ({ id, title, date, image, summary }) => (
     <NewsCard>
-      <NewsImage src={image} alt="news image" />
+      <ImageContainer>
+        <Link to={`/notifications/${id}`}
+              onClick={() => window.scrollTo(0, 0)}>
+          <NewsImage src={image} alt="news image" />
+        </Link>
+      </ImageContainer>
       <NewsContent>
-        <NewsTitle>{title}</NewsTitle>
+        <NewsTitle>{truncateText(title, 15)}</NewsTitle>
         <NewsDate>{date}</NewsDate>
-        <NewsSummary>{summary}</NewsSummary>
+        <NewsSummary>{truncateText(summary, 15)}</NewsSummary>
       </NewsContent>
     </NewsCard>
-  );
-};
+);
 
 const GoToNewsPageLink = styled.div`
   display: flex;
   align-items: center;
-  justify-content: right; // 링크를 중앙 정렬
+  justify-content: right;
   font-weight: bold;
-  margin-left: auto; // 이전 아이템과의 간격을 유지
+  margin-left: auto;
   padding-right: 60px;
-  padding-top: 100px;
+  padding-top: 3%;
   cursor: pointer;
   a {
-    text-decoration: none; // 밑줄 제거
+    text-decoration: none;
     color: #00FCCE;
   }
 `;
 
-// 최신 소식 섹션을 만듭니다.
 const MainSection2 = () => {
-    const newsData = [
-        { title: "패치 노트 2.07 출시", date: "2024-04-17", summary: "새로운 패치 노트를 확인하세요. 이번 패치에서는...", image:'valorent.jpg' },
-        { title: "신규 이벤트 시작", date: "2024-04-20", summary: "신규 이벤트가 시작됩니다. 참여하여 독특한 보상을 얻으세요!", image:'valorent.jpg' },
-        { title: "요원 현황 2024년 4월", date: "2024-04-27", summary: "요원 현황을 확인하세요!", image:'valorent.jpg' },
-        // 추가 뉴스 항목...
-    ];
+  const [fetchedThree, setFetchedThree] = useState<Post[]>([]);
+  const [isFetching, setIsFetching] = useState(false);
+  const [error, setError] = useState<string>();
 
+  useEffect(() => {
+    const getThree = async () => {
+      setIsFetching(true);
+      try {
+        const newsData = await getNotificationList() as Notices;
+        const posts: Post[] = newsData.map((notice: Notice) => ({
+          id: notice.noticeId,
+          title: notice.noticeTitle,
+          text: notice.noticeContent,
+          image: notice.noticeImg,
+          date: notice.noticeCreatedAt, // Convert Date to string
+        }));
+        const threeNews = posts.slice(-3).reverse(); // Get the last 3 items and reverse the order
+        setFetchedThree(threeNews);
+      } catch (error) {
+        if (error instanceof Error) {
+          setError(error.message);
+        }
+      }
+      setIsFetching(false);
+    };
+    getThree();
+  }, []);
 
-    return (
-        <NewsSectionContainer>
-          <NewsTitleContainer>
-            <NewsHeader>최신소식</NewsHeader>
-            <GoToNewsPageLink>
-              <a href="/news-page">소식 페이지 바로가기</a>
-            </GoToNewsPageLink>
-          </NewsTitleContainer>
-          <NewsItemsContainer>
-            {newsData.map((news, index) => (
+  return (
+      <NewsSectionContainer>
+        <NewsTitleContainer>
+          <NewsHeader>최신소식</NewsHeader>
+          <GoToNewsPageLink>
+            <a href="/notifications">소식 페이지 바로가기</a>
+          </GoToNewsPageLink>
+        </NewsTitleContainer>
+        <NewsItemsContainer>
+          {isFetching && <p>Loading...</p>}
+          {error && <p>Error: {error}</p>}
+          {!isFetching && !error && fetchedThree.map((news) => (
               <NewsItem
-                key={index}
-                title={news.title}
-                date={news.date}
-                summary={news.summary}
-                image={news.image}
+                  key={news.id}
+                  id={news.id}
+                  title={news.title}
+                  date={news.date}
+                  summary={news.text}
+                  image={getImageUrl(news.image)}
               />
-            ))}
-          </NewsItemsContainer>
-        </NewsSectionContainer>
-      );
+          ))}
+        </NewsItemsContainer>
+      </NewsSectionContainer>
+  );
 };
 
 export default MainSection2;

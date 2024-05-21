@@ -6,7 +6,7 @@ import styled from 'styled-components';
 // Section 컴포넌트에 스타일을 적용합니다.
 const Section = styled.section`
   height: 90vh;
-  background-image: url('/Background.png');
+  background-image: url('/game_map_imgs/qq.png');
   background-size: cover;
   display: flex;
   flex-direction: column;
@@ -19,8 +19,8 @@ const Section = styled.section`
 
 export const MainSection5: React.FC = () => {
   return (
-    <Section>
+      <Section>
 
-    </Section>
+      </Section>
   );
 }
