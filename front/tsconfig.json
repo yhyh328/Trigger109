@@ -1,0 +1,37 @@
+{
+  "compilerOptions": {
+    "target": "es5",
+<<<<<<< HEAD
+    "lib": [
+      "dom",
+      "dom.iterable",
+      "esnext"
+    ],
+    "allowJs": true,
+    "checkJs": false,
+=======
+    "lib": ["dom", "dom.iterable", "esnext"],
+    "allowJs": true,
+>>>>>>> origin/develop_fe
+    "skipLibCheck": true,
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "strict": true,
+    "forceConsistentCasingInFileNames": true,
+    "noFallthroughCasesInSwitch": true,
+    "module": "esnext",
+    "moduleResolution": "node",
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "noEmit": true,
+    "jsx": "react-jsx"
+  },
+<<<<<<< HEAD
+  "include": [
+    "src"
+  ]
+  
+=======
+  "include": ["src"]
+>>>>>>> origin/develop_fe
+}
