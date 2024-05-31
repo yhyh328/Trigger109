@@ -1,27 +1,23 @@
 #guideImg {
-<<<<<<< HEAD
-    width: 70%;
-=======
-    width: 80%;
->>>>>>> origin/develop_fe
-    margin: 2rem auto;
-  }
-  
+  width: 80%;
+  margin: 2rem auto;
+}
+
 #guideImg h2 {
-    font-size: 1.5rem;
-    color: #a59b8b;
-    text-transform: uppercase;
+  font-size: 1.5rem;
+  color: #a59b8b;
+  text-transform: uppercase;
 }
 
 #gImgs {
-    list-style: none;
-    margin: 0;
-    padding: 0;
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(20rem, 1fr));
-    gap: 2rem;
-  }
-  
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(20rem, 1fr));
+  gap: 2rem;
+}
+
 .gImg {
 height: 100%;
 background: #5f4e33;

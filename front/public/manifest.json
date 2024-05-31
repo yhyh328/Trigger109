@@ -1,11 +1,6 @@
 {
-<<<<<<< HEAD
-  "short_name": "React App",
-  "name": "Create React App Sample",
-=======
   "short_name": "Trigger",
   "name": "Trigger game",
->>>>>>> origin/develop_fe
   "icons": [
     {
       "src": "favicon.ico",

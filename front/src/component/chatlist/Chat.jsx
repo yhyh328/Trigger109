@@ -1,14 +1,8 @@
 import React, { useEffect, useState } from "react";
-<<<<<<< HEAD
-import socket from "../../server"; 
-import InputField from "./InputField/InputField";
-import MessageContainer from "./MessageContainer/MessageContainer"; 
-=======
 import socket from "../../server";
 import InputField from "./InputField/InputField";
 import MessageContainer from "./MessageContainer/MessageContainer";
 import { fetchUserInfo } from "../../api/getuser"; // 사용자 정보 가져오기 함수 임포트
->>>>>>> origin/develop_fe
 
 const Chat = () => {
   const [user, setUser] = useState(null);
@@ -16,20 +10,6 @@ const Chat = () => {
   const [messageList, setMessageList] = useState([]);
 
   useEffect(() => {
-<<<<<<< HEAD
-    socket.on('message', (message) => {
-      setMessageList(prevState => [...prevState, message]);
-    });
-
-    const userName = prompt("당신의 이름을 입력하세요");
-    socket.emit("login", userName, (res) => {
-      if (res?.ok) {
-        setUser(res.data);
-      }
-    });
-
-    return () => socket.off('message'); 
-=======
     const initChat = async () => {
       try {
         const userInfo = await fetchUserInfo(); // 로그인된 사용자 정보 가져오기
@@ -52,7 +32,6 @@ const Chat = () => {
     };
 
     initChat();
->>>>>>> origin/develop_fe
   }, []);
 
   const sendMessage = (event) => {

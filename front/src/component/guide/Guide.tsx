@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import GuideSection from './GuideSection';
-import { DUMMY_GUIDEIMG1, DUMMY_GUIDEIMG2 } from './dummy-guideImg';
+import { DUMMY_GUIDEIMG1 } from './dummy-guideImg';
 
 const GuideTopImg = styled.section`
   height: 80vh;
@@ -55,26 +55,26 @@ const ImageSection2 = styled.div`
 // Define Guide component
 const Guide = () => {
 
-    return (
-        <>
-            <GuideTopImg>
-                {/* Additional content can be placed here */}
-            </GuideTopImg>
-            <GuideItemContainer>
-                <Title>초보자 가이드</Title>
-                <ImageSection1>
-                    {DUMMY_GUIDEIMG1.map((image1) => (
-                        <GuideSection key={image1.id} {...image1} />
-                    ))}
-                </ImageSection1>
-                <ImageSection2>
-                    {DUMMY_GUIDEIMG2.map((image2) => (
-                        <GuideSection key={image2.id} {...image2} />
-                    ))}
-                </ImageSection2>
-            </GuideItemContainer>
-        </>
-    );
+  return (
+    <>
+      <GuideTopImg>
+        {/* Additional content can be placed here */}
+      </GuideTopImg>
+      <GuideItemContainer>
+        <Title>초보자 가이드</Title>
+        <ImageSection1>
+          {DUMMY_GUIDEIMG1.map((image1) => (
+            <GuideSection key={image1.id} {...image1} />
+          ))}
+        </ImageSection1>
+        <ImageSection2>
+          {/* {DUMMY_GUIDEIMG2.map((image2) => (
+            <GuideSection key={image2.id} {...image2} />
+          ))} */}
+        </ImageSection2>
+      </GuideItemContainer>
+    </>
+  );
 };
 
 export default Guide;
