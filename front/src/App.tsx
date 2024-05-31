@@ -16,7 +16,7 @@ import { SoundProvider } from './soundEffects/soundContext';
 import SignUp from './component/member/SignUp'
 import './App.css';
 import { useEffect } from 'react';
-import { generateToken } from './component/notifications/firebase';
+import { generateToken, app } from './component/notifications/firebase';
 import Login from './component/member/Login'
 import { AxiosError } from "axios";
 import NotificationDetail from './component/notifications/NotificationDetail';

@@ -1,45 +1,38 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
+import { getAnalytics } from 'firebase/analytics';
 import { getMessaging, getToken } from "firebase/messaging";
 import { getFCMs, postFCM } from "../../api/fcm";
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
+require('dotenv').config();
+
 // Your web app's Firebase configuration
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
 const firebaseConfig = {
-  apiKey: "AIzaSyB-GOUMKDJ5yMkrBlR9uU0aBRoXRuR7p1E",
-  authDomain: "trigger109-3d431.firebaseapp.com",
-  databaseURL: "https://trigger109-3d431-default-rtdb.asia-southeast1.firebasedatabase.app",
-  projectId: "trigger109-3d431",
-  storageBucket: "trigger109-3d431.appspot.com",
-  messagingSenderId: "451870712939",
-  appId: "1:451870712939:web:31a4ae839a9d7ecc9e3d2e",
-  measurementId: "G-3FNRJEBB9R"
+  apiKey: process.env.FIREBASE_API_KEY,
+  authDomain: process.env.FIREBASE_AUTH_DOMAIN,
+  databaseURL: process.env.FIREBASE_DATABASE_URL,
+  projectId: process.env.FIREBASE_PROJECT_ID,
+  storageBucket: process.env.FIREBASE_STORAGE_BUCKET,
+  messagingSenderId: process.env.FIREBASE_MESSAGING_SENDER_ID,
+  appId: process.env.FIREBASE_APP_ID,
+  measurementId: process.env.FIREBASE_MEASUREMENT_ID
 };
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
+const analytics = getAnalytics(app);
 const messaging = getMessaging(app);
 
 export const generateToken = async () => {
     const permission = await Notification.requestPermission();
-    // console.log(permission);
     if (permission === "granted") {
         const FCMToken = await getToken(messaging, {
-            vapidKey: 
-                "BOfsVc6-5m98UdU9cd79oZC3Z5amKIdTNlH2EaVM7Pb8CKWHct0-ubSOx1XooLUSJkI9SrGaeDTvfQPdoSguXew"
+            vapidKey: process.env.FIREBASE_VAPID_KEY
         });
         if (FCMToken) {
-
-            // console.log('FCMToken: ', FCMToken)
-
-            // const fcmTokens = await getFCMs();
-            //     const validFcmTokens = fcmTokens
-            //         .filter((fcm) => fcm.fcmToken && fcm.fcmToken !== 'undefined')
-            //         .map((fcm) => fcm.fcmToken);
-
-            //     console.log('validFcmTokens: ', validFcmTokens);
 
             try {
                 await postFCM({ fcmToken: FCMToken });
@@ -59,4 +52,4 @@ export const generateToken = async () => {
     }
 }
 
-export { messaging, app };
+export { messaging, app, analytics };

@@ -89,7 +89,7 @@ const MainSection4 = () => {
         if (isSoundEnabled) {
             playGunShot.play().catch(err => console.error('Error playing gunshot:', err));
         }
-        navigate('/guide');
+        navigate('/guide/');
         window.scrollTo(0, 0);
     }
 

@@ -9,7 +9,7 @@ import { prepareGunShot, prepareGunLoad } from '../../soundEffects/soundEffects'
 // Section 컴포넌트에 스타일을 적용합니다.
 const Section = styled.section`
   height: 90vh;
-  background-image: url('https://trigger109-bucket.s3.ap-northeast-2.amazonaws.com/trigger_%EB%B0%B0%EA%B2%BD1.png');
+  background-image: url('/game_map_imgs/003.png');
   background-size: cover;
   display: flex;
   flex-direction: column;
@@ -44,10 +44,10 @@ const MainSection3 = () => {
   };
 
   return (
-      <Section>
-        <LiveButton label="지금 시청하기"
-                    onMouseEnter={handlePlayButtonEnter}onClick={handlePlayClick} />
-      </Section>
+    <Section>
+      <LiveButton label="지금 시청하기" 
+      onMouseEnter={handlePlayButtonEnter}onClick={handlePlayClick} />
+    </Section>
   );
 }
 
